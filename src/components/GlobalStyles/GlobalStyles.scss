@@ -3,9 +3,15 @@
 
 :root {
     --primary: #33cc99;
+    --primary-hover: rgba(51, 204, 153, 0.7);
+    --primary-opacity: #45ffca;
     --white: #fff;
     --black: #000;
+    --red: rgb(255, 109, 96);
+    --red-hover: rgb(255, 109, 96, 0.8);
+    --close-color: rgb(255, 109, 96);
     --text-color: #333;
+    --invalid-color: rgb(255, 109, 96);
 
     --default-layout-header-height: 66px;
 }
@@ -34,7 +40,20 @@ input,
     border: none;
 }
 
-a[href] {
+a {
     color: var(--text-color);
     text-decoration: none;
+}
+
+.modal-active {
+    overflow-y: hidden;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

@@ -1,0 +1,110 @@
+.wrapper {
+    margin-top: 50px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.common-movie {
+}
+
+// section furniture
+.infr-content {
+    flex: 1;
+    padding-left: 50px;
+
+    li {
+        color: #4f4f4f;
+        padding-left: 16px;
+        margin-top: 24px;
+        position: relative;
+        font-size: 16px;
+        line-height: 20px;
+        list-style: none;
+
+        &:before {
+            content: '';
+            display: block;
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            position: absolute; // yeah, you have to manually position it based on the text size, line height, etc. (in the parent li style). it's not the smarest solution
+            top: 0;
+            left: -20px;
+        }
+    }
+}
+.infr-content {
+    li:nth-child(odd):before {
+        border-color: var(--primary);
+    }
+    li:nth-child(even):before {
+        border-color: var(--black);
+    }
+}
+
+.infr-image {
+    margin: 16px 16px 16px 0;
+    img {
+        border-radius: 16px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        width: 50vw;
+        height: 70vh;
+    }
+}
+
+//adv section
+.adv-wrapper {
+    margin-top: 50px;
+    height: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background-color: #f2f2f2;
+}
+
+.adv-content {
+    width: 50%;
+    color: #555;
+    margin: 20px 40px 0 30px;
+
+    h3 {
+        font-weight: 700;
+    }
+}
+
+.adv-form {
+    flex: 1;
+    padding-right: 30px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+//responsive
+@media (max-width: 970px) {
+    .infr-image {
+        img {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 1030px) {
+    .adv-wrapper {
+        flex-direction: column;
+    }
+
+    .adv-content {
+        width: 100%;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .adv-form {
+        width: 80%;
+    }
+}

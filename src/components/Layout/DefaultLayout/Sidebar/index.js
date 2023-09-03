@@ -1,13 +1,13 @@
-import classNames from 'classnames/bind';
-import styles from './Sidebar.module.scss';
-import { Link } from 'react-router-dom';
-import images from '~/assets/images';
 import { useState } from 'react';
+import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+
+import styles from './Sidebar.module.scss';
+import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 
-const tabs = ['home', 'booking', 'blog'];
-function Sidebar() {
+function Sidebar({ tabs }) {
     const [type, setType] = useState('home');
 
     return (

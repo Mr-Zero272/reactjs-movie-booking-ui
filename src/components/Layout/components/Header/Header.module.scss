@@ -1,3 +1,13 @@
+a {
+    color: var(--text-color);
+}
+.container {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
 .wrapper {
     height: var(--default-layout-header-height, 66px);
     align-items: center;
@@ -6,12 +16,11 @@
     display: flex;
     justify-content: space-between;
     font-size: 1.4rem;
-    left: 0;
     padding: 0 28px;
-    position: sticky;
+    position: relative;
+    left: 0;
     right: 0;
     top: 0;
-    z-index: 20;
 }
 
 .logo {
@@ -29,7 +38,11 @@
 
 .search-wrapper,
 .search-result {
-    width: 420px;
+    width: 90%;
+}
+
+.body {
+    width: 40vw;
 }
 
 .search-wrapper {
@@ -37,8 +50,9 @@
     border-radius: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 40px;
-    padding: 0 16px 0 8px;
+    padding: 0 8px 0 16px;
     transition: border-color 0.2s ease-in-out;
 
     .search-input {
@@ -51,11 +65,11 @@
     }
 
     .search-icon {
+        padding: 8px;
         border-left: 1px solid #555;
         font-size: 1.4rem;
         cursor: pointer;
         color: #555;
-        padding: 8px;
     }
 }
 
@@ -81,7 +95,15 @@
 
     .action:not(:first-child) {
         font-size: 1.4rem;
+        margin-left: 8px;
     }
+}
+
+.user-avatar {
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
 .action_notification,
@@ -94,4 +116,58 @@
     background-color: transparent;
     padding: 8px;
     cursor: pointer;
+}
+
+.menu-sidebar {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        justify-content: flex-start;
+    }
+
+    .body {
+        width: 50vw;
+        margin: 0 18px 0 16px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .menu-sidebar {
+        display: block;
+    }
+}
+
+@media (max-width: 590px) {
+    .action:not(:first-child):not(:last-child) {
+        display: none;
+    }
+
+    .body {
+        width: 60vw;
+        margin: 0 0 0 6px;
+
+        .search-input {
+            width: 70%;
+            border: none;
+            caret-color: #444;
+            flex: 1 1;
+            height: 100%;
+            outline: none;
+            padding: 0 4px;
+        }
+    }
+
+    .actions {
+        .action {
+            margin-left: 0;
+        }
+    }
+
+    .login-btn {
+        font-size: 1.2rem;
+    }
 }

@@ -1,0 +1,78 @@
+.wrapper {
+    color: #292929;
+    text-align: left;
+    width: 100%;
+}
+
+.labelGroup {
+    display: flex;
+    justify-content: space-between;
+
+    .label {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 10px 0 10px 8px;
+    }
+}
+
+.input-wrap {
+    background: rgba(22, 24, 35, 0.06);
+    border: 1px solid rgba(22, 24, 35, 0.06);
+    border-radius: 44px;
+    display: flex;
+    height: 44px;
+    overflow: hidden;
+
+    input {
+        background: transparent;
+        font-size: 1.6rem;
+        padding: 12px 20px;
+        padding-right: 5px;
+        width: 100%;
+    }
+
+    .side-btn {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--red);
+        color: var(--white);
+        font-weight: 600;
+        font-size: 1.3rem;
+        width: 25%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--red-hover);
+        }
+    }
+}
+
+.square {
+    border-radius: 0;
+}
+
+.whiteBg {
+    background: var(--white);
+}
+
+.focus {
+    border: 1px solid var(--red);
+}
+
+.invalid-input {
+    border: 1px solid var(--invalid-color);
+}
+
+.message {
+    color: #292929;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin: 8px 0 8px 8px;
+}
+
+.message-error {
+    color: var(--invalid-color);
+}

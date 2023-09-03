@@ -1,0 +1,14 @@
+.wrapper {
+    margin: 20px 0 20px 0;
+}
+
+.title {
+    color: var(--text-color);
+    text-transform: capitalize;
+    margin-bottom: 16px;
+}
+
+.line-gradient {
+    height: 2px;
+    background: linear-gradient(to right, var(--primary), white);
+}

@@ -1,0 +1,44 @@
+.wrapper {
+    margin: 40px 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2f2;
+}
+
+.main-content {
+    display: flex;
+    width: 100%;
+
+    .img {
+        margin-right: 20px;
+        img {
+            width: 170px;
+            height: 230px;
+        }
+    }
+
+    .main-content-left {
+        flex: 1;
+    }
+}
+
+.schedule {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+        font-size: 2.2rem;
+        padding: 8px 16px;
+        background: transparent;
+        cursor: pointer;
+    }
+}

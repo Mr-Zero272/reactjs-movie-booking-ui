@@ -1,0 +1,131 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    position: fixed;
+    z-index: 999;
+    animation: dropTop 0.3 linear;
+}
+
+@keyframes dropTop {
+    0% {
+        transform: translateY(-100%) scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(100%) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-container {
+    max-height: 90vh;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 30px 0 rgba(#000, 0.25);
+    @media (max-width: 600px) {
+        width: 90%;
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(#000, 0.25);
+}
+
+.content {
+    max-height: 90vh;
+    max-width: 500px;
+    position: relative;
+    padding: 15px;
+    background-color: var(--white);
+    z-index: 1;
+
+    .close-btn {
+        align-items: center;
+        background: rgba(22, 24, 35, 0.03);
+        border-radius: 50%;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        font-size: 2.8rem;
+        height: 40px;
+        justify-content: center;
+        line-height: 0;
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        width: 40px;
+    }
+
+    .modal-header {
+        padding: 16px 32px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1;
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 24px 32px 51px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 60vh;
+    }
+
+    .modal-footer {
+        padding: 20px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        border-top: 1px solid #ddd;
+        gap: 12px;
+        position: relative;
+
+        .footer-title {
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -51px;
+            left: 24px;
+            right: 24px;
+            height: 50px;
+            flex-shrink: 0;
+            background-image: linear-gradient(to top, rgba(#fff, 0.75), transparent);
+            pointer-events: none;
+        }
+    }
+}

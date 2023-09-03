@@ -1,0 +1,126 @@
+.item {
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    height: calc(100vh - 116px);
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+
+    .item-img-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        background-repeat: no-repeat;
+        //background-position: center;
+        background-size: cover;
+
+        // .img {
+        //     object-fit: none;
+        //     object-position: center;
+        //     border-style: none;
+        // }
+    }
+}
+
+.content-wrapper {
+    background: transparent;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    justify-content: center;
+    text-align: left;
+    line-height: 1.6;
+    width: 50%;
+    padding: 36px 40px;
+    margin-left: 20px;
+    z-index: 32;
+}
+
+.heading {
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 1.8em;
+    color: var(--text-color);
+
+    .sub-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 50%;
+        font-size: 1.6rem;
+
+        > :not(:first-child) {
+            border-left: 1px solid #333;
+            padding-left: 3rem;
+        }
+
+        .star {
+            color: #f8de22;
+        }
+    }
+}
+
+.heading-title {
+    color: var(--text-color);
+}
+
+.body {
+    padding: 20px 0 20px 0;
+    width: 80%;
+
+    .desc {
+        margin-bottom: 24px;
+        margin-top: 0;
+    }
+
+    .cta-btn {
+        font-size: 1.6rem;
+    }
+}
+
+.footer {
+    margin-top: 10px;
+    width: 80%;
+}
+
+.starting {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(26, 26, 26, 0.5);
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+}
+
+.whiteText {
+    color: var(--white);
+}
+//responsive
+// ipad
+@media (max-width: 920px) {
+    .content-wrapper {
+        width: 80%;
+    }
+}
+
+//smartphone
+@media (max-width: 520px) {
+    .content-wrapper {
+        width: 50%;
+        padding: 0;
+        margin: 0 50px;
+    }
+
+    .heading {
+        .sub-heading {
+            width: 80%;
+        }
+    }
+}

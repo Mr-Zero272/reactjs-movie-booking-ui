@@ -1,13 +1,23 @@
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
+
 import { DefaultLayout } from '~/components/Layout';
-import Home from './pages/Home';
+import LoginModal from '~/components/Modal/LoginModal';
+import { useSelector } from 'react-redux';
 
 function App() {
+    const isOpenModal = useSelector((state) => state.loginModal.isOpen);
+
+    if (isOpenModal) {
+        document.body.classList.add('modal-active');
+    } else {
+        document.body.classList.remove('modal-active');
+    }
     return (
         <Router>
             <div className="App">
+                {isOpenModal && <LoginModal />}
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component;

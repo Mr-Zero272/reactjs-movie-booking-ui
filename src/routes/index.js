@@ -5,6 +5,7 @@ import Home from '~/pages/Home';
 import About from '~/pages/About';
 import Booking from '~/pages/Booking';
 import Blog from '~/pages/Blog';
+import Schedule from '~/pages/Schedule';
 
 //Public routes
 const publicRoutes = [
@@ -12,6 +13,7 @@ const publicRoutes = [
     { path: '/about', component: About },
     { path: '/booking', component: Booking },
     { path: '/blog', component: Blog },
+    { path: '/schedule', component: Schedule },
 ];
 
 const privateRoutes = [];

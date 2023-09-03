@@ -7,6 +7,11 @@ import {
     faEllipsisVertical,
     faMagnifyingGlass,
     faRightToBracket,
+    faBars,
+    faShareFromSquare,
+    faNewspaper,
+    faUsersViewfinder,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
@@ -14,8 +19,10 @@ import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import MovieItem from '~/components/MovieItem';
+import MovieItemSearch from '~/components/MovieItem/MovieItemSearch';
 import Menu from '~/components/Popper/Menu';
+import { useDispatch } from 'react-redux';
+import { modalLoginActions } from '~/store/modal-login-slice';
 
 const cx = classNames.bind(styles);
 
@@ -36,10 +43,39 @@ const MENU_ITEMS = [
             ],
         },
     },
+    {
+        icon: <FontAwesomeIcon icon={faUsersViewfinder} />,
+        title: 'Blog',
+        to: '/my-ticket',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faNewspaper} />,
+        title: 'News',
+        to: '/news',
+    },
 ];
 
-function Header() {
+const userMenu = [
+    {
+        icon: <FontAwesomeIcon icon={faUser} />,
+        title: 'ViewProfile',
+        to: '/profile',
+    },
+    ...MENU_ITEMS,
+    {
+        icon: <FontAwesomeIcon icon={faShareFromSquare} />,
+        title: 'Logout',
+        to: '/logout',
+        separate: true,
+    },
+];
+
+function Header({ onToggleMenu }) {
+    const dispatch = useDispatch();
+
     const [searchResult, setSearchResult] = useState([]);
+
+    const currentUser = true;
 
     useEffect(() => {
         setTimeout(() => {
@@ -50,9 +86,13 @@ function Header() {
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
     };
+
     return (
-        <header>
+        <header className={cx('container')}>
             <nav className={cx('wrapper')}>
+                <button className={cx('more-btn', 'menu-sidebar')} onClick={onToggleMenu}>
+                    <FontAwesomeIcon icon={faBars} />
+                </button>
                 <Link className={cx('logo')} to="/">
                     <img src={images.logo} alt="logo" height={30} width={30} />
                     <h4 className={cx('logo-heading')}>
@@ -72,32 +112,55 @@ function Header() {
                                             See more
                                         </Link>
                                     </div>
-                                    <MovieItem />
-                                    <MovieItem />
-                                    <MovieItem />
+                                    <MovieItemSearch />
+                                    <MovieItemSearch />
+                                    <MovieItemSearch />
                                 </PopperWrapper>
                             </div>
                         )}
                     >
                         <div className={cx('search-wrapper')}>
-                            <input className={cx('search-input')} placeholder="Enter something here..." />
+                            <input className={cx('search-input')} placeholder="Search..." />
                             <FontAwesomeIcon className={cx('search-icon')} icon={faMagnifyingGlass} />
                         </div>
                     </Tippy>
                 </div>
                 <div className={cx('actions')}>
+                    {currentUser ? (
+                        <>
+                            <div className={cx('action')}>
+                                <Button className={cx('login-btn')} text>
+                                    My ticket
+                                </Button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className={cx('action')}>
+                                <Button
+                                    onClick={() => dispatch(modalLoginActions.openModal())}
+                                    className={cx('login-btn')}
+                                    primary
+                                    rightIcon={<FontAwesomeIcon icon={faRightToBracket} />}
+                                >
+                                    Login
+                                </Button>
+                            </div>
+                            <div className={cx('action')}>
+                                <Button text>Register</Button>
+                            </div>
+                        </>
+                    )}
                     <div className={cx('action')}>
-                        <Button primary rightIcon={<FontAwesomeIcon icon={faRightToBracket} />}>
-                            Login
-                        </Button>
-                    </div>
-                    <div className={cx('action')}>
-                        <Button text>Register</Button>
-                    </div>
-                    <div className={cx('action')}>
-                        <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
+                        <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                             <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                                {currentUser ? (
+                                    <>
+                                        <img className={cx('user-avatar')} src={images.fakeAvatar} alt="avatar" />
+                                    </>
+                                ) : (
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                )}
                             </button>
                         </Menu>
                     </div>

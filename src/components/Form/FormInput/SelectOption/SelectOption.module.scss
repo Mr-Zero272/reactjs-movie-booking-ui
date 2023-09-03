@@ -1,0 +1,54 @@
+.wrapper {
+    margin-right: 15px;
+}
+.selector {
+    width: 350px;
+    position: relative;
+}
+
+.select-field {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    color: var(--white);
+    background: var(--primary);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    cursor: pointer;
+
+    .arrow-icon {
+        transition: transform 0.5s;
+    }
+}
+
+.list {
+    width: 100%;
+    background: #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.option {
+    width: 100%;
+    padding: 15px 15px 15px 20px;
+    list-style: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {
+        color: var(--white);
+        background: var(--primary);
+    }
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}

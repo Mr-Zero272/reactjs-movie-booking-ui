@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.type-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px;
+    width: 170px;
+    padding: 10px 19px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--white);
+    background: #ddd;
+    cursor: pointer;
+    user-select: none;
+}
+
+.active {
+    background: var(--primary);
+}
+
+.schedule {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .schedule-item {
+        padding: 10px 0;
+        border-radius: 10px;
+        text-align: center;
+        background: var(--white);
+        width: 13%;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+}

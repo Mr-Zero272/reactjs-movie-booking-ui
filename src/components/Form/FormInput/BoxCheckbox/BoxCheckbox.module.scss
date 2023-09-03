@@ -1,0 +1,31 @@
+.wrapper {
+    width: 120px;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--text-color);
+    padding: 9px 14px;
+    border: 1px solid #333;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: all 0.3 ease;
+
+    + .wrapper {
+        margin-left: 16px;
+    }
+
+    // &:hover {
+    //     background-color: var(--primary);
+    //     color: var(--white);
+    //     border: none;
+    // }
+}
+
+.active {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+}
