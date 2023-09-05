@@ -2,10 +2,18 @@
     margin: 20px 0 20px 0;
 }
 
+.heading {
+    display: flex;
+}
+
 .title {
     color: var(--text-color);
     text-transform: capitalize;
     margin-bottom: 16px;
+
+    + .title {
+        margin-left: 20px;
+    }
 }
 
 .line-gradient {

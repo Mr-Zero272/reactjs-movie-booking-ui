@@ -3,10 +3,16 @@ import styles from './TitleHeadingPage.module.scss';
 
 const cx = classNames.bind(styles);
 
-function TitleHeadingPage({ titleHeadingPageName }) {
+function TitleHeadingPage({ titles }) {
     return (
         <div className={cx('wrapper')}>
-            <h2 className={cx('title')}>{titleHeadingPageName}</h2>
+            <div className={cx('heading')}>
+                {titles.map((item) => (
+                    <h2 className={cx('title')} style={{ width: `${item.size}%` }}>
+                        {item.title}
+                    </h2>
+                ))}
+            </div>
             <div className={cx('line-gradient')}></div>
         </div>
     );

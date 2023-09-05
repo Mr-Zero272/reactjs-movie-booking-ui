@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './MovieScheduleItem.module.scss';
 import TimeItem from '~/components/TimeItem';
@@ -109,6 +109,16 @@ function MovieScheduleItem({ data }) {
                     />
                 </div>
                 <div className={cx('main-content-left')}>
+                    <div className={cx('movie-info')}>
+                        <div>
+                            <h3>NO WAY UP </h3>
+                            <div className={cx('sub-info')}>
+                                <span>1h 25min</span>
+                                <span>Kawasaki Chihiro</span>
+                            </div>
+                        </div>
+                        <div className={cx('movie-id')}>EFD983</div>
+                    </div>
                     <div className={cx('schedule')}>
                         {movieSchedule.schedules.map((item) => (
                             <TimeItem
@@ -136,7 +146,8 @@ function MovieScheduleItem({ data }) {
                     {types.map((item, index) => (
                         <CinemaTypeCheckbox
                             onCheck={() => handleCheckboxType(item.type)}
-                            active={checkIncludes(movieSchedule.types, item.type)}
+                            //active={checkIncludes(movieSchedule.types, item.type)}
+                            active
                             key={index}
                             type={item.type}
                         />

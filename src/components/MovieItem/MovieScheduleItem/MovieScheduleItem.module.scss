@@ -1,9 +1,13 @@
 .wrapper {
-    margin: 40px 10px;
+    margin: 40px 0px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-color: #f2f2f2f2;
+    background-color: #f0eeed;
+    width: 100%;
+    //color: var(--white);
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .main-content {
@@ -14,12 +18,29 @@
         margin-right: 20px;
         img {
             width: 170px;
-            height: 230px;
+            height: 260px;
         }
     }
 
     .main-content-left {
         flex: 1;
+    }
+}
+
+.movie-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .sub-info {
+        span:not(:first-child) {
+            margin-left: 18px;
+            padding-left: 18px;
+            border-left: 1px solid #ddd;
+        }
+    }
+
+    .movie-id {
+        font-weight: 600;
     }
 }
 

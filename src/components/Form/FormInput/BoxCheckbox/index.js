@@ -5,7 +5,7 @@ import { useState } from 'react';
 const cx = classNames.bind(styles);
 const dfFunction = () => {};
 
-function BoxCheckbox({ name, onSelect = dfFunction }) {
+function BoxCheckbox({ item, onSelect = dfFunction }) {
     const [toggleCheckbox, setToggleCheckbox] = useState(false);
     const handleSelect = () => {
         setToggleCheckbox(!toggleCheckbox);
@@ -15,10 +15,10 @@ function BoxCheckbox({ name, onSelect = dfFunction }) {
             className={cx('wrapper', { active: toggleCheckbox })}
             onClick={() => {
                 handleSelect();
-                onSelect(3);
+                onSelect(item.id);
             }}
         >
-            <span>{name}</span>
+            <span>{item.typeName}</span>
         </div>
     );
 }
