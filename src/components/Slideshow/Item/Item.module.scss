@@ -15,20 +15,13 @@
         right: 0;
         z-index: -1;
         background-repeat: no-repeat;
-        //background-position: center;
         background-size: cover;
-
-        // .img {
-        //     object-fit: none;
-        //     object-position: center;
-        //     border-style: none;
-        // }
     }
 }
 
-.content-wrapper {
+.item-content {
     background: transparent;
-    color: #333;
+    color: #444;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -37,6 +30,7 @@
     text-align: left;
     line-height: 1.6;
     width: 50%;
+    height: 100%;
     padding: 36px 40px;
     margin-left: 20px;
     z-index: 32;
@@ -46,18 +40,22 @@
     margin-bottom: 8px;
     font-weight: 700;
     font-size: 1.8em;
-    color: var(--text-color);
+    color: #444;
 
     .sub-heading {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        width: 50%;
+        width: 100%;
         font-size: 1.6rem;
 
         > :not(:first-child) {
             border-left: 1px solid #333;
-            padding-left: 3rem;
+            padding-left: 1em;
+        }
+
+        > :not(:last-child) {
+            padding-right: 1em;
         }
 
         .star {
@@ -68,6 +66,14 @@
 
 .heading-title {
     color: var(--text-color);
+    margin-left: -100px;
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+.show {
+    margin-left: 0;
+    opacity: 1;
 }
 
 .body {
@@ -99,28 +105,42 @@
     letter-spacing: 0.5px;
 }
 
+//white text
 .whiteText {
     color: var(--white);
+}
+
+//no content
+.noContent {
+    visibility: hidden;
 }
 //responsive
 // ipad
 @media (max-width: 920px) {
-    .content-wrapper {
+    .item-content {
+        font-size: 1.6rem;
         width: 80%;
+    }
+
+    .heading {
+        font-size: 1.8rem;
     }
 }
 
 //smartphone
-@media (max-width: 520px) {
-    .content-wrapper {
-        width: 50%;
+@media (max-width: 540px) {
+    .item-content {
+        font-size: 1.4rem;
+        width: 60%;
         padding: 0;
         margin: 0 50px;
     }
 
     .heading {
+        font-size: 1.6rem;
+
         .sub-heading {
-            width: 80%;
+            font-size: 1.4rem;
         }
     }
 }

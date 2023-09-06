@@ -3,7 +3,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background-color: #f0eeed;
+    background: transparent;
     width: 100%;
     //color: var(--white);
     overflow: hidden;
@@ -61,5 +61,55 @@
         padding: 8px 16px;
         background: transparent;
         cursor: pointer;
+    }
+}
+
+// cinematypecheckbox
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.type-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px;
+    width: 170px;
+    padding: 10px 19px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--white);
+    background: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.active {
+    background: var(--primary);
+}
+
+.schedule-list {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    //padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+
+    .schedule-item {
+        margin-top: 8px;
+        padding: 10px 0;
+        outline: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+        width: 13%;
+        cursor: pointer;
+    }
+
+    .hidden {
+        visibility: hidden;
     }
 }

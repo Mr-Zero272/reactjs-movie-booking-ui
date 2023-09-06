@@ -1,8 +1,7 @@
 .wrapper {
-    margin: 0 auto;
+    margin: 25px auto;
     margin-bottom: 20px;
     width: 95%;
-    text-align: center;
 }
 
 .arrow {
@@ -18,17 +17,15 @@
     text-align: center;
     top: 50%;
     width: 32px;
-    z-index: 3;
-
-    button {
-        cursor: pointer;
-    }
+    z-index: 1;
 }
 
-.next {
-    right: 0;
-}
-
-.prev {
+.left {
     left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.right {
+    right: 0;
+    transform: translate(50%, -50%);
 }

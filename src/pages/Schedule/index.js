@@ -77,7 +77,7 @@ function Schedule() {
 
     return (
         <div className={cx('wrapper')}>
-            <TitleHeadingPage titles={[{ title: 'schedule', size: 100 }]} />
+            <TitleHeadingPage title={'schedule'} />
             <div className={cx('filter')}>
                 <SelectOption options={MENU_OPTION} defaultValue={MENU_OPTION[0]} onSelectOption={handleSelectOption} />
                 {/* {them mot cai div o day lam cai list loc goi fucntion dang hoan} */}

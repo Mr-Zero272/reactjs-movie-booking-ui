@@ -40,7 +40,7 @@ function FullViewBannerTrailer({ poster, movieName }) {
                     <source src={videos.testVideo} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
-                <div className={cx('control-btn', { hide: playVideo, fade: isHovered })} onClick={handlePlayVideo}>
+                <div className={cx('control-btn', { hide: playVideo })} onClick={handlePlayVideo}>
                     <FontAwesomeIcon className={cx('play-btn')} icon={faCirclePlay} />
                     <span>Watch trailer</span>
                 </div>

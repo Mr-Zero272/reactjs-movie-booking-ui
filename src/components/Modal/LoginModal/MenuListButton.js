@@ -1,11 +1,13 @@
 import classNames from 'classnames/bind';
-import styles from './MenuListButton.module.scss';
+import styles from './LoginModal.module.scss';
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
-function MenuListButton({ items, onSelectedOption }) {
+
+// Loi vo cai component Loginmodal
+function MenuListButton({ items, onSelectedOption, className }) {
     return (
-        <div className={cx('menu-list')}>
+        <div className={cx('menu-list', className)}>
             {items.map((item, index) => (
                 <Button
                     key={index}

@@ -1,5 +1,10 @@
 .wrapper {
     margin: 20px 0 20px 0;
+    width: 100%;
+
+    + .wrapper {
+        margin-left: 20px;
+    }
 }
 
 .heading {
@@ -10,10 +15,6 @@
     color: var(--text-color);
     text-transform: capitalize;
     margin-bottom: 16px;
-
-    + .title {
-        margin-left: 20px;
-    }
 }
 
 .line-gradient {

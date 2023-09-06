@@ -1,10 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
+
 import styles from './MovieScheduleItem.module.scss';
 import TimeItem from '~/components/TimeItem';
-import CinemaTypeCheckbox from '~/components/Form/FormInput/CinemaTypeCheckbox';
-import { useCallback, useEffect, useState } from 'react';
+import CinemaTypeCheckbox from './CinemaTypeCheckbox';
 
 let scheduleMain = [
     { id: 22108, day: 'Monday', date: '21', month: 'Aug' },

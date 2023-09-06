@@ -6,7 +6,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import Modal from '..';
 //import styles from './LoginModal.module.scss';
 import images from '~/assets/images';
-import MenuListButton from '~/components/MenuListButton';
+import MenuListButton from './MenuListButton';
 import Form from '~/components/Form';
 import FormInputText from '~/components/Form/FormInput/FormInputText';
 import { useDispatch } from 'react-redux';
@@ -76,19 +76,6 @@ function LoginModal() {
         setSelectedOption(null);
     };
 
-    if (!selectedOption) {
-        return (
-            <Modal
-                closeBtn
-                title={'Register with'}
-                footerTitle="Your continued use of this website means that you agree to our terms of use."
-                onToggleModal={() => dispatch(modalLoginActions.closeModal())}
-            >
-                <MenuListButton items={MENU_FORM_ITEMS} onSelectedOption={handleOptionClick} />
-            </Modal>
-        );
-    }
-
     // email input
     const emailValidation = {
         patternRegex: /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/,
@@ -130,6 +117,19 @@ function LoginModal() {
         console.log('email', loginInfo.email);
         console.log('password', loginInfo.password);
     };
+
+    if (!selectedOption) {
+        return (
+            <Modal
+                closeBtn
+                title={'Register with'}
+                footerTitle="Your continued use of this website means that you agree to our terms of use."
+                onToggleModal={() => dispatch(modalLoginActions.closeModal())}
+            >
+                <MenuListButton items={MENU_FORM_ITEMS} onSelectedOption={handleOptionClick} />
+            </Modal>
+        );
+    }
 
     return (
         <Modal

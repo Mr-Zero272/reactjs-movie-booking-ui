@@ -1,107 +1,79 @@
 import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 
 import styles from './Slideshow.module.scss';
-import './Slideshow.css';
 import Item from './Item';
-import CustomDots from './CustomDots';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 // nho xoa
 
 const cx = classNames.bind(styles);
+function CustomNextArrow(props) {
+    const { onClick } = props;
+    return (
+        <div className={cx('arrow', 'left')} onClick={onClick}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+        </div>
+    );
+}
+
+function CustomPrevArrow(props) {
+    const { onClick } = props;
+    return (
+        <div className={cx('arrow', 'right')} onClick={onClick}>
+            <FontAwesomeIcon icon={faChevronRight} />
+        </div>
+    );
+}
 
 function Slideshow({ data }) {
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 1,
-            slidesToSlide: 1, // optional, default to 1.
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 1,
-            slidesToSlide: 1, // optional, default to 1.
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-            slidesToSlide: 1, // optional, default to 1.
-        },
+    var settings = {
+        // customPaging: function (i) {
+        //     return (
+        //         <a>
+        //             <img
+        //                 style={{ width: '50px', height: '50px' }}
+        //                 src={`https://i.pinimg.com/originals/18/c6/73/18c673214596744749d36e4495ced1ac.jpg`}
+        //             />
+        //         </a>
+        //     );
+        // },
+        dots: true,
+        infinite: true,
+        arrows: true,
+        //fade: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: <CustomNextArrow />,
+        prevArrow: <CustomPrevArrow />,
     };
-
-    const CustomRightArrow = ({ onClick, ...rest }) => {
-        // const {
-        //     carouselState: { currentSlide, deviceType },
-        // } = rest;
-        // onMove means if dragging or swiping in progress.
-        return (
-            <div className={cx('arrow', 'next')} onClick={() => onClick()}>
-                <button>
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </button>
-            </div>
-        );
-    };
-
-    const CustomLeftArrow = ({ onClick, ...rest }) => {
-        // const {
-        //     carouselState: { currentSlide, deviceType },
-        // } = rest;
-        // onMove means if dragging or swiping in progress.
-        return (
-            <div className={cx('arrow', 'prev')} onClick={() => onClick()}>
-                <button>
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                </button>
-            </div>
-        );
-    };
-
-    const CustomDot = ({ onClick, ...rest }) => {
-        const { index, active } = rest;
-        // onMove means if dragging or swiping in progress.
-        // active is provided by this lib for checking if the item is active or not.
-        const carouselItems = [
-            <CustomDots active={active ? true : false} imgUrl={data[0].imgUrl} />,
-            <CustomDots active={active ? true : false} imgUrl={data[1].imgUrl} />,
-            <CustomDots active={active ? true : false} imgUrl={data[2].imgUrl} />,
-            <CustomDots active={active ? true : false} imgUrl={data[3].imgUrl} />,
-        ];
-        return <li onClick={() => onClick()}>{React.Children.toArray(carouselItems)[index]}</li>;
-    };
-
     return (
         <div className={cx('wrapper')}>
-            <Carousel
-                responsive={responsive}
-                showDots={true}
-                autoPlay={true}
-                infinite={true}
-                autoPlaySpeed={5000}
-                transitionDuration={2000}
-                containerClass="carousel-container"
-                dotListClass="custom-dot-list-style"
-                renderButtonGroupOutside={true}
-                customDot={<CustomDot />}
-                customRightArrow={<CustomRightArrow />}
-                customLeftArrow={<CustomLeftArrow />}
-            >
-                {data.map((item, index) => (
-                    <Item
-                        key={index}
-                        heading={item.heading}
-                        desc={item.desc}
-                        button={item.button}
-                        imgUrl={item.imgUrl}
-                        href={item.href}
-                        whiteText={item.whiteText}
-                    />
-                ))}
-            </Carousel>
+            <Slider {...settings}>
+                <Item
+                    heading={data[1].heading}
+                    desc={data[1].desc}
+                    button={data[1].button}
+                    imgUrl={data[1].imgUrl}
+                    href={data[1].href}
+                    whiteText={data[1].whiteText}
+                    noContent={data[1].noContent}
+                />
+                <Item
+                    heading={data[0].heading}
+                    desc={data[0].desc}
+                    button={data[0].button}
+                    imgUrl={data[0].imgUrl}
+                    href={data[0].href}
+                    whiteText={data[0].whiteText}
+                    noContent={data[0].noContent}
+                />
+            </Slider>
         </div>
     );
 }
