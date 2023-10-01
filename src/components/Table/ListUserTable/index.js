@@ -7,7 +7,7 @@ function ListUserTable({ data }) {
     return (
         <div className={cx('wrapper')}>
             {data.map((item, index) => (
-                <div className={cx('row')}>
+                <div className={cx('row')} key={index}>
                     <img src={item.avatar} alt="avatar" />
                     <p>{item.name}</p>
                 </div>

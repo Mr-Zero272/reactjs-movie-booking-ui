@@ -1,0 +1,32 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    background: transparent;
+}
+
+.item {
+    //background: #ddd;
+    font-size: 1.8rem;
+    //font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    + .item {
+        margin-left: 20px;
+    }
+}
+
+.line-bottom {
+    margin-top: 20px;
+    height: 1px;
+    width: 0;
+    background: linear-gradient(to right, var(--primary), var(--white));
+    transition: all 0.5s ease;
+}
+
+.active {
+    width: 100%;
+}

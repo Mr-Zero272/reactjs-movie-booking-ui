@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 
 import styles from './DefaultLayout.module.scss';
 import Header from '~/components/Layout/components/Header';
-import Sidebar from './Sidebar';
+import Sidebar from '~/components/Layout/components/Sidebar';
 import Footer from '~/components/Layout/components/Footer';
 import SideBarResponsive from '../components/SlideBarResponsive';
 
@@ -20,7 +20,7 @@ function DefaultLayout({ children }) {
             <Header onToggleMenu={handleOpenMenu} />
             <SideBarResponsive state={toggleMenu} onToggleMenu={handleOpenMenu} />
             <div className={cx('container')}>
-                <Sidebar className={cx('sidebar')} tabs={['home', 'schedule', 'booking', 'blog']} />
+                <Sidebar className={cx('sidebar')} tabs={['home', 'schedule', 'ticket', 'blog']} />
                 <div className={cx('content')}>{children}</div>
             </div>
             <Footer />

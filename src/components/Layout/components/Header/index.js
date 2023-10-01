@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faEarthAsia,
-    faEllipsisVertical,
-    faMagnifyingGlass,
     faRightToBracket,
     faBars,
     faShareFromSquare,
@@ -13,16 +13,13 @@ import {
     faUsersViewfinder,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Button from '~/components/Button';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import MovieItemSearch from '~/components/MovieItem/MovieItemSearch';
 import Menu from '~/components/Popper/Menu';
-import { useDispatch } from 'react-redux';
-import { modalLoginActions } from '~/store/modal-login-slice';
+import Search from '../Search';
+import { userActions } from '~/store/user-slice';
 
 const cx = classNames.bind(styles);
 
@@ -65,26 +62,48 @@ const userMenu = [
     {
         icon: <FontAwesomeIcon icon={faShareFromSquare} />,
         title: 'Logout',
-        to: '/logout',
+        action: 'logout',
         separate: true,
     },
 ];
 
+const isExpired = (d1) => {
+    const today = new Date();
+    return d1.getTime() < today.getTime();
+};
 function Header({ onToggleMenu }) {
     const dispatch = useDispatch();
-
-    const [searchResult, setSearchResult] = useState([]);
-
-    const currentUser = true;
-
     useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
+        const token = localStorage.getItem('token');
+        if (token === '') {
+            dispatch(userActions.setUserStatus('logout'));
+        } else {
+            const tokenDecode = jwtDecode(token);
+            if (!isExpired(new Date(tokenDecode.exp * 1000))) {
+                dispatch(userActions.setUserNecessaryInfo({ status: 'online', username: tokenDecode.sub }));
+            } else {
+                dispatch(userActions.setUserStatus('logout'));
+                localStorage.setItem('token', '');
+            }
+        }
+
+        // return () => {
+        //     dispatch(userActions.clearUserInfo());
+        // };
     }, []);
+    const currentUser = useSelector((state) => state.user.status) === 'online';
+    //console.log(currentUser);
+    //console.log(useSelector((state) => state.user.status));
+    //const currentUser = true;
 
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
+        switch (menuItem.action) {
+            case 'logout':
+                dispatch(userActions.logout());
+                break;
+            default:
+                throw new Error('Something went wrong!!!');
+        }
     };
 
     return (
@@ -100,30 +119,7 @@ function Header({ onToggleMenu }) {
                     </h4>
                 </Link>
                 <div className={cx('body')}>
-                    <Tippy
-                        interactive
-                        visible={searchResult.length > 0}
-                        render={(attrs) => (
-                            <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                                <PopperWrapper>
-                                    <div className={cx('search-heading')}>
-                                        <h4 className={cx('search-title')}>Film</h4>
-                                        <Link to="/" className={cx('search-seemore')}>
-                                            See more
-                                        </Link>
-                                    </div>
-                                    <MovieItemSearch />
-                                    <MovieItemSearch />
-                                    <MovieItemSearch />
-                                </PopperWrapper>
-                            </div>
-                        )}
-                    >
-                        <div className={cx('search-wrapper')}>
-                            <input className={cx('search-input')} placeholder="Search..." />
-                            <FontAwesomeIcon className={cx('search-icon')} icon={faMagnifyingGlass} />
-                        </div>
-                    </Tippy>
+                    <Search />
                 </div>
                 <div className={cx('actions')}>
                     {currentUser ? (
@@ -137,8 +133,13 @@ function Header({ onToggleMenu }) {
                     ) : (
                         <>
                             <div className={cx('action')}>
+                                <Button to={'/register'} text>
+                                    Register
+                                </Button>
+                            </div>
+                            <div className={cx('action')}>
                                 <Button
-                                    onClick={() => dispatch(modalLoginActions.openModal())}
+                                    to={'/login'}
                                     className={cx('login-btn')}
                                     primary
                                     rightIcon={<FontAwesomeIcon icon={faRightToBracket} />}
@@ -146,24 +147,17 @@ function Header({ onToggleMenu }) {
                                     Login
                                 </Button>
                             </div>
-                            <div className={cx('action')}>
-                                <Button text>Register</Button>
-                            </div>
                         </>
                     )}
-                    <div className={cx('action')}>
-                        <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
-                            <button className={cx('more-btn')}>
-                                {currentUser ? (
-                                    <>
-                                        <img className={cx('user-avatar')} src={images.fakeAvatar} alt="avatar" />
-                                    </>
-                                ) : (
-                                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                                )}
-                            </button>
-                        </Menu>
-                    </div>
+                    {currentUser && (
+                        <div className={cx('action')}>
+                            <Menu items={userMenu} onChange={handleMenuChange}>
+                                <button className={cx('more-btn')}>
+                                    <img className={cx('user-avatar')} src={images.fakeAvatar} alt="avatar" />
+                                </button>
+                            </Menu>
+                        </div>
+                    )}
                 </div>
             </nav>
         </header>

@@ -2,12 +2,17 @@
     margin: 40px 0px;
     padding: 20px;
     display: flex;
-    flex-direction: column;
-    background: transparent;
-    width: 100%;
     //color: var(--white);
     overflow: hidden;
     box-sizing: border-box;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: transparent;
+    width: 100%;
 }
 
 .main-content {
@@ -31,7 +36,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .sub-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
         span:not(:first-child) {
             margin-left: 18px;
             padding-left: 18px;
@@ -44,23 +54,74 @@
     }
 }
 
+@keyframes sheen {
+    100% {
+        transform: rotateZ(60deg) translate(0, -4em);
+    }
+}
+
+@keyframes jump {
+    0% {
+        transform: none;
+    }
+    50% {
+        transform: translateY(-1em);
+    }
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    background: white;
+    padding: 20px 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    .booking-btn {
+        padding: 12px;
+        margin-top: 13px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        border: 1px solid var(--black);
+        border-radius: 8px;
+        color: var(--text-color);
+        transition: all 0.2s linear;
+
+        &:hover {
+            background: var(--white);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        cursor: pointer;
+
+        svg {
+            font-size: 2rem;
+        }
+
+        span {
+            padding-top: 10px;
+        }
+    }
+
+    .attention {
+        width: 100%;
+        height: 10%;
+        background: #fff url(../../../assets/images/nhanroi.gif) no-repeat center center;
+        background-size: contain;
+    }
+}
+
 .schedule {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-}
 
-.control-btn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    button {
-        font-size: 2.2rem;
-        padding: 8px 16px;
-        background: transparent;
-        cursor: pointer;
+    .schedule-item {
+        width: 100%;
     }
 }
 
@@ -95,12 +156,13 @@
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     //padding: 10px 0;
     border-bottom: 1px solid #ddd;
 
     .schedule-item {
-        margin-top: 8px;
+        color: #333;
+        margin: 8px 8px 0 0;
         padding: 10px 0;
         outline: 1px solid #ddd;
         border-radius: 10px;
@@ -111,5 +173,19 @@
 
     .hidden {
         visibility: hidden;
+    }
+}
+
+@media (max-width: 520px) {
+    .movie-info {
+        .sub-info:not(:first-child) {
+            span:not(:first-child) {
+                display: none;
+            }
+        }
+
+        .movie-id {
+            display: none;
+        }
     }
 }

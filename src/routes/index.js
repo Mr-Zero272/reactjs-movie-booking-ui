@@ -3,20 +3,25 @@ import { HeaderOnly } from '~/components/Layout';
 
 //Pages
 import Home from '~/pages/Home';
-import About from '~/pages/About';
 import Booking from '~/pages/Booking';
 import Blog from '~/pages/Blog';
 import Schedule from '~/pages/Schedule';
 import Detail from '~/pages/Detail';
-
+import Login from '~/pages/Login';
+import Ticket from '~/pages/Ticket';
+import Search from '~/pages/Search';
+import Register from '~/pages/Register';
 //Public routes
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/about', component: About },
-    { path: '/booking', component: Booking },
+    { path: '/search', component: Search },
+    { path: '/booking/:id', component: Booking, layout: HeaderOnly },
     { path: '/blog', component: Blog },
     { path: '/schedule', component: Schedule },
-    { path: '/detail', component: Detail, layout: HeaderOnly },
+    { path: '/detail/:movieId', component: Detail, layout: HeaderOnly },
+    { path: '/login', component: Login, layout: null },
+    { path: '/ticket', component: Ticket },
+    { path: '/register', component: Register, layout: null },
 ];
 
 const privateRoutes = [];

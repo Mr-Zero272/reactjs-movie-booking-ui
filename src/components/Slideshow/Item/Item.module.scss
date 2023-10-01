@@ -71,9 +71,16 @@
     transition: all 1s ease;
 }
 
+//show text
 .show {
     margin-left: 0;
     opacity: 1;
+}
+
+//hide text
+.hide {
+    margin-left: -100px;
+    opacity: 0;
 }
 
 .body {

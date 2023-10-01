@@ -24,6 +24,10 @@
     height: 44px;
     overflow: hidden;
 
+    // &:focus-within {
+    //     border: 1px solid var(--primary);
+    // }
+
     input {
         background: transparent;
         font-size: 1.6rem;
@@ -37,7 +41,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--red);
+        background-color: var(--primary);
         color: var(--white);
         font-weight: 600;
         font-size: 1.3rem;
@@ -45,7 +49,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: var(--red-hover);
+            background-color: var(--primary-hover);
         }
     }
 }
@@ -59,7 +63,7 @@
 }
 
 .focus {
-    border: 1px solid var(--red);
+    border: 1px solid var(--primary);
 }
 
 .invalid-input {

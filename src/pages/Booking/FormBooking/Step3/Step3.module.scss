@@ -1,0 +1,34 @@
+.wrapper {
+    padding: 20px 5px;
+    display: flex;
+}
+
+.list-tickets {
+    width: 75%;
+}
+
+.left-side {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    justify-content: space-between;
+
+    .send-email {
+        p {
+            text-transform: uppercase;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+    }
+
+    .last-check {
+        p {
+            text-align: justify;
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    }
+}

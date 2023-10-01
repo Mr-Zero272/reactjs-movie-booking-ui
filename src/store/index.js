@@ -1,9 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import modalLoginSlice from './modal-login-slice';
+import formBookingTicketSlice from './form-boking-ticket-slice';
+import listTodayScheduleSlice from './list-today-schedule-slice';
+import paginationSlice from './pagination-slice';
+import userSlice from './user-slice';
 
 const store = configureStore({
     reducer: {
-        loginModal: modalLoginSlice.reducer,
+        formBookingTicket: formBookingTicketSlice.reducer,
+        listTodaySchedule: listTodayScheduleSlice.reducer,
+        pagination: paginationSlice.reducer,
+        user: userSlice.reducer,
     },
 });
 

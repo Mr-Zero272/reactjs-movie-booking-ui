@@ -1,15 +1,13 @@
 .wrapper {
     margin-right: 15px;
-}
-.selector {
-    width: 350px;
+    width: 230px;
     position: relative;
 }
 
 .select-field {
     width: 100%;
-    padding: 15px 20px;
-    margin-bottom: 30px;
+    padding: 14px 18px;
+    margin-bottom: 15px;
     color: var(--white);
     background: var(--primary);
     border-radius: 6px;
@@ -19,6 +17,9 @@
     user-select: none;
     cursor: pointer;
 
+    p {
+        text-transform: capitalize;
+    }
     .arrow-icon {
         transition: transform 0.5s;
     }
@@ -28,8 +29,12 @@
     width: 100%;
     background: #ddd;
     border-radius: 6px;
-    overflow: hidden;
+    overflow: auto;
     position: absolute;
+    max-height: 400px;
+    visibility: hidden;
+    //visibility: visible;
+    // transition: all 0.5s linear;
 }
 
 .option {
@@ -39,16 +44,34 @@
     cursor: pointer;
     box-sizing: border-box;
 
+    p {
+        text-transform: capitalize;
+    }
+
     &:hover {
         color: var(--white);
         background: var(--primary);
     }
 }
 
-.hide {
-    visibility: hidden;
+.active {
+    visibility: visible;
 }
 
 .rotate {
     transform: rotate(180deg);
+}
+
+@media (max-width: 520px) {
+    .wrapper {
+        width: 100%;
+    }
+
+    .list {
+        margin-bottom: 15px;
+    }
+
+    .active {
+        position: relative;
+    }
 }

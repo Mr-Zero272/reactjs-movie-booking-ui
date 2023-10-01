@@ -5,20 +5,15 @@ import { useState } from 'react';
 const cx = classNames.bind(styles);
 const dfFunction = () => {};
 
-function BoxCheckbox({ item, onSelect = dfFunction }) {
-    const [toggleCheckbox, setToggleCheckbox] = useState(false);
-    const handleSelect = () => {
-        setToggleCheckbox(!toggleCheckbox);
-    };
+function BoxCheckbox({ item, active, onSelect = dfFunction, className }) {
     return (
         <div
-            className={cx('wrapper', { active: toggleCheckbox })}
+            className={cx('wrapper', { active: active, [className]: className })}
             onClick={() => {
-                handleSelect();
-                onSelect(item.id);
+                onSelect(item.name);
             }}
         >
-            <span>{item.typeName}</span>
+            <span>{item.name}</span>
         </div>
     );
 }

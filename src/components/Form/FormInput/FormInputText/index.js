@@ -1,50 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './FormInputText.module.scss';
 
 const cx = classNames.bind(styles);
-
-function FormInputText({
+const defFunction = () => {};
+const FormInputText = ({
     label,
     name,
     placeholder,
     memo,
+    value,
     square,
     sideBtn,
     whiteBg,
     focus,
-    onValueChange,
+    onValueChange = defFunction,
     onValidityChange,
     onFocus,
     onBlur,
     type = 'text',
-    validation = { patternRegex: '', errorMessage: '' },
-}) {
-    const [inputValue, setInputValue] = useState('');
-    const [isValid, setIsValid] = useState(true);
+    validation = { patternRegex: '', errorMessage: '', maxLength: 1 },
+}) => {
+    const [inputValue, setInputValue] = useState(() => ({
+        value: '',
+        isValid: true,
+    }));
+    const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        if (inputValue !== '') {
-            const regex = new RegExp(validation.patternRegex);
-            setIsValid(regex.test(inputValue));
+    const lengthErrorMessage = (l) => {
+        return 'This field has a maximum of ' + l + ' characters.';
+    };
+
+    const isInputValid = (value) => {
+        if (value !== '') {
+            if (value.length >= validation.maxLength) {
+                setErrorMessage(lengthErrorMessage(validation.maxLength));
+                return false;
+            } else {
+                const regex = new RegExp(validation.patternRegex);
+                setErrorMessage(validation.errorMessage);
+                return regex.test(value);
+            }
         } else {
-            setIsValid(true);
+            return true;
         }
-    }, [inputValue, validation]);
+    };
 
-    useEffect(() => {
-        // You can define a prop function like `onValidityChange`
-        // and call it whenever the validity changes
-        if (typeof onValidityChange === 'function') {
-            onValidityChange(isValid);
-        }
-    }, [isValid]);
-
-    useEffect(() => {
-        if (typeof onValueChange === 'function') {
-            onValueChange(inputValue); // Notify parent about value change
-        }
-    }, [inputValue]);
+    const handleOnchange = (e) => {
+        const isValid = isInputValid(e.target.value);
+        setInputValue((prev) => ({
+            ...prev,
+            value: e.target.value,
+            isValid: isValid,
+        }));
+        onValueChange(e, isValid);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -53,23 +63,30 @@ function FormInputText({
                     <label className={cx('label')}>{label}</label>
                 </div>
             )}
-            <div className={cx('input-wrap', isValid === false ? 'invalid-input' : '', { square, whiteBg, focus })}>
+            <div
+                className={cx('input-wrap', inputValue.isValid === false ? 'invalid-input' : '', {
+                    square,
+                    whiteBg,
+                    focus,
+                })}
+            >
                 <input
+                    //ref={ref}
                     type={type}
                     placeholder={placeholder}
                     name={name}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={(e) => handleOnchange(e)}
                     onFocus={onFocus}
                     onBlur={onBlur}
-                    value={inputValue}
+                    value={value ? value : inputValue.value}
                 />
                 {sideBtn && <button className={cx('side-btn')}>{sideBtn}</button>}
             </div>
-            <div className={cx('message', isValid === false ? 'message-error' : '')}>
-                {isValid === false ? validation.errorMessage : memo}
+            <div className={cx('message', inputValue.isValid === false ? 'message-error' : '')}>
+                {inputValue.isValid === false ? errorMessage : memo}
             </div>
         </div>
     );
-}
+};
 
 export default FormInputText;

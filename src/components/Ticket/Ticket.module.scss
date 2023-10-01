@@ -1,0 +1,96 @@
+$colorTextTicket: #777;
+
+.wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background: transparent;
+}
+
+.left-side {
+    padding: 20px;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .customer-info {
+        padding: 8px 12px;
+        .row {
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+            color: $colorTextTicket;
+        }
+    }
+
+    .barcode {
+        width: 100%;
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .company-name {
+        padding-top: 8px;
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: 600px;
+        color: $colorTextTicket;
+    }
+}
+
+.right-side {
+    flex: 1;
+    position: relative;
+
+    .background-behind {
+        position: absolute;
+        border-radius: 0 10px 10px 0;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .content {
+        background: transparent;
+        height: 100%;
+        //padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .content-top {
+            padding: 20px;
+        }
+
+        .content-bottom {
+            width: 70%;
+            h1 {
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                padding: 10px 20px;
+            }
+            .seat-info {
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: rgba(39, 40, 41, 0.2);
+                //opacity: 0.7;
+
+                .seat-info-item {
+                    padding: 20px;
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+    }
+}

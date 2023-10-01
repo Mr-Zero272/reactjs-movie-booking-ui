@@ -1,0 +1,22 @@
+.wrapper {
+    width: 100%;
+}
+
+.list-dates {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+        font-size: 2.2rem;
+        padding: 8px 6px;
+        background: transparent;
+        cursor: pointer;
+    }
+}

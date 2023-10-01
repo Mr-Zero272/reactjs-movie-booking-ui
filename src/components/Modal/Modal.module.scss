@@ -4,7 +4,7 @@
     justify-content: center;
     inset: 0;
     position: fixed;
-    z-index: 999;
+    z-index: 90;
     animation: dropTop 0.3 linear;
 }
 
@@ -94,7 +94,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding: 24px 32px 51px;
+        padding: 24px 32px 30px;
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 60vh;

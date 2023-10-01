@@ -10,9 +10,11 @@ function Modal({ children, title, icon = 'f', acceptBtn, onToggleModal, footerTi
             <div className={cx('modal-container')}>
                 <div className={cx('overlay')} onClick={onToggleModal}></div>
                 <div className={cx('content')}>
-                    <button className={cx('close-btn')} onClick={onToggleModal}>
-                        <span>x</span>
-                    </button>
+                    {closeBtn && (
+                        <button className={cx('close-btn')} onClick={onToggleModal}>
+                            <span>x</span>
+                        </button>
+                    )}
                     <div className={cx('modal-header')}>
                         <h3 className={cx('modal-title')}>
                             {icon && <img src={images.logo} alt="modal-icon" width={40} height={40} />}

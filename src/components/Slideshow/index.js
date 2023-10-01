@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -31,6 +31,14 @@ function CustomPrevArrow(props) {
 }
 
 function Slideshow({ data }) {
+    const [showText, setShowText] = useState(true);
+
+    const handleBeforeChange = () => {
+        setShowText(false);
+    };
+    const handleAfterChange = () => {
+        setShowText(true);
+    };
     var settings = {
         // customPaging: function (i) {
         //     return (
@@ -54,8 +62,10 @@ function Slideshow({ data }) {
     };
     return (
         <div className={cx('wrapper')}>
-            <Slider {...settings}>
+            <Slider {...settings} beforeChange={handleBeforeChange} afterChange={handleAfterChange}>
                 <Item
+                    showTextAnimation={showText}
+                    //hideTextAnimation={!showText}
                     heading={data[1].heading}
                     desc={data[1].desc}
                     button={data[1].button}
@@ -65,6 +75,8 @@ function Slideshow({ data }) {
                     noContent={data[1].noContent}
                 />
                 <Item
+                    showTextAnimation={showText}
+                    //hideTextAnimation={!showText}
                     heading={data[0].heading}
                     desc={data[0].desc}
                     button={data[0].button}

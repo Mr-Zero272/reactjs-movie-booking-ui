@@ -1,0 +1,64 @@
+.input-data {
+    width: 100%;
+    height: 40px;
+    margin: 20px 0;
+    position: relative;
+}
+.textarea {
+    height: 70px;
+}
+.input-data input,
+.textarea textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+.input-data input:focus ~ label,
+.textarea textarea:focus ~ label,
+.input-data input:valid ~ label,
+.textarea textarea:valid ~ label {
+    transform: translateY(-20px);
+    font-size: 14px;
+    color: var(--primary);
+}
+.textarea textarea {
+    resize: none;
+    padding-top: 10px;
+}
+.input-data label {
+    position: absolute;
+    pointer-events: none;
+    bottom: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+.textarea label {
+    width: 100%;
+    bottom: 40px;
+    background: #fff;
+}
+.input-data .underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+}
+.input-data .underline:before {
+    position: absolute;
+    content: '';
+    height: 2px;
+    width: 100%;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+.input-data input:focus ~ .underline:before,
+.input-data input:valid ~ .underline:before,
+.textarea textarea:focus ~ .underline:before,
+.textarea textarea:valid ~ .underline:before {
+    transform: scale(1);
+}

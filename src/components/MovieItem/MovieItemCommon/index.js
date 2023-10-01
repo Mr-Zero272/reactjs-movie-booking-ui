@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video, horizontal }) {
+function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video, horizontal, className }) {
     const [hovered, setHovered] = useState(false);
     let roundRating = Math.round(rating);
     roundRating = roundRating > 5 ? 5 : roundRating;
@@ -31,7 +31,7 @@ function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', { [className]: className })}>
             <div className={boxClasses}>
                 <div className={cx('box-thumbnail')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {!hovered && <img src={imgURL} alt={movieName} />}

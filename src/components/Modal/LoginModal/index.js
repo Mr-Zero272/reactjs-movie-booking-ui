@@ -1,23 +1,23 @@
-import { useState } from 'react';
-//import classNames from 'classnames/bind';
+import { useCallback, useState, useEffect } from 'react';
+import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 import Modal from '..';
-//import styles from './LoginModal.module.scss';
+import styles from './LoginModal.module.scss';
 import images from '~/assets/images';
 import MenuListButton from './MenuListButton';
 import Form from '~/components/Form';
 import FormInputText from '~/components/Form/FormInput/FormInputText';
-import { useDispatch } from 'react-redux';
-import { modalLoginActions } from '~/store/modal-login-slice';
+import * as authService from '~/apiServices/authService';
 
-//const cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 const MENU_FORM_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
-        title: 'Use Email',
-        code: 'email',
+        title: 'Use Username',
+        code: 'username',
     },
     {
         icon: (
@@ -57,16 +57,31 @@ const MENU_FORM_ITEMS = [
     },
 ];
 function LoginModal() {
-    let defaultInfo = {
-        email: '',
-        password: '',
-    };
-    const dispatch = useDispatch();
     const [selectedOption, setSelectedOption] = useState(null);
-    const [loginInfo, setLoginInfo] = useState(defaultInfo);
-    const [passwordInputValidity, setPasswordInputValidity] = useState(false);
-    const [emailInputValidity, setEmailInputValidity] = useState(false);
-
+    const [userLoginInfo, setUserLoginInfo] = useState(() => ({
+        username: {
+            value: '',
+            isValid: false,
+        },
+        password: {
+            value: '',
+            isValid: false,
+        },
+    }));
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const validation = {
+        username: {
+            maxLength: 20,
+        },
+        password: {
+            patternRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            errorMessage:
+                'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:',
+            maxLength: 30,
+        },
+    };
     //handle menu login
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -76,55 +91,55 @@ function LoginModal() {
         setSelectedOption(null);
     };
 
-    // email input
-    const emailValidation = {
-        patternRegex: /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/,
-        errorMessage: 'Your email is not valid!!!',
-    };
-    const handleEmailValidityChange = (isValid) => {
-        setEmailInputValidity(isValid);
-    };
-
-    const handleChangeEmail = (newValue) => {
-        setLoginInfo((prev) => ({ ...prev, email: newValue }));
-    };
-
-    // password input
-    const passwordValidation = {
-        patternRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        errorMessage:
-            'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:',
-    };
-    const handlePasswordValidityChange = (isValid) => {
-        setPasswordInputValidity(isValid);
-    };
-
-    const handleChangePassword = (newValue) => {
-        setLoginInfo((prev) => ({ ...prev, password: newValue }));
-    };
-
-    //check from validation
-    const validateForm = () => {
-        if (loginInfo.email === '' || loginInfo.password === '') {
-            return false;
-        } else {
-            return passwordInputValidity && emailInputValidity;
+    const isValidateForm = () => {
+        for (let key in userLoginInfo) {
+            if (userLoginInfo.hasOwnProperty(key)) {
+                if (userLoginInfo[key].isValid === false) {
+                    return false;
+                }
+            }
         }
+        return true;
     };
+
+    const onValueChange = useCallback((e, isValid) => {
+        setUserLoginInfo((prev) => ({
+            ...prev,
+            [e.target.name]: {
+                ...prev[e.target.name],
+                value: e.target.value,
+                isValid: isValid,
+            },
+        }));
+    }, []);
+
+    useEffect(() => {
+        setIsFormValid(isValidateForm);
+    }, [userLoginInfo]);
 
     // submit event
-    const handleSubmit = () => {
-        console.log('email', loginInfo.email);
-        console.log('password', loginInfo.password);
-    };
+    const handleSubmit = useCallback(() => {
+        const fetchApi = async () => {
+            setLoading(true);
+            const result = await authService.login(userLoginInfo.username.value, userLoginInfo.password.value);
+            //console.log(result);
+            setLoading(false);
+            if (result.message !== 'success') {
+                setErrorMessage('Something went wrong!!!');
+            } else {
+                setErrorMessage('');
+                localStorage.setItem('token', result.token);
+                window.location = '/';
+            }
+        };
+        fetchApi();
+    }, [userLoginInfo]);
 
     if (!selectedOption) {
         return (
             <Modal
-                closeBtn
-                title={'Register with'}
+                title={'Login with'}
                 footerTitle="Your continued use of this website means that you agree to our terms of use."
-                onToggleModal={() => dispatch(modalLoginActions.closeModal())}
             >
                 <MenuListButton items={MENU_FORM_ITEMS} onSelectedOption={handleOptionClick} />
             </Modal>
@@ -135,32 +150,36 @@ function LoginModal() {
         <Modal
             title={'Login with'}
             footerTitle="Your continued use of this website means that you agree to our terms of use."
-            onToggleModal={() => dispatch(modalLoginActions.closeModal())}
         >
             <Form
+                formErrorMessage={errorMessage}
                 noFormHeader={false}
                 backBtn
                 onBack={handleReturnClick}
                 nameBtnSubmit="Login"
-                isValidateForm={validateForm()}
+                isValidateForm={isFormValid}
                 onSubmit={handleSubmit}
+                onLoading={loading}
             >
                 <FormInputText
-                    label="Your email ?"
-                    placeholder="Enter your email..."
-                    validation={emailValidation}
-                    onValueChange={handleChangeEmail}
-                    onValidityChange={handleEmailValidityChange}
+                    label="Your username ?"
+                    placeholder="Enter your username..."
+                    validation={validation.username}
+                    name="username"
+                    onValueChange={onValueChange}
                 />
                 <FormInputText
                     type="password"
                     placeholder="Password..."
+                    name="password"
                     memo={'Your password should have at least 8 letters.'}
-                    validation={passwordValidation}
-                    onValueChange={handleChangePassword}
-                    onValidityChange={handlePasswordValidityChange}
+                    validation={validation.password}
+                    onValueChange={onValueChange}
                 />
             </Form>
+            <div className={cx('sub-text-modal')}>
+                If you don't have account. <Link to="/register">Register here!!!</Link>
+            </div>
         </Modal>
     );
 }

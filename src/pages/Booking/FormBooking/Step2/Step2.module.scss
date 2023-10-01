@@ -1,0 +1,131 @@
+.wrapper {
+    display: flex;
+    padding: 20px 0;
+    position: relative;
+    height: 100%;
+}
+
+.list-seats {
+    padding-top: 20px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    .list-seats-item {
+        max-height: 90%;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .total-price {
+        padding: 10px;
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+}
+
+.user-info {
+    //margin-left: 20px;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.user-info-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    .payment {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .info {
+        flex: 1;
+    }
+}
+
+.showtime-info {
+    width: 20%;
+    // background: #777;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+
+    .showtime-info-item {
+        padding: 20px;
+
+        > :first-child {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+
+        > :last-child {
+            font-weight: 600;
+            font-size: 4rem;
+        }
+        .custom-time-item {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            font-size: 2rem;
+        }
+    }
+}
+
+.control-btn-nextStep {
+    padding: 14px 20px;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    color: var(--white);
+    background: var(--primary);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+// SeatChosen
+.seat-chosen-wrapper {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 16px 20px;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seat-chosen-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    strong {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+}
+
+.price {
+    color: #777;
+}
+
+.delete-seat-btn {
+    padding: 4px;
+    font-size: 1.8rem;
+    background: transparent;
+    cursor: pointer;
+}

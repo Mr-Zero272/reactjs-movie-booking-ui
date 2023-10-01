@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGaugeHigh, faClock, faPenToSquare, faListCheck } from '@fortawesome/free-solid-svg-icons';
+import { faGaugeHigh, faClock, faPenToSquare, faListCheck, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Home.module.scss';
 import Slideshow from '~/components/Slideshow';
@@ -8,7 +9,7 @@ import ScrollList from '~/components/ScrollList';
 import FormInputText from '~/components/Form/FormInput/FormInputText';
 import { MovieServiceItem } from '~/components/MovieItem';
 import videos from '~/assets/videos';
-import { useState } from 'react';
+import FloatingButton from '~/components/FloatingButton';
 
 const cx = classNames.bind(styles);
 
@@ -267,6 +268,7 @@ function Home() {
                     />
                 </div>
             </div>
+            <FloatingButton icon={<FontAwesomeIcon icon={faChevronUp} />} />
         </div>
     );
 }

@@ -24,7 +24,14 @@
         cursor: pointer;
     }
 }
-
+.form-error-message {
+    padding: 0 8px;
+    font-style: italic;
+    color: var(--red);
+    span {
+        margin-left: 10px;
+    }
+}
 .form-body {
     background-color: transparent;
     margin-top: 6px;
@@ -38,5 +45,21 @@
 
     .submit-btn {
         width: 100%;
+        .loading {
+            margin-right: 8px;
+        }
+    }
+}
+
+.onLoading {
+    animation: spinner 0.7s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(0);
+    }
+    from {
+        transform: rotate(360deg);
     }
 }

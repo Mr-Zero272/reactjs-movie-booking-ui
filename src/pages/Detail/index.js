@@ -1,4 +1,9 @@
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import styles from './Detail.module.scss';
 import FullViewBannerTrailer from '~/components/FullViewBannerTrailer';
@@ -6,8 +11,8 @@ import MovieScheduleItem from '~/components/MovieItem/MovieScheduleItem';
 import TitleHeadingPage from '~/components/TitleHeadingPage';
 import { LineTable, ListUserTable } from '~/components/Table';
 import Slideshow from '~/components/Slideshow';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import FloatingButton from '~/components/FloatingButton';
+import * as searchService from '~/apiServices/searchService';
 
 const cx = classNames.bind(styles);
 const testDataLineTable = [
@@ -65,13 +70,37 @@ const SlideshowItems = [
     },
 ];
 function Detail() {
+    const [movieInfo, setMovieInfo] = useState({});
+    const [listTypes, setListTypes] = useState([]);
+    const movieId = useParams('movieId');
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result = await searchService.getMovieInfo(movieId.movieId);
+            const types = await axios.get('http://localhost:8081/api/v1/screening/type');
+            //console.log(result);
+            setMovieInfo(result);
+            setListTypes((prev) => {
+                let newArray = [];
+                newArray = types.data.types.map((item) => item.name);
+                console.log(newArray);
+                return newArray;
+            });
+            //console.log(types.data.types);
+        };
+
+        fetchApi();
+    }, []);
     return (
         <div className={cx('wrapper')}>
-            <FullViewBannerTrailer />
+            <FullViewBannerTrailer
+                poster={movieInfo.horizontalImage}
+                movieName={movieInfo.title}
+                trailer={movieInfo.trailer}
+            />
 
             <div className={cx('content')}>
                 <div style={{ width: '100%', boxSizing: 'border-box' }}>
-                    <MovieScheduleItem />
+                    <MovieScheduleItem types={listTypes} data={movieInfo} />
                 </div>
 
                 <section className={cx('sub-detail')}>
@@ -79,18 +108,7 @@ function Detail() {
                         <LineTable data={testDataLineTable} />
                     </TitleHeadingPage>
                     <TitleHeadingPage title={'storyline'} className={cx('story-line')}>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae pariatur quaerat nobis
-                            illo laudantium in perferendis adipisci qui fugit, saepe quo facilis dolore dicta corrupti
-                            nam quas, deleniti tenetur magni! Deserunt id, ullam minima amet sed nesciunt. Illum et nam
-                            sed suscipit natus? Saepe quaerat perspiciatis optio sint! Unde, obcaecati.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae pariatur quaerat nobis
-                            illo laudantium in perferendis adipisci qui fugit, saepe quo facilis dolore dicta corrupti
-                            nam quas, deleniti tenetur magni! Deserunt id, ullam minima amet sed nesciunt. Illum et nam
-                            sed suscipit natus? Saepe quaerat perspiciatis optio sint! Unde, obcaecati.
-                        </p>
+                        <p>{movieInfo.description}</p>
                     </TitleHeadingPage>
                 </section>
                 <section className={cx('sub-detail-2')}>
@@ -102,9 +120,8 @@ function Detail() {
                     </TitleHeadingPage>
                 </section>
             </div>
-            <div className={cx('floating-btn')}>
-                <FontAwesomeIcon icon={faCalendarPlus} />
-            </div>
+
+            <FloatingButton icon={<FontAwesomeIcon icon={faChevronUp} />} />
         </div>
     );
 }

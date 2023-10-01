@@ -7,7 +7,7 @@ function LineTable({ data, hover }) {
     return (
         <div className={cx('wrapper')}>
             {data.map((item, index) => (
-                <div className={cx('row', hover)}>
+                <div className={cx('row', hover)} key={index}>
                     <p>{item.fieldName}</p>
                     <p>{item.value}</p>
                 </div>

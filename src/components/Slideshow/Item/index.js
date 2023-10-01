@@ -7,15 +7,24 @@ import { faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
-function Item({ heading, desc, button, imgUrl, href, whiteText = false, noContent = false }) {
-    const [headingHovered, setHeadingHovered] = useState(false);
+function Item({
+    heading,
+    desc,
+    button,
+    imgUrl,
+    href,
+    whiteText = false,
+    noContent = false,
+    showTextAnimation: show,
+    hideTextAnimation: hide,
+}) {
     return (
         <div className={cx('item')}>
             <div className={cx('item-img-cover')} style={{ backgroundImage: `url(${imgUrl})` }}></div>
             <div className={cx('item-content', { whiteText, noContent })}>
                 <div className={cx('heading')}>
-                    <h2 onMouseEnter={() => setHeadingHovered(!headingHovered)}>
-                        <Link className={cx('heading-title', { whiteText, show: headingHovered })} to={href}>
+                    <h2>
+                        <Link className={cx('heading-title', { whiteText, show, hide })} to={href}>
                             {heading}
                         </Link>
                     </h2>

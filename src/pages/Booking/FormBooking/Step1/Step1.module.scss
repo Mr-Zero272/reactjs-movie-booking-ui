@@ -1,0 +1,187 @@
+.wrapper {
+    margin-top: 10px;
+    padding: 10px 1px;
+}
+
+.form-top {
+}
+
+.form-bottom {
+    position: relative;
+    padding: 20px 30px 0 30px;
+}
+
+.control-btn-nextStep {
+    position: absolute;
+    padding: 14px 20px;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    color: var(--white);
+    background: var(--primary);
+    bottom: 0;
+    right: 160px;
+    cursor: pointer;
+}
+
+.movie-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .movie-name {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .time-desc {
+        .cinema-name {
+            margin-left: 15px;
+        }
+    }
+}
+
+// show-time part
+.showtime-wrapper {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+}
+
+.showtime-left,
+.showtime-right {
+    width: 45%;
+
+    .showtime-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+
+        .full-day {
+            padding-bottom: 6px;
+            font-weight: normal;
+        }
+
+        .date-control-btn {
+            button:nth-child(2) {
+                margin-left: 10px;
+            }
+
+            button {
+                background: transparent;
+                padding: 4px 6px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .showtime-body {
+        display: flex;
+    }
+}
+
+// seats part
+.screen-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    //width: 100%;
+
+    .screen {
+        width: 400px;
+        height: 2px;
+        background: var(--text-color-fainter);
+    }
+
+    p {
+        font-size: 2rem;
+        letter-spacing: 3px;
+        color: var(--text-color-fainter);
+    }
+}
+
+.seats-section {
+    width: 100%;
+    padding: 10px 40px 0 40px;
+}
+
+.seats-section-note {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .seats-section-note-item {
+        margin: 0 20px;
+        display: flex;
+
+        p {
+            margin-left: 10px;
+        }
+    }
+}
+
+//rowOfSeats
+.row-seat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.row-seat-side,
+.row-seat-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row-name {
+    color: var(--text-color-fainter);
+    font-size: 1.8rem;
+    padding: 0 20px;
+}
+
+// seat
+.seat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+
+    + .seat {
+        margin-left: 5px;
+    }
+    .seat-top {
+        width: 20px;
+        height: 20px;
+        background: #ddd;
+        border-radius: 4px;
+    }
+    .seat-bottom {
+        margin-top: 5px;
+        width: 20px;
+        height: 6px;
+        background: #ddd;
+        border-radius: 4px;
+    }
+}
+
+.taken {
+    cursor: not-allowed;
+    .seat-top,
+    .seat-bottom {
+        background: var(--red);
+    }
+}
+
+.selected {
+    .seat-top,
+    .seat-bottom {
+        background: var(--primary);
+    }
+}

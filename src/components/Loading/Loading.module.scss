@@ -1,0 +1,12 @@
+.loading {
+    background: #fff url(../../assets/images/loading.gif) no-repeat center center;
+    background-size: 35%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
+.hide {
+    display: none;
+}

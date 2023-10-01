@@ -7,7 +7,7 @@ import styles from './FullViewBannerTrailer.module.scss';
 import videos from '~/assets/videos';
 
 const cx = classNames.bind(styles);
-function FullViewBannerTrailer({ poster, movieName }) {
+function FullViewBannerTrailer({ poster, trailer, movieName }) {
     const videoRef = useRef(null);
     const [playVideo, setPlayVideo] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -32,12 +32,8 @@ function FullViewBannerTrailer({ poster, movieName }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('video-trailer')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <video
-                    ref={videoRef}
-                    loop
-                    poster="https://i.pinimg.com/originals/d3/8b/c5/d38bc5b12e32ea4d426807769ccbfd44.png"
-                >
-                    <source src={videos.testVideo} type="video/mp4" />
+                <video ref={videoRef} loop poster={'http://localhost:8081/movie/images/' + poster}>
+                    <source src={'http://localhost:8081/movie/videos/' + trailer} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
                 <div className={cx('control-btn', { hide: playVideo })} onClick={handlePlayVideo}>
@@ -50,7 +46,7 @@ function FullViewBannerTrailer({ poster, movieName }) {
                 </div>
             </div>
             <div className={cx('content')}>
-                <h2>MORTAL ENGINES</h2>
+                <h2>{movieName}</h2>
             </div>
         </div>
     );
