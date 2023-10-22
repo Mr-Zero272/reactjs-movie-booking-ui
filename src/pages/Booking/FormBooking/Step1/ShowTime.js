@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 import { formBookingTicketActions } from '~/store/form-boking-ticket-slice';
 import classNames from 'classnames/bind';
 import styles from './Step1.module.scss';
 import TimeItem from '~/components/TimeItem';
+import { addToCartActions } from '~/store/add-to-cart-slice';
 
 const cx = classNames.bind(styles);
 
@@ -53,77 +55,205 @@ const timeDataTest = [
     },
     {
         dateInformation: { day: 'Sun', date: 17, month: 'Sep', year: 2023, fullNameDay: 'Sunday' },
-        showTimes: [
-            { startTime: '20:00', auditorium: '2D' },
-            { startTime: '21:00', auditorium: '3D' },
-        ],
+        showTimes: [],
     },
 ];
 
+function getFullWeek(today) {
+    //const today = new Date('2023/9/30'); // dayofweek = 3
+    const dayOfWeek = today.getDay() === 0 ? 7 : today.getDay(); // The day of the week as an integer, 0 for Sunday, 1 for Monday, etc.
+    //console.log(today.toLocaleDateString());
+    // const temp = new Date('2023/9/10');
+    // console.log(temp.toLocaleDateString('en-us', { weekday: 'short' }));
+    //cn la 0 th7 la 6 :v
+    const daysOfWeek = [];
+    for (let i = 0; i < dayOfWeek - 1; i++) {
+        const numberOfDatesToSubtract = dayOfWeek - 1 - i;
+        const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - numberOfDatesToSubtract);
+        daysOfWeek.push({
+            date: date,
+        });
+    }
+
+    daysOfWeek.push({
+        date: today,
+    });
+
+    for (let j = 0; j < 7 - dayOfWeek; j++) {
+        const numberOfDatesToPlus = j + 1;
+        const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + numberOfDatesToPlus);
+        daysOfWeek.push({
+            date: date,
+        });
+    }
+    return daysOfWeek;
+}
+
 function ShowTime() {
     const dispatch = useDispatch();
-    const activeDate = useSelector((state) => state.formBookingTicket.activeDate);
-    const activeShowTimes = useSelector((state) => state.formBookingTicket.activeShowTimes);
-    const showTimes = useSelector((state) => state.formBookingTicket.showTimes);
+    const addToCartInfo = useSelector((state) => state.addToCart);
+    const activeShowTimes = addToCartInfo.activeShowtime;
+    const activeDate = new Date(addToCartInfo.activeDate);
 
-    // get current date
-    //const today = new Date();
-    // call api lấy date sau h tạm tạo data đã
-    // lấy hôm nay và call api tuần chứa ngày hôm nay,
-    // lấy cả tuần trước và tuần sau luôn
+    const [dataDate, setDataDate] = useState(() => {
+        const today = new Date();
+        return getFullWeek(today);
+    });
 
-    // fix truoc vai truong hop
-    // truong hop vd ngay thu 3 meo co suat chiu phim nao thi set startTime va auditorium = null
-    // dell nay la cua back-end duma nhung cu note o day da
+    const handleNextWeek = () => {
+        const firstDateOfNextWeek = new Date(
+            dataDate[6].date.getFullYear(),
+            dataDate[6].date.getMonth(),
+            dataDate[6].date.getDate() + 1,
+        );
+        setDataDate(getFullWeek(firstDateOfNextWeek));
+    };
 
-    // handle click schedule
+    const handlePreWeek = () => {
+        const lastDateOfPrevWeek = new Date(
+            dataDate[0].date.getFullYear(),
+            dataDate[0].date.getMonth(),
+            dataDate[0].date.getDate() - 1,
+        );
+        setDataDate(getFullWeek(lastDateOfPrevWeek));
+    };
+
+    const checkActiveDate = (d) => {
+        return (
+            d.date.getDate() === activeDate.getDate() &&
+            d.date.getMonth() === activeDate.getMonth() &&
+            d.date.getFullYear() === activeDate.getFullYear()
+        );
+    };
+
+    const formatActiveDate = (d) => {
+        return {
+            day: d.toLocaleDateString('en-US', { weekday: 'short' }),
+            date: d.getDate(),
+            month: d.toLocaleDateString('en-US', { month: 'short' }),
+            year: d.getFullYear(),
+            fullNameDay: d.toLocaleDateString('en-US', { weekday: 'long' }),
+        };
+    };
+
+    const listItems = dataDate.map((item, index) => {
+        const strDate =
+            item.date.getFullYear() +
+            '-' +
+            (item.date.getMonth() + 1) +
+            '-' +
+            (item.date.getDate() < 10 ? '0' + item.date.getDate() : item.date.getDate());
+        return (
+            <TimeItem
+                key={index}
+                smallText
+                active2={checkActiveDate(item)}
+                onClick={() => dispatch(addToCartActions.setActionDate(strDate))}
+                date={item.date.getDate()}
+                day={item.date.toLocaleDateString('en-us', { weekday: 'short' })}
+                //month={item.date.toLocaleDateString('en-us', { month: 'short' })}
+            />
+        );
+    });
+
+    // filter showtime before
+    const checkActiveDate2 = (d) => {
+        return (
+            d.getDate() === activeDate.getDate() &&
+            d.getMonth() === activeDate.getMonth() &&
+            d.getFullYear() === activeDate.getFullYear()
+        );
+    };
+
+    const filterSchedule = (schedule) => {
+        let filterSchedule = [];
+        if (schedule !== undefined) {
+            filterSchedule = schedule.filter((item) => {
+                const itemDate = new Date(item.screening_start);
+                return checkActiveDate2(itemDate);
+            });
+        }
+        return filterSchedule;
+    };
+
+    const showTimes = filterSchedule(addToCartInfo.screenings);
 
     return (
         <div className={cx('showtime-wrapper')}>
             <div className={cx('showtime-left')}>
                 <div className={cx('showtime-heading')}>
                     <p className={cx('full-day')}>
-                        {activeDate.fullNameDay}, {activeDate.date} {activeDate.month}
+                        {activeDate.toLocaleDateString('en-us', { weekday: 'long' })}, {activeDate.getDate()}{' '}
+                        {activeDate.toLocaleDateString('en-us', { month: 'long' })}
                     </p>
                     <div className={cx('date-control-btn')}>
                         <button>
-                            <FontAwesomeIcon icon={faChevronLeft} />
+                            <FontAwesomeIcon icon={faChevronLeft} onClick={handlePreWeek} />
                         </button>
                         <button>
-                            <FontAwesomeIcon icon={faChevronRight} />
+                            <FontAwesomeIcon icon={faChevronRight} onClick={handleNextWeek} />
                         </button>
                     </div>
                 </div>
-                <div className={cx('showtime-body')}>
-                    {timeDataTest.map((item, index) => (
-                        <TimeItem
-                            key={index}
-                            day={item.dateInformation.day}
-                            date={item.dateInformation.date}
-                            smallText
-                            active2={item.dateInformation.date === activeDate.date}
-                            onClick={() => dispatch(formBookingTicketActions.chooseDate(item))}
-                        />
-                    ))}
-                </div>
+                <div className={cx('showtime-body')}>{listItems}</div>
             </div>
             <div className={cx('showtime-right')}>
-                <div className={cx('showtime-heading')}>ShowTime</div>
+                <div className={cx('showtime-heading')}>
+                    <p>ShowTime</p>
+                    <div
+                        className={cx(
+                            'date-control-btn',
+                            'product_sorting_container',
+                            'product_sorting_container_bottom',
+                        )}
+                    >
+                        <ul className={cx('product_sorting')}>
+                            <li>
+                                <span>Auditorium:</span>
+                                <FontAwesomeIcon icon={faAngleDown} className={cx('i')} />
+                                <ul className={cx('sorting_num')}>
+                                    <li
+                                        className={cx('num_sorting_btn')}
+                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(1))}
+                                    >
+                                        <span>The sunshine</span>
+                                    </li>
+                                    <li
+                                        className={cx('num_sorting_btn')}
+                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(2))}
+                                    >
+                                        <span>CGV</span>
+                                    </li>
+                                    <li
+                                        className={cx('num_sorting_btn')}
+                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(3))}
+                                    >
+                                        <span>Lottee</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div className={cx('showtime-body')}>
                     {showTimes?.length > 0 ? (
-                        showTimes.map((item, index) => (
-                            <TimeItem
-                                key={index}
-                                day={item.auditorium}
-                                date={item.startTime}
-                                smallText
-                                active2={
-                                    item.startTime === activeShowTimes.startTime &&
-                                    item.auditorium === activeShowTimes.auditorium
-                                }
-                                onClick={() => dispatch(formBookingTicketActions.chooseShowtime(item))}
-                            />
-                        ))
+                        showTimes.map((item) => {
+                            const d = new Date(item.screening_start);
+                            return (
+                                <TimeItem
+                                    key={item.id}
+                                    day={item.type.slice(0, 4)}
+                                    date={
+                                        d.getHours() +
+                                        ':' +
+                                        (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes())
+                                    }
+                                    smallText
+                                    active2={item.id === activeShowTimes}
+                                    onClick={() => dispatch(addToCartActions.setActiveShowtime(item.id))}
+                                />
+                            );
+                        })
                     ) : (
                         <TimeItem day={'No'} date={'Showtime'} notAllowed smallText />
                     )}

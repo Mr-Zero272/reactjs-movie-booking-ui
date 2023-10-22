@@ -1,4 +1,5 @@
 .wrapper {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -45,8 +46,35 @@
     .desc-item:last-child {
         p {
             white-space: nowrap;
+            text-transform: capitalize;
             overflow: hidden;
             text-overflow: ellipsis;
         }
     }
+}
+
+.arrow {
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    color: #4b4b4b;
+    cursor: pointer;
+    font-size: 1.2rem;
+    height: 32px;
+    line-height: 32px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 32px;
+    z-index: 1;
+}
+
+.left {
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.right {
+    right: 0;
+    transform: translate(50%, -50%);
 }

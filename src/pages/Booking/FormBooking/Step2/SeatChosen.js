@@ -1,13 +1,17 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 
 import styles from './Step2.module.scss';
-import { formBookingTicketActions } from '~/store/form-boking-ticket-slice';
+import { addToCartActions } from '~/store/add-to-cart-slice';
+import { useState } from 'react';
 const cx = classNames.bind(styles);
-function SeatChosen({ seatInfo }) {
+function SeatChosen({ seatInfo, screeningIfo }) {
     const dispatch = useDispatch();
+    const addToCartInfo = useSelector((state) => state.addToCart);
+    //console.log(seatInfo);
+
     return (
         <div className={cx('seat-chosen-wrapper')}>
             <div className={cx('seat-chosen-column')}>
@@ -23,13 +27,26 @@ function SeatChosen({ seatInfo }) {
             <div className={cx('seat-chosen-column', 'price')}>
                 <p>
                     <span>&#8363;</span>
-                    {seatInfo.price}k
+                    {seatInfo.price / 1000}k
                 </p>
             </div>
             <div className={cx('seat-chosen-column')}>
                 <button
                     className={cx('delete-seat-btn')}
-                    onClick={() => dispatch(formBookingTicketActions.chooseSeats(seatInfo))}
+                    onClick={() =>
+                        dispatch(
+                            addToCartActions.chooseSeats({
+                                newSeat: seatInfo,
+                                newScreening: {
+                                    seatId: seatInfo.seatId,
+                                    screeningId: addToCartInfo.activeShowtime,
+                                    auditoriumId: screeningIfo[0].auditorium.id,
+                                    movieId: addToCartInfo.activeMovie,
+                                    activeDate: screeningIfo[0].screening_start,
+                                },
+                            }),
+                        )
+                    }
                 >
                     <FontAwesomeIcon icon={faXmark} />
                 </button>

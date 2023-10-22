@@ -18,7 +18,7 @@ function Schedule() {
     const filter = useSelector((state) => state.listTodaySchedule);
     const q = useSelector((state) => state.pagination.q);
     const types = useSelector((state) => state.listTodaySchedule.cinemaTypes);
-    console.log(types);
+    //console.log(types);
     useEffect(() => {
         const fetchApi = async () => {
             const tempGenre = filter.genre;

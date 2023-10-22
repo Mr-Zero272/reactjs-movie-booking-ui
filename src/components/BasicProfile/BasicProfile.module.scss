@@ -1,0 +1,35 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(to right, var(--primary), var(--primary-opacity), #acfadf);
+    font-size: 2.4rem;
+    width: 100%;
+    height: 80vh;
+    color: var(--white);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    border-radius: 8px;
+    position: sticky;
+    top: 104px;
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+        cursor: pointer;
+    }
+
+    .profile-item {
+        margin-top: 8px;
+        user-select: none;
+    }
+}
+
+.edit-btn {
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
+}

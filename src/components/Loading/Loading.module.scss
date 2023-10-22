@@ -1,9 +1,9 @@
 .loading {
     background: #fff url(../../assets/images/loading.gif) no-repeat center center;
     background-size: 35%;
-    height: 100vh;
+    height: 100%;
     width: 100%;
-    position: fixed;
+    position: relative;
     z-index: 100;
 }
 

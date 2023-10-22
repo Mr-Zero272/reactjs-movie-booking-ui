@@ -13,6 +13,7 @@ import { LineTable, ListUserTable } from '~/components/Table';
 import Slideshow from '~/components/Slideshow';
 import FloatingButton from '~/components/FloatingButton';
 import * as searchService from '~/apiServices/searchService';
+import Slider from 'react-slick';
 
 const cx = classNames.bind(styles);
 const testDataLineTable = [
@@ -70,7 +71,7 @@ const SlideshowItems = [
     },
 ];
 function Detail() {
-    const [movieInfo, setMovieInfo] = useState({});
+    const [movieInfo, setMovieInfo] = useState({ galleries: [] });
     const [listTypes, setListTypes] = useState([]);
     const movieId = useParams('movieId');
     useEffect(() => {
@@ -82,14 +83,27 @@ function Detail() {
             setListTypes((prev) => {
                 let newArray = [];
                 newArray = types.data.types.map((item) => item.name);
-                console.log(newArray);
+                //console.log(newArray);
                 return newArray;
             });
             //console.log(types.data.types);
         };
 
         fetchApi();
-    }, []);
+    }, [movieId.movieId]);
+    //console.log(movieInfo);
+    var settings = {
+        dots: true,
+        autoplay: true,
+        infinite: true,
+        arrows: false,
+        fade: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        // nextArrow: <CustomNextArrow />,
+        // prevArrow: <CustomPrevArrow />,
+    };
     return (
         <div className={cx('wrapper')}>
             <FullViewBannerTrailer
@@ -116,7 +130,15 @@ function Detail() {
                         <ListUserTable data={testDataCastList} />
                     </TitleHeadingPage>
                     <TitleHeadingPage title={'photo gallery'} className={cx('story-line')}>
-                        <Slideshow data={SlideshowItems} />
+                        <Slider {...settings}>
+                            {movieInfo.galleries.map((item) => (
+                                <img
+                                    key={item.id}
+                                    src={'http://localhost:8081/movie/images/' + item.imgUrl}
+                                    alt={item.imgUrl}
+                                />
+                            ))}
+                        </Slider>
                     </TitleHeadingPage>
                 </section>
             </div>

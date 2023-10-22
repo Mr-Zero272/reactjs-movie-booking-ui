@@ -33,6 +33,7 @@
 
 .overlay {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -45,6 +46,7 @@
     visibility: hidden;
 
     .custom-btn {
+        margin: 10px 0 0 0;
         width: 140px;
         height: 40px;
         background-color: #fff;
@@ -92,6 +94,10 @@
         text-overflow: ellipsis;
         color: rgba(26, 26, 26, 0.5);
     }
+}
+
+.box-detail-desc-right {
+    width: 80%;
 }
 
 .run-time {

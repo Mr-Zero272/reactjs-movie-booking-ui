@@ -1,18 +1,52 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import styles from './Step1.module.scss';
 import { formBookingTicketActions } from '~/store/form-boking-ticket-slice';
+import { addToCartActions } from '~/store/add-to-cart-slice';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
-function Seat({ seatInfo, available, taken, selected }) {
+function Seat({ seatInfo, booked, selected }) {
     const dispatch = useDispatch();
+    //const location = useLocation();
+    //console.log('location: ', location);
+    const [screeningInfo, setScreeningInfo] = useState({});
+    const addToCartInfo = useSelector((state) => state.addToCart);
+    useEffect(() => {
+        const activeScreening = addToCartInfo.screenings.filter((item) => item.id === addToCartInfo.activeShowtime);
+        //console.log(activeScreening);
+        setScreeningInfo((prev) => ({
+            activeScreening,
+        }));
+    }, [addToCartInfo.screenings]);
+    //console.log(screeningInfo);
     let handleChooseSeats = (seatInfo) => {
-        dispatch(formBookingTicketActions.chooseSeats(seatInfo));
+        // if (location.pathname === '/booking') {
+        //     dispatch(
+        //         addToCartActions.chooseSeatsWhenCheckout({
+        //             newSeat: seatInfo,
+        //         }),
+        //     );
+        // } else {
+        dispatch(
+            addToCartActions.chooseSeats({
+                newSeat: seatInfo,
+                newScreening: {
+                    seatId: seatInfo.seatId,
+                    screeningId: addToCartInfo.activeShowtime,
+                    auditoriumId: screeningInfo.activeScreening[0].auditorium.id,
+                    movieId: addToCartInfo.activeMovie,
+                    activeDate: screeningInfo.activeScreening[0].screening_start,
+                },
+            }),
+        );
+        // }
     };
-    if (taken) handleChooseSeats = (seatInfo) => {};
+    if (booked) handleChooseSeats = (seatInfo) => {};
     return (
-        <div className={cx('seat', { taken, selected })} onClick={() => handleChooseSeats(seatInfo)}>
+        <div className={cx('seat', { booked, selected })} onClick={() => handleChooseSeats(seatInfo)}>
             <div className={cx('seat-top')}></div>
             <div className={cx('seat-bottom')}></div>
         </div>

@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video, horizontal, className }) {
+function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video, horizontal, detail, className }) {
     const [hovered, setHovered] = useState(false);
     let roundRating = Math.round(rating);
     roundRating = roundRating > 5 ? 5 : roundRating;
@@ -42,7 +42,9 @@ function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video
                         </video>
                     )}
                     <div className={cx('overlay')}>
-                        <Button className={cx('custom-btn')}>Watch now!</Button>
+                        <Button className={cx('custom-btn')} to={detail}>
+                            Detail
+                        </Button>
                     </div>
                 </div>
                 <div className={cx('box-detail')}>
@@ -50,7 +52,7 @@ function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video
                         <a href="/home">{movieName}</a>
                         <span>{genres}</span>
                     </div>
-                    <div className={cx('box-detail-desc', 'box-detail-desc-right')}>
+                    <div className={cx('box-detail-desc', 'box-detail-desc-left')}>
                         <a href="/home" className={cx('run-time')}>
                             {runTime}
                         </a>

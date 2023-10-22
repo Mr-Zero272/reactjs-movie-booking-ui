@@ -1,3 +1,174 @@
 .wrapper {
     padding: 40px;
+    display: flex;
+}
+
+.booked-wrapper {
+}
+
+.user-info {
+    width: 30%;
+    margin-right: 30px;
+}
+
+.content {
+    width: 70%;
+
+    .header-content {
+        padding: 8px;
+        display: flex;
+        position: sticky;
+        top: 64px;
+        background: var(--white);
+        z-index: 8;
+    }
+}
+
+.content-body {
+    width: 100%;
+}
+
+//cart
+.cart-wrapper {
+    position: relative;
+    margin-top: 20px;
+    width: 99%;
+    height: auto;
+}
+
+//cart-item
+.cart-item-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    + .cart-item-wrapper {
+        margin-top: 10px;
+    }
+}
+
+.cart-item-body {
+    flex: 1;
+    display: flex;
+    img {
+        width: 200px;
+        height: 270px;
+    }
+
+    .cart-item-details {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .cart-item-details-movie {
+            padding-left: 25px;
+
+            .movie-detail {
+                &:first-child {
+                    font-size: 2.5rem;
+                    font-weight: 600;
+                }
+
+                &:last-child {
+                    color: #777;
+                }
+            }
+        }
+
+        .cart-item-details-ticket {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+
+            .ticket-detail {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                :first-child {
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+.cart-item-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    font-size: 2.3rem;
+    color: #777;
+
+    .check-box {
+        cursor: pointer;
+    }
+}
+
+.checked {
+    color: var(--primary);
+}
+
+.booked {
+    color: var(--red);
+}
+
+.booked-label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 2rem;
+    padding: 10px;
+    background: var(--red);
+    color: var(--white);
+}
+
+.cart-item-feature-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+
+    button {
+        background: transparent;
+        padding: 8px;
+        font-size: 2.3rem;
+        cursor: pointer;
+
+        &:first-child {
+            color: var(--red);
+        }
+    }
+}
+
+//check-out section
+.check-out-section {
+    padding: 20px 0;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 8;
+
+    .check-out-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+
+        .check-all-checkbox {
+            font-size: 1.9rem;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+    }
+}
+
+.hide {
+    display: none;
 }

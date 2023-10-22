@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlay, faCirclePause } from '@fortawesome/free-regular-svg-icons';
 
@@ -8,6 +8,7 @@ import videos from '~/assets/videos';
 
 const cx = classNames.bind(styles);
 function FullViewBannerTrailer({ poster, trailer, movieName }) {
+    //console.log(trailer);
     const videoRef = useRef(null);
     const [playVideo, setPlayVideo] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -19,6 +20,10 @@ function FullViewBannerTrailer({ poster, trailer, movieName }) {
     const handleMouseLeave = () => {
         setIsHovered(true);
     };
+
+    useEffect(() => {
+        videoRef.current.load();
+    }, [trailer]);
 
     const handlePlayVideo = () => {
         setPlayVideo(!playVideo);
@@ -32,8 +37,8 @@ function FullViewBannerTrailer({ poster, trailer, movieName }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('video-trailer')} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <video ref={videoRef} loop poster={'http://localhost:8081/movie/images/' + poster}>
-                    <source src={'http://localhost:8081/movie/videos/' + trailer} type="video/mp4" />
+                <video ref={videoRef} preload="metadata" loop poster={'http://localhost:8081/movie/images/' + poster}>
+                    <source src={`http://localhost:8081/movie/videos/${trailer}`} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
                 <div className={cx('control-btn', { hide: playVideo })} onClick={handlePlayVideo}>

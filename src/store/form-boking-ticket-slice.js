@@ -8,6 +8,7 @@ const getListSeatsSelected = (listSeats) => {
     });
     return listSeatsSelected;
 };
+
 const formBookingTicketSlice = createSlice({
     name: 'formBookingTicket',
     initialState: {

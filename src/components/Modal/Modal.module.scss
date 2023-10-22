@@ -115,6 +115,12 @@
             font-size: 1.2rem;
         }
 
+        .btn-control {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
         &:after {
             content: '';
             display: block;

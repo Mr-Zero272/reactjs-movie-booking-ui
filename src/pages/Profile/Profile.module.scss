@@ -1,0 +1,121 @@
+.wrapper {
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //border: 1px solid #ddd;
+
+    .right-content {
+        width: 70%;
+        padding-left: 50px;
+        align-self: flex-start;
+    }
+    .left-content {
+        width: 30%;
+    }
+}
+
+.form-profile {
+    padding: 0 20px;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    height: 80vh;
+}
+
+.info {
+    .info-header {
+        margin-bottom: 20px;
+    }
+
+    .info-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .form-group {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+
+            :first-child {
+                width: 50%;
+            }
+
+            :last-child {
+                flex: 1;
+            }
+        }
+
+        .form-group:last-child {
+            margin-top: 20px;
+        }
+
+        // .info-body-item {
+        //     width: 47%;
+        // }
+    }
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    :first-child {
+        width: 50%;
+    }
+
+    :last-child {
+        flex: 1;
+    }
+}
+
+//input custom
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .input-label {
+        margin-bottom: 6px;
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    .input-m {
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        display: flex;
+        height: 44px;
+        overflow: hidden;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+        .input-i {
+            font-size: 1.6rem;
+            padding: 12px 20px;
+            padding-right: 5px;
+            width: 100%;
+            cursor: default;
+        }
+    }
+
+    .input-value-only {
+        color: #777;
+        font-size: 1.8rem;
+    }
+}
+
+.input-error {
+    color: var(--red);
+    font-style: italic;
+    margin: 8px 0 0 10px;
+}
+
+.save-btn {
+    margin-top: 20px;
+}

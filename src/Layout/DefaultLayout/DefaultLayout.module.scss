@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    flex-shrink: 0;
+}
+
+.content {
+    max-width: calc(100% - 96px);
+    flex: 1;
+}
+
+@media (max-width: 767px) {
+    .content {
+        max-width: 100%;
+        flex: 1;
+    }
+}

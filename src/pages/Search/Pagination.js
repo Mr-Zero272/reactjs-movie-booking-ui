@@ -236,28 +236,16 @@ function Pagination({ data }) {
                 </div>
             </div>
             <div className={cx('movie-grid')}>
-                {/* {listMovieCommonWithVideo.map((item, index) => (
-                    <MovieItemCommon
-                        key={index}
-                        className={cx('movie-item')}
-                        horizontal={false}
-                        imgURL={item.imgURL}
-                        movieName={item.movieName}
-                        genres={item.genres}
-                        runTime={item.runTime}
-                        rating={item.rating}
-                        video={item.video}
-                    />
-                ))} */}
                 {fullFilterInfo.data !== undefined &&
                     fullFilterInfo.data.map((item) => (
                         <MovieItemCommon
                             key={item.id}
+                            detail={'/detail/' + item.id}
                             className={cx('movie-item')}
                             horizontal={false}
                             imgURL={'http://localhost:8081/movie/images/' + item.verticalImage}
                             movieName={item.title}
-                            genres={item.manufacture}
+                            genres={item.manufacturer}
                             runTime={item.duration_min + 'minutes'}
                             rating={item.rating / 10}
                         />

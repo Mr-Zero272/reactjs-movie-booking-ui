@@ -1,17 +1,19 @@
 import classNames from 'classnames/bind';
-import styles from './MovieItemWithDesc.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlayCircle, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './MovieItemWithDesc.module.scss';
+import baseUrl from '~/config/baseUrl';
 
 const cx = classNames.bind(styles);
-
-function MovieItemWithDesc() {
+const defaultData = { genres: [{ id: '', name: '' }] };
+function MovieItemWithDesc({ data = defaultData, arrows = false, onNext, onPrev }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('movie-img')}>
-                <img src="https://file770.com/wp-content/uploads/3-body-poster.jpg" alt="film-name" />
-                <Link to={'/detail'} className={cx('play-btn')}>
+                <img src={baseUrl.image + data.verticalImage} alt={data.title} />
+                <Link to={'/detail/' + data.id} className={cx('play-btn')}>
                     <FontAwesomeIcon className={cx('play-btn-icon')} icon={faPlayCircle} />
                 </Link>
             </div>
@@ -20,21 +22,31 @@ function MovieItemWithDesc() {
                     <p>
                         <strong>Director</strong>
                     </p>
-                    <p>Rupert Sanders</p>
+                    <p>{data.director}</p>
                 </div>
                 <div className={cx('desc-item')}>
                     <p>
                         <strong>Starring</strong>
                     </p>
-                    <p>Scarlett Johansson, Pilou Asbeak, Takeshi Kitano</p>
+                    <p>{data.cast}</p>
                 </div>
                 <div className={cx('desc-item')}>
                     <p>
                         <strong>Genre</strong>
                     </p>
-                    <p>Action, Crime, Sci-Fi</p>
+                    <p>{data.genres && data.genres.map((item) => item.name + ', ')}...</p>
                 </div>
             </div>
+            {arrows && (
+                <div className={cx('arrow', 'right')} onClick={() => onNext()}>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </div>
+            )}
+            {arrows && (
+                <div className={cx('arrow', 'left')} onClick={() => onPrev()}>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </div>
+            )}
         </div>
     );
 }

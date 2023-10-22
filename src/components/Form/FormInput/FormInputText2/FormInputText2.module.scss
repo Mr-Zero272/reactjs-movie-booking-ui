@@ -32,7 +32,7 @@
     position: absolute;
     pointer-events: none;
     bottom: 10px;
-    font-size: 16px;
+    //font-size: 16px;
     transition: all 0.3s ease;
 }
 .textarea label {
@@ -61,4 +61,9 @@
 .textarea textarea:focus ~ .underline:before,
 .textarea textarea:valid ~ .underline:before {
     transform: scale(1);
+}
+
+.boldLabel {
+    font-weight: 700;
+    font-size: 2rem;
 }

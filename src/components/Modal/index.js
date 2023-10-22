@@ -4,14 +4,14 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
-function Modal({ children, title, icon = 'f', acceptBtn, onToggleModal, footerTitle, closeBtn }) {
+function Modal({ children, title, icon = 'f', acceptBtn, onAccept, onCloseModal, footerTitle, closeBtn }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('modal-container')}>
-                <div className={cx('overlay')} onClick={onToggleModal}></div>
+                <div className={cx('overlay')} onClick={onCloseModal}></div>
                 <div className={cx('content')}>
                     {closeBtn && (
-                        <button className={cx('close-btn')} onClick={onToggleModal}>
+                        <button className={cx('close-btn')} onClick={onCloseModal}>
                             <span>x</span>
                         </button>
                     )}
@@ -24,12 +24,18 @@ function Modal({ children, title, icon = 'f', acceptBtn, onToggleModal, footerTi
                     <div className={cx('modal-body')}>{children}</div>
                     <div className={cx('modal-footer')}>
                         {footerTitle && <p className={cx('footer-title')}>{footerTitle}</p>}
-                        {acceptBtn && <Button outline>Accept</Button>}
-                        {closeBtn && (
-                            <Button close onClick={onToggleModal}>
-                                Close
-                            </Button>
-                        )}
+                        <div className={cx('btn-control')}>
+                            {acceptBtn && (
+                                <Button primary onClick={() => onAccept()}>
+                                    Accept
+                                </Button>
+                            )}
+                            {closeBtn && (
+                                <Button close onClick={onCloseModal}>
+                                    Close
+                                </Button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

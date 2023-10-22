@@ -4,8 +4,25 @@ const userSlice = createSlice({
     initialState: {
         status: 'logout',
         username: '',
+        avatar: '',
+        lastUpdate: '',
     },
     reducers: {
+        setLastUpdate(state, action) {
+            return {
+                ...state,
+                lastUpdate: action.payload,
+            };
+        },
+        haveChange(state) {
+            return state;
+        },
+        setAvatar(state, action) {
+            return {
+                ...state,
+                avatar: 'http://localhost:8081/movie/images/' + action.payload + '?type=avatar',
+            };
+        },
         setUserStatus(state, action) {
             return {
                 ...state,
@@ -23,6 +40,7 @@ const userSlice = createSlice({
                 ...state,
                 status: action.payload.status,
                 username: action.payload.username,
+                avatar: action.payload.avatar,
             };
         },
         clearUserInfo(state) {

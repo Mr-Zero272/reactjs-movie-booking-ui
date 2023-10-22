@@ -54,7 +54,7 @@ function Register() {
                 userRegisterInfo.password.value,
                 userRegisterInfo.email.value,
             );
-            console.log(result);
+            //console.log(result);
             setLoading(false);
             if (result.message !== 'success') {
                 setErrorMessage(result.response.data.message);

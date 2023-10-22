@@ -2,7 +2,7 @@
     display: flex;
     padding: 20px 0;
     position: relative;
-    height: 100%;
+    min-height: 80vh;
 }
 
 .list-seats {
@@ -14,7 +14,7 @@
     align-items: flex-end;
 
     .list-seats-item {
-        max-height: 90%;
+        max-height: 50%;
         width: 100%;
         overflow: auto;
     }
@@ -45,13 +45,20 @@
         align-items: center;
 
         img {
-            width: 100%;
+            width: 160px;
+            height: 160px;
         }
     }
 
     .info {
         flex: 1;
     }
+}
+
+.payment-success {
+    padding: 20px 0;
+    font-size: 2rem;
+    color: #00dfa2;
 }
 
 .showtime-info {
@@ -82,9 +89,16 @@
             font-size: 2rem;
         }
     }
+
+    .type {
+        > :last-child {
+            font-size: 3rem;
+        }
+    }
 }
 
 .control-btn-nextStep {
+    margin-top: 30px;
     padding: 14px 20px;
     font-size: 1.6rem;
     border-radius: 50%;
@@ -92,7 +106,7 @@
     background: var(--primary);
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 60px;
     cursor: pointer;
 }
 

@@ -1,6 +1,6 @@
 import * as request from '~/utils/request';
 
-export const register = async (username, password, email, avatar = 'myAvatar.jpg') => {
+export const register = async (username, password, email, avatar = 'no_image.png', phoneNumber = '0999999999') => {
     console.log(username, password, email, avatar);
     try {
         const res = await request.postAuth(
@@ -10,6 +10,7 @@ export const register = async (username, password, email, avatar = 'myAvatar.jpg
                 password: password,
                 email: email,
                 avatar: avatar,
+                phoneNumber: phoneNumber,
             },
             {},
         );
