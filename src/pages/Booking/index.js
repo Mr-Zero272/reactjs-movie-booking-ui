@@ -37,7 +37,7 @@ function Booking() {
     const dispatch = useDispatch();
     const [activeStep, setActiveStep] = useState(+tab);
     const checkoutInfo = useSelector((state) => state.addToCart);
-    const [userInfo, setUserInfo] = useState({ username: 'PITI', email: 'pitithuong@gmail.com' });
+    const [userInfo, setUserInfo] = useState({ username: '', email: '' });
     let sliderRef = useRef(null);
     const movieId = checkoutInfo.activeMovie;
 

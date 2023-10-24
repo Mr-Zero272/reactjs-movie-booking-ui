@@ -113,7 +113,7 @@ function Header({ onToggleMenu }) {
     //const currentUser = true;
 
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
+        //console.log(menuItem);
         switch (menuItem.action) {
             case 'logout':
                 dispatch(userActions.logout());

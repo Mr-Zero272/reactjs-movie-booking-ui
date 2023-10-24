@@ -125,7 +125,7 @@ function LoginModal() {
             //console.log(result);
             setLoading(false);
             if (result.message !== 'success') {
-                setErrorMessage('Something went wrong!!!');
+                setErrorMessage('Your username or password is incorrect!!!');
             } else {
                 setErrorMessage('');
                 localStorage.setItem('token', result.token);

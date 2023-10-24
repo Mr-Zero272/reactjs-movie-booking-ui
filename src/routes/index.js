@@ -38,13 +38,13 @@ const publicRoutes = [
     { path: '/detail/:movieId', component: Detail, layout: HeaderOnly },
     { path: '/login', component: Login, layout: null },
     { path: '/register', component: Register, layout: null },
+    { path: '/map', component: Map, layout: null },
 ];
 
 const privateRoutes = [
     { path: '/booking', component: Booking, layout: HeaderOnly },
     { path: '/cart', component: AddToCart, layout: HeaderOnly },
     { path: '/ticket', component: Ticket },
-    { path: '/map', component: Map, layout: null },
     { path: '/profile', component: Profile },
     { path: '/payment', component: Payment, layout: HeaderOnly },
 ];

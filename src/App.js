@@ -5,32 +5,16 @@ import { publicRoutes, privateRoutes } from '~/routes';
 
 import { DefaultLayout } from '~/Layout';
 import { ToastContainer } from 'react-toastify';
-import Modal from './components/Modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { modalAction } from './store/modal-slice';
 import PrivateRouter from '~/routes/PrivateRouter';
 
 function App() {
-    const modalInfo = useSelector((state) => state.modal);
-    const dispatch = useDispatch();
-    if (modalInfo.isOpen) {
-        document.body.classList.add('modal-active');
-    } else {
-        document.body.classList.remove('modal-active');
-    }
+    // if (modalInfo.isOpen) {
+    //     document.body.classList.add('modal-active');
+    // } else {
+    //     document.body.classList.remove('modal-active');
+    // }
     return (
         <Router>
-            {modalInfo.isOpen && (
-                <Modal
-                    title={modalInfo.title}
-                    closeBtn={modalInfo.closeBtn}
-                    acceptBtn={modalInfo.acceptBtn}
-                    onCloseModal={() => dispatch(modalAction.closeModal())}
-                    onAccept={() => dispatch(modalAction.onAccept())}
-                >
-                    {modalInfo.children}
-                </Modal>
-            )}
             <ToastContainer />
             <div className="App">
                 <Routes>

@@ -36,13 +36,13 @@ function Search() {
     };
 
     useEffect(() => {
+        dispatch(paginationAction.setSearchString(debounced));
         if (!debounced.trim()) {
             setSearchResult([]);
             return;
         }
 
         setLoading(true);
-        dispatch(paginationAction.setSearchString(debounced));
         const fetchApi = async () => {
             setLoading(true);
 

@@ -16,16 +16,6 @@ import { fetchQuantityCart } from '~/store/cart-quantity';
 
 const cx = classNames.bind(styles);
 
-const notify = (message, type = 'success') => {
-    toast(message, {
-        type: type,
-        style: { fontSize: '1.4rem' },
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-        className: 'foo-bar',
-    });
-};
-
 const NAV_PURCHASE_TICKET = ['Add to cart'];
 function AddToCart() {
     const navigate = useNavigate();

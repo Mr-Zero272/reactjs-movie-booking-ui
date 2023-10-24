@@ -13,7 +13,6 @@ const defaultF = () => {};
 function Cart() {
     const dispatch = useDispatch();
     const cartInfo = useSelector((state) => state.addToCart);
-    const modalState = useSelector((state) => state.modal);
     const [listTicket, setListTicket] = useState([]);
     const checkoutInfo = {
         activeMovie: cartInfo.activeMovie,
@@ -33,21 +32,6 @@ function Cart() {
         fetchApi();
     }, []);
 
-    useEffect(() => {
-        const deleteCall = async () => {
-            if (modalState.data && modalState.data.accept === true) {
-                const token = localStorage.getItem('token');
-                const ids = modalState.data.ids;
-                const isDelete = await cartService.deleteTicketById(token, ids);
-                const result = await cartService.getAllTicketInActiveCart(token);
-                //console.log(result);
-                setListTicket(result);
-                dispatch(fetchQuantityCart());
-            }
-        };
-        deleteCall();
-    }, [modalState.data]);
-
     const addToDistinctArray = (array, value) => {
         let temp = [];
         if (array.some((item) => item.seatId === value.seatId)) {
@@ -57,6 +41,18 @@ function Cart() {
         }
         return temp;
     };
+
+    const handleDeleteItemInCart = useCallback(() => {
+        const fetchApi = async () => {
+            const token = localStorage.getItem('token');
+            const result = await cartService.getAllTicketInActiveCart(token);
+            //console.log(result);
+            setListTicket(result);
+        };
+
+        fetchApi();
+        dispatch(fetchQuantityCart());
+    }, []);
 
     const handleCheck = useCallback(
         (seatChosenId) => {
@@ -91,7 +87,12 @@ function Cart() {
     return (
         <div className={cx('cart-wrapper')}>
             {listTicket.map((item) => (
-                <CartItem key={item.seatStatus.id} data={item} onSelect={handleCheck} />
+                <CartItem
+                    key={item.seatStatus.id}
+                    data={item}
+                    onSelect={handleCheck}
+                    onDelete={handleDeleteItemInCart}
+                />
             ))}
         </div>
     );

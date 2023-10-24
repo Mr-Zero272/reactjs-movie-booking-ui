@@ -5,18 +5,16 @@ import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { faSquareCheck, faSquareXmark, faXmark, faTag } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 import styles from './Ticket.module.scss';
 import Image from '~/components/Image';
 import * as cartService from '~/apiServices/cartService';
-import { useDispatch } from 'react-redux';
-import { modalAction } from '~/store/modal-slice';
 
 const cx = classNames.bind(styles);
 
 const dF = () => {};
-function CartItem({ data, onSelect = dF }) {
-    const dispatch = useDispatch();
+function CartItem({ data, onSelect = dF, onDelete = dF }) {
     const [checked, setChecked] = useState(false);
     //console.log(data);
 
@@ -25,29 +23,38 @@ function CartItem({ data, onSelect = dF }) {
         onSelect(data.seatStatus.id);
     };
 
-    useEffect(() => {
-        dispatch(
-            modalAction.initModal({
-                title: 'Delete ticket?',
-                name: 'deleteTicket',
-                children: 'Are you sure to delete this ticket from your cart?',
-                data: {},
-                closeBtn: true,
-                acceptBtn: true,
-            }),
-        );
-    }, []);
+    const handleDeleteTicket = (id) => {
+        Swal.fire({
+            title: 'Are you sure to delete this ticket?',
+            text: "You won't be able to revert this! ",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const callApi = async () => {
+                    const token = localStorage.getItem('token');
+                    const ids = [id];
+                    const result = await cartService.deleteTicketById(token, ids);
+                    //console.log(result); {message: 'success'}
+                    if (result.message && result.message === 'success') {
+                        onDelete();
+                        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                    } else {
+                        Swal.fire('Opps!', 'Some thing went wrong!', 'warning');
+                    }
+                };
 
-    const handleDeleteTicket = async (id) => {
-        dispatch(modalAction.showModal({ ids: [id], accept: false }));
-        //confirm('Are sure to delete this ticket?');
-        // if (idConfirm === true) {
-        //     const token = localStorage.getItem('token');
-        //     const ids = [id];
-        //     const result = cartService.deleteTicketById(token, ids);
-        //     dispatch(fetchQuantityCart());
-        // }
-        //console.log(result);
+                callApi();
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire('Cancelled', 'Your ticket is still available!', 'error');
+            }
+        });
     };
 
     const showTime = new Date(data.seatStatus.screening.screening_start);
@@ -120,7 +127,7 @@ function CartItem({ data, onSelect = dF }) {
                 </div>
             </div>
             <div className={cx('cart-item-feature-btn')}>
-                <button onClick={() => handleDeleteTicket(data.seatStatus.id)}>
+                <button onClick={() => handleDeleteTicket(data.id)}>
                     <FontAwesomeIcon icon={faXmark} />
                 </button>
             </div>

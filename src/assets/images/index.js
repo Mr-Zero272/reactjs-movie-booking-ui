@@ -13,6 +13,7 @@ const image = {
     noImage: require('~/assets/images/no_image.png'),
     barcode: require('~/assets/images/barcode-svgrepo-com.svg').default, //nho xoa
     point: require('~/assets/images/location.png'), // nho xoa
+    point2: require('~/assets/images/point-google-maps.png'),
     paymentQrCode: require('~/assets/images/qr-code.svg').default,
 };
 

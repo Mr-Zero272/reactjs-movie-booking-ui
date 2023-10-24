@@ -30,7 +30,7 @@ function Step2({ onNextStep, onChangeInfo }) {
     const addToCartInfo = useSelector((state) => state.addToCart);
     let [searchParams, setSearchParams] = useSearchParams();
     const tab = searchParams.get('tab');
-    const [userInfo, setUserInfo] = useState({ username: 'PITI', email: 'pitithuong@gmail.com' });
+    const [userInfo, setUserInfo] = useState({ username: '', email: '' });
     const [step2Info, setStep2Info] = useState({
         activeScreening: [{ type: '' }],
         date: new Date(),

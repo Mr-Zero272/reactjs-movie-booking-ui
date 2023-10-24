@@ -5,7 +5,6 @@ import paginationSlice from './pagination-slice';
 import userSlice from './user-slice';
 import addToCartSlice from './add-to-cart-slice';
 import cartQuantity from './cart-quantity';
-import modalSlice from './modal-slice';
 
 const store = configureStore({
     reducer: {
@@ -15,7 +14,6 @@ const store = configureStore({
         user: userSlice.reducer,
         addToCart: addToCartSlice.reducer,
         cartQuantity: cartQuantity.reducer,
-        modal: modalSlice.reducer,
     },
 });
 

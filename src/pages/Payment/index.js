@@ -3,14 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faCalendarDays,
-    faCirclePlus,
-    faFileLines,
-    faMessage,
-    faPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCalendarDays, faFileLines, faMessage, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import classNames from 'classnames/bind';
 
@@ -115,7 +108,7 @@ function Payment() {
         <div className={cx('wrapper')}>
             <div className={cx('payment-detail')}>
                 <div className={cx('payment-detail-top')}>
-                    <p className={cx('total')}>&#8363; {invoiceInfo.tt * 1000}</p>
+                    <p className={cx('total')}>&#8363; {invoiceInfo.tt}</p>
                     <div className={cx('detail')}>
                         <div className={cx('detail-item')}>
                             <p>Commission:</p>
@@ -123,7 +116,7 @@ function Payment() {
                         </div>
                         <div className={cx('detail-item')}>
                             <p>Total:</p>
-                            <p>{invoiceInfo.tt * 1000} &#8363;</p>
+                            <p>{invoiceInfo.tt} &#8363;</p>
                         </div>
                         <div className={cx('end-line-part')}></div>
                     </div>
@@ -196,7 +189,7 @@ function Payment() {
                 </div>
                 <div className={cx('payment-info-footer')}>
                     <Button primary onClick={handleSubmit}>
-                        Pay {invoiceInfo.tt * 1000} &#8363;
+                        Pay {invoiceInfo.tt} &#8363;
                     </Button>
                 </div>
             </div>

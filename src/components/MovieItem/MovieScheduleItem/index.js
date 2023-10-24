@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faCashRegister } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import classNames from 'classnames/bind';
 
 import styles from './MovieScheduleItem.module.scss';
@@ -11,6 +12,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
 
 const cx = classNames.bind(styles);
+
+const notify = (message, type = 'success') => {
+    toast(message, {
+        type: type,
+        style: { fontSize: '1.4rem' },
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+        className: 'foo-bar',
+    });
+};
 
 function MovieScheduleItem({ data, types = [] }) {
     const [activeDate, setActiveDate] = useState(() => {
@@ -62,8 +73,13 @@ function MovieScheduleItem({ data, types = [] }) {
         dispatch(addToCartActions.checkout(temp));
     };
 
-    // console.log(data);
-    // console.log(filterSchedule);
+    const handleNoSchedule = (e) => {
+        e.preventDefault();
+        notify('There is no schedule for today!', 'warning');
+    };
+
+    //console.log(data);
+    console.log(filterSchedule);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('left')}>
@@ -104,37 +120,53 @@ function MovieScheduleItem({ data, types = [] }) {
             </div>
             <div className={cx('side-content', 'right')}>
                 <div className={cx('attention')}></div>
-                <Link to="/booking?tab=1" className={cx('booking-btn')} onClick={handleBookingNow}>
-                    <FontAwesomeIcon icon={faCashRegister} />
-                    <span>Booking now</span>
-                </Link>
+                {filterSchedule?.length === 0 ? (
+                    <>
+                        <Link to="/booking?tab=1" className={cx('booking-btn')} onClick={(e) => handleNoSchedule(e)}>
+                            <FontAwesomeIcon icon={faCashRegister} />
+                            <span>Booking now</span>
+                        </Link>
 
-                <Link
-                    to={'/cart?tab=1'}
-                    className={cx('booking-btn')}
-                    onClick={() =>
-                        dispatch(
-                            addToCartActions.addToCart({
-                                activeMovie: data !== undefined ? data.id : '',
-                                activeShowtime: data !== undefined ? filterSchedule[0].id : '',
-                                activeDate: data !== undefined ? filterSchedule[0].screening_start : '',
-                                screening:
-                                    data !== undefined
-                                        ? {
-                                              seatId: 0,
-                                              screeningId: filterSchedule[0].id,
-                                              auditoriumId: filterSchedule[0].auditorium.id,
-                                              movieId: data.id,
-                                              activeDate: filterSchedule[0].screening_start,
-                                          }
-                                        : '',
-                            }),
-                        )
-                    }
-                >
-                    <FontAwesomeIcon icon={faCartPlus} />
-                    <span>Add to cart</span>
-                </Link>
+                        <Link to={'/cart?tab=1'} className={cx('booking-btn')} onClick={(e) => handleNoSchedule(e)}>
+                            <FontAwesomeIcon icon={faCartPlus} />
+                            <span>Add to cart</span>
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/booking?tab=1" className={cx('booking-btn')} onClick={handleBookingNow}>
+                            <FontAwesomeIcon icon={faCashRegister} />
+                            <span>Booking now</span>
+                        </Link>
+
+                        <Link
+                            to={'/cart?tab=1'}
+                            className={cx('booking-btn')}
+                            onClick={() =>
+                                dispatch(
+                                    addToCartActions.addToCart({
+                                        activeMovie: data !== undefined ? data.id : '',
+                                        activeShowtime: data !== undefined ? filterSchedule[0].id : '',
+                                        activeDate: data !== undefined ? filterSchedule[0].screening_start : '',
+                                        screening:
+                                            data !== undefined
+                                                ? {
+                                                      seatId: 0,
+                                                      screeningId: filterSchedule[0].id,
+                                                      auditoriumId: filterSchedule[0].auditorium.id,
+                                                      movieId: data.id,
+                                                      activeDate: filterSchedule[0].screening_start,
+                                                  }
+                                                : '',
+                                    }),
+                                )
+                            }
+                        >
+                            <FontAwesomeIcon icon={faCartPlus} />
+                            <span>Add to cart</span>
+                        </Link>
+                    </>
+                )}
             </div>
         </div>
     );

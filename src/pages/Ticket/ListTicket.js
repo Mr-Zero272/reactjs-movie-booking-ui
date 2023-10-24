@@ -30,7 +30,7 @@ function ListTicket({ userInfo }) {
                         month={date.toLocaleDateString('en-us', { month: 'short' })}
                         type={item.seatStatus.screening.type}
                         movieName={item.movieName}
-                        userInfo={userInfo}
+                        userInfo={{ username: item.nameInTicket, email: item.emailInTicket }}
                         imgUrl={'http://localhost:8081/movie/images/' + item.imageHorizonName}
                         startTime={hours + ':' + minutes}
                     />

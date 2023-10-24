@@ -21,9 +21,10 @@ const sliceString = (array) => {
     return strR;
 };
 
-function Pagination({ data }) {
+function Pagination() {
     const fullFilterInfo = useSelector((state) => state.pagination);
     const dispatch = useDispatch();
+    console.log(fullFilterInfo);
 
     useEffect(() => {
         const q = fullFilterInfo.q;

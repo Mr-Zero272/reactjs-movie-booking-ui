@@ -72,9 +72,13 @@ function Step3({ userInfo }) {
     const handleSubmit = () => {
         const callApi = async () => {
             const token = localStorage.getItem('token');
-            const ids = addToCartInfo.listSeatSelected.map((e) => e.seatId !== 0);
+            const listSeatSelected = addToCartInfo.listSeatSelected.filter((e) => e.seatId !== 0);
+            const ids = listSeatSelected.map((e) => e.seatId);
+            const nameInTicket = userInfo.username;
+            const emailInTicket = userInfo.email;
+            //console.log(ids);
             const paid = addToCartInfo.paymentStatus;
-            const result = await cartService.checkout(token, ids, paid);
+            const result = await cartService.checkout(token, ids, paid, nameInTicket, emailInTicket);
             //console.log(result);
             if (result && result.message === 'success') {
                 notify('Complete checkout! Thank for you order WUW!', 'success');

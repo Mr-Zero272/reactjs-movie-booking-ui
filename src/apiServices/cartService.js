@@ -73,7 +73,7 @@ export const getListTicketsBeforeBook = async (ids) => {
     }
 };
 
-export const checkout = async (token = '', ids = [], paid = false) => {
+export const checkout = async (token = '', ids = [], paid = false, nameInTicket = '', emailInTicket = '') => {
     //console.log(ids);
     try {
         const res = await request.checkout(
@@ -81,6 +81,8 @@ export const checkout = async (token = '', ids = [], paid = false) => {
             {
                 ids,
                 paid,
+                nameInTicket,
+                emailInTicket,
             },
             {
                 headers: { Authorization: 'Bearer ' + token },
