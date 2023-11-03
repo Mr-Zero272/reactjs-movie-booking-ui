@@ -1,30 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
-import L from 'leaflet';
-import {
-    MapContainer,
-    TileLayer,
-    useMap,
-    Marker,
-    Popup,
-    FeatureGroup,
-    LayersControl,
-    Polygon,
-    Polyline,
-} from 'react-leaflet';
-import { GeoJSON } from 'react-leaflet/GeoJSON';
+import L, { map } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup, LayersControl, Polygon, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
 import 'leaflet/dist/images/marker-icon-2x.png';
-import { useMapEvents } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import image from '~/assets/images';
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import hash from 'object-hash';
 
-import CustomControl from './CustomControl';
+import { CustomComboBoxControl, CustomDistanceCalControl } from './CustomControl';
 import styles from './Map.module.scss';
 import MapClickHandler from './MapClickHandler';
 import { swapCoordinates } from './GeoHelpers/SwapCoordinates';
+import MyGeoJson from './MyGeoJson';
+import DrawTools from './component/DrawTools';
 
 const cx = classNames.bind(styles);
 
@@ -64,6 +54,8 @@ function Map() {
     const [featureCollection, setFeatureCollection] = useState(null);
     const [listMapEle, setListMapEle] = useState([]);
     const [positionClicked, setPositionClicked] = useState([0, 0]);
+    const [isCalculateDistance, setIsCalculateDistance] = useState(false);
+    const [range, setRange] = useState(100);
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -81,22 +73,6 @@ function Map() {
         fetchApi();
     }, []);
 
-    const onEachFeature = (feature, layer) => {
-        if (feature.properties && feature.properties.Name_VI) {
-            layer.bindPopup(
-                `<h1>${feature.properties.Name_VI}</h1><h2 style={{ color: '#777' }}>Income: ${feature.properties.Income}</h2>`,
-            );
-        }
-
-        if (feature.properties && feature.properties.Name) {
-            layer.bindPopup(`<h1>${feature.properties.Name}</h1>`);
-        }
-    };
-
-    const pointToLayer = (feature, latlng) => {
-        return L.marker(latlng, { icon: customIcon });
-    };
-
     const handleOptionChange = (value) => {
         const fetchApi = async () => {
             const newJeoJsonDHCT = await axios.get(`http://localhost:8072/api/v1/map/geojson/${value}`);
@@ -105,13 +81,41 @@ function Map() {
         fetchApi();
     };
 
-    const handleClickMap = useCallback(([lat, lng]) => {
-        setPositionClicked([lat, lng]);
-    }, []);
+    const handleClickMap = useCallback(
+        ([lat, lng]) => {
+            const fetchApi = async () => {
+                const newJeoJsonDHCT = await axios.get(`http://localhost:8072/api/v1/map/geojson/distance`, {
+                    params: {
+                        lng: lng,
+                        lat: lat,
+                        range: range,
+                    },
+                });
+                setFeatureCollection(newJeoJsonDHCT.data);
+                setPositionClicked([lat, lng]);
+            };
+            fetchApi();
+        },
+        [range],
+    );
 
-    if (featureCollection) {
-        console.log(swapCoordinates(featureCollection));
-    }
+    // if (featureCollection) {
+    //     console.log(swapCoordinates(featureCollection));
+    // }
+    const handleDistance = () => {
+        setIsCalculateDistance((prev) => {
+            if (!prev === false) {
+                handleOptionChange('all');
+            }
+            return !prev;
+        });
+    };
+
+    const handleOnRangeChange = (value) => {
+        setRange((prev) => value);
+    };
+
+    //console.log(featureCollection);
 
     return (
         <MapContainer center={[10.030249, 105.772097]} zoom={16} style={{ width: '100vw', height: '100vh' }}>
@@ -126,54 +130,41 @@ function Map() {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    {listMapEle?.length > 0 && (
-                        <CustomControl
-                            position="topleft"
-                            options={listMapEle}
-                            onChange={(value) => {
-                                handleOptionChange(value);
-                            }}
-                        />
-                    )}
                 </LayersControl.BaseLayer>
             </LayersControl>
-            {/* <GeoJSON data={geojsonData} onEachFeature={onEachFeature} /> */}
-            <GeoJSON
-                key={hash(featureCollection)}
-                data={featureCollection}
-                onEachFeature={onEachFeature}
-                pointToLayer={pointToLayer}
+            {listMapEle?.length > 0 && (
+                <CustomComboBoxControl
+                    position="topleft"
+                    options={listMapEle}
+                    onChange={(value) => {
+                        handleOptionChange(value);
+                    }}
+                />
+            )}
+            <CustomDistanceCalControl
+                position="topleft"
+                onCalDistance={handleDistance}
+                onInputDistanceChange={handleOnRangeChange}
             />
-            <MapClickHandler onClickMap={handleClickMap} />
-            {positionClicked && (
+            {/* <GeoJSON data={geojsonData} onEachFeature={onEachFeature} /> */}
+
+            <MyGeoJson
+                data={featureCollection}
+                point={positionClicked}
+                pointz={positionClicked}
+                isUse={isCalculateDistance}
+            ></MyGeoJson>
+            <DrawTools />
+
+            {isCalculateDistance && <MapClickHandler onClickMap={handleClickMap} />}
+            {isCalculateDistance && positionClicked?.length !== 0 && (
                 <Marker position={positionClicked} icon={customIcon2}>
                     <Popup>
                         You clicked at {positionClicked[0]}, {positionClicked[1]}
                     </Popup>
                 </Marker>
             )}
-            <Polygon
-                positions={[
-                    [10.031368, 105.770971],
-                    [10.030749, 105.771513],
-                    [10.032028, 105.771534],
-                    [10.031513, 105.77202],
-                ]}
-            >
-                <Popup>Day la vuon bang</Popup>
-            </Polygon>
-
-            {positionClicked && (
-                <Polyline
-                    positions={[
-                        positionClicked,
-                        [10.031368, 105.770971],
-                        [10.030749, 105.771513],
-                        [10.032028, 105.771534],
-                        [10.031513, 105.77202],
-                    ]}
-                ></Polyline>
-            )}
+            <Marker position={[10.031368, 105.770971]} icon={customIcon}></Marker>
         </MapContainer>
     );
 }

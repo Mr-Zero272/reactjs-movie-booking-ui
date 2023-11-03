@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGaugeHigh, faClock, faPenToSquare, faListCheck, faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,7 @@ import FormInputText from '~/components/Form/FormInput/FormInputText';
 import { MovieServiceItem } from '~/components/MovieItem';
 import videos from '~/assets/videos';
 import FloatingButton from '~/components/FloatingButton';
+import * as searchService from '~/apiServices/searchService';
 
 const cx = classNames.bind(styles);
 
@@ -170,14 +171,30 @@ const SlideshowItems = [
 
 function Home() {
     const [focusInputAdv, setFocusInputAdv] = useState(false);
+    const [listMovie1, setListMovie1] = useState([]);
+    const [listMovie2, setListMovie2] = useState([]);
 
     const handleFocusInputAdv = () => {
         setFocusInputAdv(!focusInputAdv);
     };
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result1 = await searchService.search('', 'less', 1);
+            const result2 = await searchService.search('', 'less', 2);
+            setListMovie1(result1);
+            setListMovie2(result2);
+        };
+
+        fetchApi();
+    }, []);
+
+    //console.log(listMovie1);
+    // console.log(listMovie2);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('slide-new-item')}>
-                <Slideshow data={SlideshowItems} />
+                <Slideshow data={listMovie1} />
             </div>
 
             <div className={cx('common-movie')}>
@@ -185,7 +202,7 @@ function Home() {
                     subHeading={{ amount: '33.252+', desc: 'people watched' }}
                     title={'Popular movies'}
                     moreBtn={'Watch full'}
-                    data={listMovieCommon}
+                    data={listMovie1}
                 />
             </div>
 
@@ -194,7 +211,7 @@ function Home() {
                     subHeading={{ amount: '33.252+', desc: 'people watched' }}
                     title={'New movies'}
                     moreBtn={'Watch full'}
-                    data={listMovieCommonWithVideo}
+                    data={listMovie2}
                     horizontalItem
                 />
             </div>

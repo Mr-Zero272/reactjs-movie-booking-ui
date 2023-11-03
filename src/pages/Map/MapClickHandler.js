@@ -5,7 +5,8 @@ function MapClickHandler({ onClickMap }) {
         click(e) {
             const { lat, lng } = e.latlng;
             onClickMap([lat, lng]);
-            console.log([lat, lng]);
+
+            //console.log([lat, lng]);
         },
     });
     return null;

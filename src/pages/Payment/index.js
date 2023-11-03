@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,8 +11,9 @@ import styles from './Payment.module.scss';
 import Button from '~/components/Button';
 import FormInputText2 from '~/components/Form/FormInput/FormInputText2';
 import * as userService from '~/apiServices/userService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
+import * as paymentService from '~/apiServices/paymentService';
 
 const maskPrivateString = (inputString) => {
     // Extract the first three characters
@@ -27,15 +28,42 @@ const maskPrivateString = (inputString) => {
     return maskedString;
 };
 
+const notify = (message, type = 'success') => {
+    toast(message, {
+        type: type,
+        style: { fontSize: '1.4rem' },
+        position: toast.POSITION.TOP_RIGHT,
+        closeOnClick: true,
+        autoClose: 1500,
+        className: 'foo-bar',
+    });
+};
+
+const generateRandomString = (length, key) => {
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' + key;
+    let result = '';
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+    }
+
+    return result;
+};
+
+let toastLoading;
+
 const cx = classNames.bind(styles);
 
 function Payment() {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const paymentSate = useSelector((state) => state.addToCart);
     let [searchParams] = useSearchParams();
     const invoiceInfo = {
-        tt: +searchParams.get('tt'),
-        iv: searchParams.get('iv'),
-        ct: searchParams.get('ct').slice(0, 5) + searchParams.get('iv').slice(5),
+        tt: +searchParams.get('vnp_Amount') / 100,
+        iv: searchParams.get('vnp_TxnRef'),
+        ct: searchParams.get('vnp_OrderInfo'),
     };
     const navigate = useNavigate();
     if (invoiceInfo.tt === null || invoiceInfo.tt === undefined || invoiceInfo.tt === '') {
@@ -71,11 +99,59 @@ function Payment() {
         fetchApi();
     }, []);
 
+    useEffect(() => {
+        const rspCode = searchParams.get('vnp_ResponseCode');
+        //console.log(rspCode);
+        if (rspCode !== null) {
+            const vnp_Amount = searchParams.get('vnp_Amount');
+            const vnp_BankCode = searchParams.get('vnp_BankCode');
+            const vnp_BankTranNo = searchParams.get('vnp_BankTranNo');
+            const vnp_CardType = searchParams.get('vnp_CardType');
+            const vnp_OrderInfo = searchParams.get('vnp_OrderInfo');
+            const vnp_PayDate = searchParams.get('vnp_PayDate');
+            const vnp_ResponseCode = searchParams.get('vnp_ResponseCode');
+            const vnp_TmnCode = searchParams.get('vnp_TmnCode');
+            const vnp_TransactionNo = searchParams.get('vnp_TransactionNo');
+            const vnp_TransactionStatus = searchParams.get('vnp_TransactionStatus');
+            const vnp_TxnRef = searchParams.get('vnp_TxnRef');
+            const vnp_SecureHash = searchParams.get('vnp_SecureHash');
+
+            const result = paymentService.checkTransactionState(
+                vnp_Amount,
+                vnp_BankCode,
+                vnp_BankTranNo,
+                vnp_CardType,
+                vnp_OrderInfo,
+                vnp_PayDate,
+                vnp_ResponseCode,
+                vnp_TmnCode,
+                vnp_TransactionNo,
+                vnp_TransactionStatus,
+                vnp_TxnRef,
+                vnp_SecureHash,
+            );
+            //console.log(result);
+            if (result.rspCode === '00') {
+                notify('Payment completed ^-^', 'success');
+                setTimeout(() => {
+                    setTimeout(() => {
+                        localStorage.setItem('paymentStatus', true);
+                        window.close();
+                    }, 1500);
+                });
+                // setTimeout(() => {
+                //     navigate(-1);
+                // }, 2000);
+            }
+        }
+    }, [location]);
+    //console.log(paymentSate);
+
     const handleSubmit = () => {
-        const id = toast.loading('Please wait...');
+        toastLoading = toast.loading('Please wait...');
         if (paymentInfo.content !== 'MOONMOVIE ' + invoiceInfo.ct) {
             setTimeout(() => {
-                toast.update(id, {
+                toast.update(toastLoading, {
                     render: 'Payment failed --!',
                     type: 'error',
                     isLoading: false,
@@ -87,18 +163,13 @@ function Payment() {
                 }, 2000);
             }, 2000);
         } else {
-            setTimeout(() => {
-                toast.update(id, {
-                    render: 'Payment completed ^-^',
-                    type: 'success',
-                    isLoading: false,
-                    autoClose: 2000,
-                });
-                dispatch(addToCartActions.setPaymentStatus(true));
-                setTimeout(() => {
-                    navigate(-1);
-                }, 2000);
-            }, 2000);
+            const urlPayment = paymentService.createPayment(
+                invoiceInfo.tt,
+                paymentInfo.content,
+                'http://localhost:3001/payment',
+                invoiceInfo.iv,
+            );
+            window.open(urlPayment, '_self')?.focus();
         }
     };
 
@@ -160,10 +231,13 @@ function Payment() {
                 <div className={cx('payment-info-body')}>
                     <div className={cx('payment-methods')}>
                         <div className={cx('payment-method', 'activem')}>
-                            <p>Moon Pay</p>
+                            <p>VN Pay</p>
                         </div>
-                        <div className={cx('payment-method')}>
-                            <p>SSS Pay</p>
+                        <div
+                            className={cx('payment-method')}
+                            onClick={() => notify('This payment method is in development.', 'warning')}
+                        >
+                            <p>Moon Pay</p>
                         </div>
                         <div className={cx('payment-method', 'more')}>
                             <p>

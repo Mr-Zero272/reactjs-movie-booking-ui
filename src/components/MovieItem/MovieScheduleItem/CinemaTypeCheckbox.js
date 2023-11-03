@@ -50,7 +50,8 @@ function CinemaTypeCheckbox({ type, schedule, onCheck, activeDate, active = fals
                             <Link
                                 to={'/booking?tab=1'}
                                 className={cx('schedule-item', { hidden: !active })}
-                                onClick={() =>
+                                onClick={() => {
+                                    dispatch(addToCartActions.refreshState());
                                     dispatch(
                                         addToCartActions.addToCart({
                                             activeMovie: cId,
@@ -64,8 +65,8 @@ function CinemaTypeCheckbox({ type, schedule, onCheck, activeDate, active = fals
                                                 activeDate: item.screening_start,
                                             },
                                         }),
-                                    )
-                                }
+                                    );
+                                }}
                             >
                                 {tempDate.getHours() +
                                     ':' +

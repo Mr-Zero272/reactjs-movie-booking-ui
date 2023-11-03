@@ -50,7 +50,6 @@ function Profile() {
     const handleSubmit = useCallback(
         (isEdit) => {
             if (!isEdit) {
-                const id = toast.loading('Please wait...');
                 // check mail valid
                 if (isValidEmail(userDetail.email) === false) {
                     setUserDetail((prev) => ({
@@ -78,7 +77,7 @@ function Profile() {
                         phoneErrorMessage: '',
                     }));
                 }
-
+                const id = toast.loading('Please wait...');
                 // if both is validation continue
                 if (isValidEmail(userDetail.email) && isVietnamesePhoneNumber(userDetail.phone)) {
                     const fetchApi = async () => {
@@ -113,6 +112,7 @@ function Profile() {
                     toast.update(id, {
                         render: 'Update successfully!',
                         type: 'success',
+                        closeOnClick: true,
                         isLoading: false,
                         autoClose: 2000,
                     });

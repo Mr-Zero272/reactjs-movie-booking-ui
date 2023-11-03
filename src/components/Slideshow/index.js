@@ -8,6 +8,7 @@ import classNames from 'classnames/bind';
 
 import styles from './Slideshow.module.scss';
 import Item from './Item';
+import baseUrl from '~/config/baseUrl';
 
 // nho xoa
 
@@ -30,15 +31,9 @@ function CustomPrevArrow(props) {
     );
 }
 
-function Slideshow({ data }) {
-    const [showText, setShowText] = useState(true);
+const whiteTextArray = [6, 4];
 
-    const handleBeforeChange = () => {
-        setShowText(false);
-    };
-    const handleAfterChange = () => {
-        setShowText(true);
-    };
+function Slideshow({ data }) {
     var settings = {
         // customPaging: function (i) {
         //     return (
@@ -50,10 +45,11 @@ function Slideshow({ data }) {
         //         </a>
         //     );
         // },
+        autoplay: true,
         dots: true,
         infinite: true,
         arrows: true,
-        //fade: true,
+        fade: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -62,29 +58,28 @@ function Slideshow({ data }) {
     };
     return (
         <div className={cx('wrapper')}>
-            <Slider {...settings} beforeChange={handleBeforeChange} afterChange={handleAfterChange}>
-                <Item
-                    showTextAnimation={showText}
-                    //hideTextAnimation={!showText}
-                    heading={data[1].heading}
-                    desc={data[1].desc}
-                    button={data[1].button}
-                    imgUrl={data[1].imgUrl}
-                    href={data[1].href}
-                    whiteText={data[1].whiteText}
-                    noContent={data[1].noContent}
-                />
-                <Item
-                    showTextAnimation={showText}
-                    //hideTextAnimation={!showText}
-                    heading={data[0].heading}
-                    desc={data[0].desc}
-                    button={data[0].button}
-                    imgUrl={data[0].imgUrl}
-                    href={data[0].href}
-                    whiteText={data[0].whiteText}
-                    noContent={data[0].noContent}
-                />
+            <Slider {...settings}>
+                {data.map((item) => {
+                    const date = new Date(item.releaseDate);
+
+                    return (
+                        <Item
+                            key={item.id}
+                            showTextAnimation={'show'}
+                            //hideTextAnimation={!showText}
+                            heading={item.title}
+                            desc={item.description.slice(0, 200)}
+                            imgUrl={baseUrl.image + item.horizontalImage}
+                            rating={item.rating / 10}
+                            duration={item.duration_min}
+                            releaseDate={date.getFullYear()}
+                            href={'/detail/' + item.id}
+                            cast={item.cast}
+                            whiteText={whiteTextArray.includes(item.id)}
+                            noContent={false}
+                        />
+                    );
+                })}
             </Slider>
         </div>
     );

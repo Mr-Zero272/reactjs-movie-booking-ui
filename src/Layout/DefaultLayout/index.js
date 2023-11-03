@@ -20,7 +20,7 @@ function DefaultLayout({ children }) {
             <Header onToggleMenu={handleOpenMenu} />
             <SideBarResponsive state={toggleMenu} onToggleMenu={handleOpenMenu} />
             <div className={cx('container')}>
-                <Sidebar className={cx('sidebar')} tabs={['home', 'schedule', 'ticket', 'blog']} />
+                <Sidebar className={cx('sidebar')} tabs={['home', 'schedule', 'ticket', 'map']} />
                 <div className={cx('content')}>{children}</div>
             </div>
             <Footer />

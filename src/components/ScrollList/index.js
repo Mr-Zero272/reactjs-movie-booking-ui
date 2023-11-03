@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ScrollList.module.scss';
 import MovieItemCommon from '~/components/MovieItem/MovieItemCommon';
+import baseUrl from '~/config/baseUrl';
 
 const cx = classNames.bind(styles);
 function ScrollList({
@@ -37,25 +39,30 @@ function ScrollList({
                         </a>
                     </h2>
                     {moreBtn && (
-                        <a className={cx('view-all')} rel="noreferrer" target="_self" href="/learning-paths">
+                        <Link className={cx('view-all')} rel="noreferrer" target="_self" to="/search">
                             {moreBtn} <FontAwesomeIcon icon={faChevronCircleRight} />
-                        </a>
+                        </Link>
                     )}
                 </div>
             </div>
             <div className={cx('body')}>
                 <section className={classesRow}>
                     {data &&
-                        data.map((item, index) => (
-                            <section key={index} className={classesCol}>
+                        data.map((item) => (
+                            <section key={item.id} className={classesCol}>
                                 <MovieItemCommon
                                     horizontal={horizontalItem}
-                                    imgURL={item.imgURL}
-                                    movieName={item.movieName}
-                                    genres={item.genres}
-                                    runTime={item.runTime}
+                                    imgURL={
+                                        horizontalItem
+                                            ? baseUrl.image + item.horizontalImage
+                                            : baseUrl.image + item.verticalImage
+                                    }
+                                    movieName={item.title}
+                                    genres={item.cast}
+                                    runTime={item.duration_min + ' min'}
                                     rating={item.rating}
-                                    video={item.video}
+                                    video={baseUrl.video + item.trailer}
+                                    detail={'/detail/' + item.id}
                                 />
                             </section>
                         ))}

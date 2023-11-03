@@ -4,15 +4,17 @@ import Button from '~/components/Button';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle, faStar } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 function Item({
     heading,
     desc,
-    button,
     imgUrl,
     href,
+    rating,
+    cast,
+    releaseDate,
+    duration,
     whiteText = false,
     noContent = false,
     showTextAnimation: show,
@@ -31,24 +33,22 @@ function Item({
                     <div className={cx('sub-heading', { whiteText })}>
                         <div className={cx('rating')}>
                             <FontAwesomeIcon className={cx('star')} icon={faStar} />
-                            <span> 8.7</span>
+                            <span> {rating}</span>
                         </div>
-                        <div className={cx('premiere-date')}>2017</div>
-                        <div className={cx('runtime')}>1h 27min</div>
+                        <div className={cx('premiere-date')}>{releaseDate}</div>
+                        <div className={cx('runtime')}>{duration}min</div>
                     </div>
                 </div>
                 <div className={cx('body')}>
                     <p className={cx('desc')}>{desc}</p>
                     <div className={cx('cta-btn')}>
                         <Button primary leftIcon={<FontAwesomeIcon icon={faPlayCircle} />} to={href}>
-                            {button}
+                            More detail
                         </Button>
                     </div>
                 </div>
                 <div className={cx('footer')}>
-                    <div className={cx('starting', { whiteText })}>
-                        Starring: Kenny, David, John, Kenny, David, John,Kenny, David, John.
-                    </div>
+                    <div className={cx('starting', { whiteText })}>{cast}</div>
                 </div>
             </div>
         </div>

@@ -51,16 +51,16 @@ function Footer() {
                         <h4>online shop</h4>
                         <ul>
                             <li>
-                                <a href="#">watch</a>
+                                <a href="#">ticket</a>
                             </li>
                             <li>
-                                <a href="#">bag</a>
+                                <a href="#">fast food</a>
                             </li>
                             <li>
-                                <a href="#">shoes</a>
+                                <a href="#">Souvenirs</a>
                             </li>
                             <li>
-                                <a href="#">dress</a>
+                                <a href="#">Other</a>
                             </li>
                         </ul>
                     </div>

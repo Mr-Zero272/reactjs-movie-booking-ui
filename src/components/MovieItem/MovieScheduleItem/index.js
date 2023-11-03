@@ -10,6 +10,7 @@ import ListTimeItem from '~/components/ListTimeItem';
 import CinemaTypeCheckbox from './CinemaTypeCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
+import CustomImage from '~/components/CustomImage';
 
 const cx = classNames.bind(styles);
 
@@ -79,13 +80,14 @@ function MovieScheduleItem({ data, types = [] }) {
     };
 
     //console.log(data);
-    console.log(filterSchedule);
+    //console.log(filterSchedule);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('left')}>
                 <div className={cx('main-content')}>
                     <Link to={'/detail/' + data.id} className={cx('img')}>
                         <img src={'http://localhost:8081/movie/images/' + data.verticalImage} alt={data.title} />
+                        {/* <CustomImage src={data.verticalImage} alt={data.title} /> */}
                     </Link>
                     <div className={cx('main-content-left')}>
                         <div className={cx('movie-info')}>

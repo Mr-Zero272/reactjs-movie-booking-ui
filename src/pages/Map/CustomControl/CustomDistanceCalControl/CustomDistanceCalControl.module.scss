@@ -1,0 +1,30 @@
+.input-wrap {
+    background: rgba(22, 24, 35, 0.06);
+    border: 1px solid rgba(22, 24, 35, 0.06);
+    border-radius: 44px;
+    display: flex;
+    height: 30px;
+    overflow: hidden;
+    width: 150px;
+
+    // &:focus-within {
+    //     border: 1px solid var(--primary);
+    // }
+
+    input {
+        background: var(--white);
+        font-size: 1.6rem;
+        padding: 12px 20px;
+        padding: 0 5px;
+        width: 100%;
+    }
+}
+
+.button {
+    margin-top: 6px;
+    padding: 12px 20px;
+    background-color: var(--primary);
+    color: var(--white);
+    cursor: pointer;
+    border-radius: 20px;
+}

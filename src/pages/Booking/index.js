@@ -12,7 +12,6 @@ import { MovieItemWithDesc } from '~/components/MovieItem';
 import NavStepper from '~/components/NavStepper';
 import { Step1, Step2, Step3 } from './FormBooking';
 import { addToCartActions, fetchInfoAddToCart } from '~/store/add-to-cart-slice';
-import { changeAvatar } from '~/utils/request';
 
 const getUniqueArray = (array) => {
     var uniqueArray = array.filter(
@@ -47,6 +46,7 @@ function Booking() {
             style: { fontSize: '1.4rem' },
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
+            closeOnClick: true,
             className: 'foo-bar',
         });
     };
@@ -61,14 +61,14 @@ function Booking() {
                 }
             }
             if (stepIndex === 3) {
-                if (userInfo.username === '' || userInfo.email === '') {
-                    notify('You cannot leave either or both of the username and email fields blank.', 'error');
-                    return;
-                }
-
                 //console.log(checkoutInfo.paymentStatus, 'asdfasdf');
                 if (checkoutInfo.paymentStatus === false) {
                     notify('You must complete payment to go to the next step!!', 'error');
+                    return;
+                }
+
+                if (userInfo.username === '' || userInfo.email === '') {
+                    notify('You cannot leave either or both of the username and email fields blank.', 'error');
                     return;
                 }
             }

@@ -280,7 +280,13 @@ function Pagination() {
                         </ul>
                     </li>
                 </ul>
-                <span className={cx('showing_results')}>Showing 1–3 of 12 results</span>
+                <span className={cx('showing_results')}>
+                    Showing 1–
+                    {fullFilterInfo.pagination.size > fullFilterInfo.pagination.totalResult
+                        ? fullFilterInfo.pagination.totalResult
+                        : fullFilterInfo.pagination.size}{' '}
+                    of {fullFilterInfo.pagination.totalResult} results
+                </span>
                 <div className={cx('pages', 'd-flex', 'flex-row', 'align-items-center')}>
                     {fullFilterInfo.pagination.currentPage > 1 && (
                         <div className={cx('page_prev')} onClick={() => dispatch(paginationAction.prevPage())}>

@@ -80,3 +80,14 @@ export const deleteTicket = async (path, options = {}) => {
 };
 
 export default request;
+
+//payment
+const requestPayment = axios.create({
+    baseURL: 'https://sandbox.vnpayment.vn',
+});
+
+export const createPayment = async (path, options = {}) => {
+    const response = await requestCart.get(path, options);
+
+    return response;
+};

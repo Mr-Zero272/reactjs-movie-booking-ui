@@ -46,7 +46,7 @@ function Schedule() {
     };
     return (
         <div className={cx('wrapper')}>
-            <TitleHeadingPage title={'TODAY MOVIE'} />
+            <TitleHeadingPage title={'SCHEDULE'} />
             <div className={cx('filter')}>
                 <SelectOption options={baseData.genres} defaultValue={''} onSelectOption={handleSelectMenuOption} />
                 <div className={cx('filter-checkbox')}>

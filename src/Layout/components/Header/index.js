@@ -21,6 +21,8 @@ import Search from '../Search';
 import { userActions } from '~/store/user-slice';
 import * as userService from '~/apiServices/userService';
 import { fetchQuantityCart } from '~/store/cart-quantity';
+import baseUrl from '~/config/baseUrl';
+import routes from '~/config/routes';
 
 const cx = classNames.bind(styles);
 
@@ -123,15 +125,19 @@ function Header({ onToggleMenu }) {
         }
     };
 
-    const handleErrorImage = () => {
-        dispatch(userActions.haveChange());
-        if (currentUser.avatar === '') {
-            dispatch(userActions.setAvatar('no_image.png'));
-            imageRef.current.src = require('~/assets/images/no_image.png');
-        } else {
-            imageRef.current.src = currentUser.avatar;
-        }
-    };
+    // const handleErrorImage = () => {
+    //     dispatch(userActions.haveChange());
+    //     if (currentUser.avatar === '' || currentUser.avatar === undefined) {
+    //         dispatch(userActions.setAvatar('no_image.png'));
+    //         imageRef.current.src = require('~/assets/images/no_image.png');
+    //     } else {
+    //         imageRef.current.src = currentUser.avatar;
+    //     }
+    // };
+    // useEffect(() => {
+    //     imageRef.src = baseUrl.image + currentUser.avatar + '?type=avatar';
+    //     console.log(currentUser.avatar);
+    // }, [currentUser.avatar]);
 
     return (
         <header className={cx('container')}>
@@ -139,7 +145,7 @@ function Header({ onToggleMenu }) {
                 <button className={cx('more-btn', 'menu-sidebar')} onClick={onToggleMenu}>
                     <FontAwesomeIcon icon={faBars} />
                 </button>
-                <Link className={cx('logo')} to="/">
+                <Link className={cx('logo')} to={routes.home}>
                     <img src={images.logo} alt="logo" height={30} width={30} />
                     <h4 className={cx('logo-heading')}>
                         Moon <span style={{ color: 'var(--primary)' }}>M</span>ovie
@@ -163,19 +169,14 @@ function Header({ onToggleMenu }) {
                                     <Button to="/profile" className={cx('more-btn')}>
                                         {/* <Image className={cx('user-avatar')} src={avatar} alt="avatar" ref={imageRef} /> */}
                                         {/* <img className={cx('user-avatar')} src={avatar} alt="avatar" ref={imageRef} /> */}
+
                                         <img
                                             className={cx('user-avatar')}
                                             ref={imageRef}
-                                            src={
-                                                currentUser.avatar
-                                                    ? 'http://localhost:8081/movie/images/' +
-                                                      currentUser.avatar +
-                                                      '?type=avatar'
-                                                    : ''
-                                            }
+                                            src={baseUrl.image + currentUser.avatar + '?type=avatar'}
                                             alt="avatar"
-                                            onError={handleErrorImage}
                                         />
+
                                         {/* <img className={cx('user-avatar')} src={images.fakeAvatar} alt="avatar" /> */}
                                     </Button>
                                 </Menu>

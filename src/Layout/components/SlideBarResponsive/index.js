@@ -6,10 +6,10 @@ import {
     faHouse,
     faCalendarCheck,
     faBell,
-    faMessage,
     faGear,
     faRightFromBracket,
     faCalendar,
+    faMap,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
@@ -44,21 +44,21 @@ function SideBarResponsive({ state, onToggleMenu }) {
                                 </Link>
                             </li>
                             <li className={cx('list')}>
-                                <Link to="/schedule" className={cx('nav-link')} onClick={onToggleMenu}>
+                                <Link to="/schedule?_type=schedule" className={cx('nav-link')} onClick={onToggleMenu}>
                                     <FontAwesomeIcon className={cx('icon')} icon={faCalendar} />
                                     <span className={cx('link')}>Schedule</span>
                                 </Link>
                             </li>
                             <li className={cx('list')}>
-                                <Link to="/booking" className={cx('nav-link')} onClick={onToggleMenu}>
+                                <Link to="/ticket?_type=ticket&tab=1" className={cx('nav-link')} onClick={onToggleMenu}>
                                     <FontAwesomeIcon className={cx('icon')} icon={faCalendarCheck} />
-                                    <span className={cx('link')}>Booking</span>
+                                    <span className={cx('link')}>Ticket</span>
                                 </Link>
                             </li>
                             <li className={cx('list')}>
-                                <Link to="/blog" className={cx('nav-link')} onClick={onToggleMenu}>
-                                    <FontAwesomeIcon className={cx('icon')} icon={faMessage} />
-                                    <span className={cx('link')}>Blog</span>
+                                <Link to="/map?_type=map" className={cx('nav-link')} onClick={onToggleMenu}>
+                                    <FontAwesomeIcon className={cx('icon')} icon={faMap} />
+                                    <span className={cx('link')}>Map</span>
                                 </Link>
                             </li>
                             <li className={cx('list')}>

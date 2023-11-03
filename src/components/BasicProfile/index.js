@@ -23,7 +23,8 @@ function BasicProfile({ userDetail = { avatar: '', username: 'username', email: 
         toast.success('Avatar has been updated!!!', {
             style: { fontSize: '1.4rem' },
             position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
+            autoClose: 1500,
+            closeOnClick: true,
             className: 'foo-bar',
         });
     };
@@ -35,10 +36,13 @@ function BasicProfile({ userDetail = { avatar: '', username: 'username', email: 
             formData.append('file', avatar);
             const result = await userService.changeAvatar(token, formData);
             //console.log(result);
+            const dotIndex = avatar.name.lastIndexOf('.');
+            const newAvatar =
+                avatar.name.substring(0, dotIndex) + userDetail.username + avatar.name.substring(dotIndex);
+            dispatch(userActions.setAvatar(newAvatar));
         };
 
         if (avatar.preview) {
-            dispatch(userActions.setAvatar(avatar.name));
             //console.log(avatar.name);
             fetchApi();
             notify();

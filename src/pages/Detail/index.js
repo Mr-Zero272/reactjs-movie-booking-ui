@@ -10,7 +10,6 @@ import FullViewBannerTrailer from '~/components/FullViewBannerTrailer';
 import MovieScheduleItem from '~/components/MovieItem/MovieScheduleItem';
 import TitleHeadingPage from '~/components/TitleHeadingPage';
 import { LineTable, ListUserTable } from '~/components/Table';
-import Slideshow from '~/components/Slideshow';
 import FloatingButton from '~/components/FloatingButton';
 import * as searchService from '~/apiServices/searchService';
 import Slider from 'react-slick';

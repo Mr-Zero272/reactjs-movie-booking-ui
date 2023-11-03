@@ -20,7 +20,7 @@ const userSlice = createSlice({
         setAvatar(state, action) {
             return {
                 ...state,
-                avatar: 'http://localhost:8081/movie/images/' + action.payload + '?type=avatar',
+                avatar: action.payload,
             };
         },
         setUserStatus(state, action) {

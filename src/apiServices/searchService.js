@@ -1,12 +1,12 @@
 import * as request from '~/utils/request';
 
-export const search = async (q, type = 'less') => {
+export const search = async (q, type = 'less', cpage = 1) => {
     try {
         const res = await request.get('/search', {
             params: {
                 q,
                 type,
-                cpage: 1,
+                cpage,
             },
         });
         return res.movies;

@@ -13,6 +13,13 @@ const cx = classNames.bind(styles);
 
 // call api va lay data nay
 // nho lay ngay hien tai
+
+const listAuditoriums = [
+    { id: 1, name: 'CGV' },
+    { id: 2, name: 'Lotte' },
+    { id: 3, name: 'Blue Sky' },
+    { id: 4, name: 'Stars' },
+];
 const timeDataTest = [
     {
         dateInformation: { day: 'Mon', date: 11, month: 'Sep', year: 2023, fullNameDay: 'Monday' },
@@ -209,27 +216,21 @@ function ShowTime() {
                     >
                         <ul className={cx('product_sorting')}>
                             <li>
-                                <span>Auditorium:</span>
+                                <span>
+                                    Auditorium:{' '}
+                                    {addToCartInfo.activeAuditorium !== 0 &&
+                                        listAuditoriums.find((item) => item.id === addToCartInfo.activeAuditorium).name}
+                                </span>
                                 <FontAwesomeIcon icon={faAngleDown} className={cx('i')} />
                                 <ul className={cx('sorting_num')}>
-                                    <li
-                                        className={cx('num_sorting_btn')}
-                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(1))}
-                                    >
-                                        <span>The sunshine</span>
-                                    </li>
-                                    <li
-                                        className={cx('num_sorting_btn')}
-                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(2))}
-                                    >
-                                        <span>CGV</span>
-                                    </li>
-                                    <li
-                                        className={cx('num_sorting_btn')}
-                                        onClick={() => dispatch(addToCartActions.chooseAuditorium(3))}
-                                    >
-                                        <span>Lottee</span>
-                                    </li>
+                                    {listAuditoriums.map((auditorium) => (
+                                        <li
+                                            className={cx('num_sorting_btn')}
+                                            onClick={() => dispatch(addToCartActions.chooseAuditorium(auditorium.id))}
+                                        >
+                                            <span>{auditorium.name}</span>
+                                        </li>
+                                    ))}
                                 </ul>
                             </li>
                         </ul>

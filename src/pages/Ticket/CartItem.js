@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -14,12 +13,12 @@ import * as cartService from '~/apiServices/cartService';
 const cx = classNames.bind(styles);
 
 const dF = () => {};
-function CartItem({ data, onSelect = dF, onDelete = dF }) {
-    const [checked, setChecked] = useState(false);
+function CartItem({ data, checked = false, onSelect = dF, onDelete = dF }) {
+    //const [checked, setChecked] = useState(false);
     //console.log(data);
 
     const handleCheck = () => {
-        setChecked(!checked);
+        //setChecked(!checked);
         onSelect(data.seatStatus.id);
     };
 

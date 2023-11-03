@@ -1,15 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Ticket.module.scss';
 
 import CartItem from './CartItem';
 import * as cartService from '~/apiServices/cartService';
-import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
 import { fetchQuantityCart } from '~/store/cart-quantity';
 
 const cx = classNames.bind(styles);
-const defaultF = () => {};
 function Cart() {
     const dispatch = useDispatch();
     const cartInfo = useSelector((state) => state.addToCart);
@@ -89,6 +88,7 @@ function Cart() {
             {listTicket.map((item) => (
                 <CartItem
                     key={item.seatStatus.id}
+                    checked={cartInfo.listSeatSelected.some((it) => it.seatId === item.seatStatus.id)}
                     data={item}
                     onSelect={handleCheck}
                     onDelete={handleDeleteItemInCart}

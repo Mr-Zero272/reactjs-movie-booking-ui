@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,8 @@ import SeatChosen from './SeatChosen';
 import TitleHeadingPage from '~/components/TitleHeadingPage';
 import Button from '~/components/Button';
 import images from '~/assets/images';
+import { addToCartActions } from '~/store/add-to-cart-slice';
+import * as paymentService from '~/apiServices/paymentService';
 
 const generateRandomString = (length, key) => {
     const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' + key;
@@ -27,6 +29,7 @@ const generateRandomString = (length, key) => {
 
 const cx = classNames.bind(styles);
 function Step2({ onNextStep, onChangeInfo }) {
+    const dispatch = useDispatch();
     const addToCartInfo = useSelector((state) => state.addToCart);
     let [searchParams, setSearchParams] = useSearchParams();
     const tab = searchParams.get('tab');
@@ -42,6 +45,24 @@ function Step2({ onNextStep, onChangeInfo }) {
         setUserInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
         onChangeInfo(e);
     };
+
+    //check if this tab is focus again
+    useEffect(() => {
+        const handleTabFocus = () => {
+            const paymentS = localStorage.getItem('paymentStatus');
+            if (paymentS !== null && paymentS === 'true') {
+                console.log(paymentS);
+                dispatch(addToCartActions.setPaymentStatus(paymentS));
+                localStorage.removeItem('paymentStatus');
+            }
+            //console.log('tab is focus');
+        };
+        window.addEventListener('focus', handleTabFocus);
+
+        return () => {
+            window.removeEventListener('focus', handleTabFocus);
+        };
+    }, []);
 
     //console.log(userInfo);
 
@@ -103,10 +124,16 @@ function Step2({ onNextStep, onChangeInfo }) {
                         <p>Or you can click here!</p>
                         {!addToCartInfo.paymentStatus && (
                             <Button
-                                to={`/payment?tt=${addToCartInfo.totalPayment}&iv=${generateRandomString(
+                                href={`/payment?vnp_Amount=${
+                                    addToCartInfo.totalPayment * 100
+                                }&vnp_TxnRef=${generateRandomString(10, 'K78FEU')}&vnp_OrderInfo=${generateRandomString(
                                     10,
-                                    'K78FEU',
-                                )}&ct=${generateRandomString(9, 'KJG809L3')}`}
+                                    'HY45E39R',
+                                )}`}
+                                target="_blank"
+                                onClick={() => {
+                                    localStorage.setItem('paymentStatus', false);
+                                }}
                                 primary
                             >
                                 Pay now!!
