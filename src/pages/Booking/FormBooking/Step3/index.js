@@ -77,8 +77,8 @@ function Step3({ userInfo }) {
             const nameInTicket = userInfo.username;
             const emailInTicket = userInfo.email;
             //console.log(ids);
-            const paid = addToCartInfo.paymentStatus;
-            const result = await cartService.checkout(token, ids, paid, nameInTicket, emailInTicket);
+            const invoiceId = addToCartInfo.invoiceId;
+            const result = await cartService.checkout(token, ids, invoiceId, nameInTicket, emailInTicket);
             //console.log(result);
             if (result && result.message === 'success') {
                 notify('Complete checkout! Thank for you order WUW!', 'success');

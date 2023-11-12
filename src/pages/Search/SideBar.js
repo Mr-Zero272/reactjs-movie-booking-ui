@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Search.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { faAngleDoubleRight, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames/bind';
+
+import styles from './Search.module.scss';
 import { paginationAction } from '~/store/pagination-slice';
-import axios from 'axios';
 
 const cx = classNames.bind(styles);
 

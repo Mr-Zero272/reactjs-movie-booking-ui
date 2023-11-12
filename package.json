@@ -33,7 +33,8 @@
     "redux": "^4.2.1",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.7.32",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "wkt": "^0.1.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

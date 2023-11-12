@@ -79,15 +79,16 @@ export const deleteTicket = async (path, options = {}) => {
     return response.data;
 };
 
-export default request;
+export const createOrderPayment = async (path, data, options = {}) => {
+    const response = await requestCart.post(path, data, options);
 
-//payment
-const requestPayment = axios.create({
-    baseURL: 'https://sandbox.vnpayment.vn',
-});
+    return response.data;
+};
 
-export const createPayment = async (path, options = {}) => {
+export const checkInvoiceExists = async (path, options = {}) => {
     const response = await requestCart.get(path, options);
 
-    return response;
+    return response.data;
 };
+
+export default request;

@@ -73,14 +73,14 @@ export const getListTicketsBeforeBook = async (ids) => {
     }
 };
 
-export const checkout = async (token = '', ids = [], paid = false, nameInTicket = '', emailInTicket = '') => {
+export const checkout = async (token = '', ids = [], invoiceId = '', nameInTicket = '', emailInTicket = '') => {
     //console.log(ids);
     try {
         const res = await request.checkout(
             '/checkout',
             {
                 ids,
-                paid,
+                invoiceId,
                 nameInTicket,
                 emailInTicket,
             },
@@ -102,6 +102,40 @@ export const deleteTicketById = async (token = '', ids = []) => {
             data: {
                 ids,
             },
+        });
+        return res;
+    } catch (error) {
+        alert(error);
+    }
+};
+
+export const createOrderPayment = async (token = '', invoiceId = '', paid = false) => {
+    //console.log(ids);
+    try {
+        const res = await request.createOrderPayment(
+            '/payment',
+            {
+                paid,
+                invoiceId,
+            },
+            {
+                headers: { Authorization: 'Bearer ' + token },
+            },
+        );
+        return res;
+    } catch (error) {
+        alert(error);
+    }
+};
+
+export const isThisInvoiceExists = async (token, invoiceId = '') => {
+    //console.log(ids);
+    try {
+        const res = await request.checkInvoiceExists('/payment', {
+            params: {
+                invoiceId,
+            },
+            headers: { Authorization: 'Bearer ' + token },
         });
         return res;
     } catch (error) {

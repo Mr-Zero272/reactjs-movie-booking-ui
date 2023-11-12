@@ -1,0 +1,23 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.input-popup {
+    padding: 6px 8px;
+    height: 55px;
+    font-size: 2rem;
+    border-radius: 12px;
+
+    &:focus {
+        border: 1px solid #ddd;
+    }
+}
+
+.btn-popup {
+    padding: 6px 14px;
+    border-radius: 8px;
+    color: var(--white);
+    background: var(--primary);
+    cursor: pointer;
+}

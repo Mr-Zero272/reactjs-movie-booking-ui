@@ -47,12 +47,14 @@ const addToCartSlice = createSlice({
         listSeatSelected: [],
         totalPayment: 0,
         paymentStatus: false,
+        invoiceId: '',
     },
     reducers: {
         setPaymentStatus(state, action) {
             return {
                 ...state,
-                paymentStatus: action.payload,
+                paymentStatus: action.payload.status,
+                invoiceId: action.payload.invoiceId,
             };
         },
         setTotalPayment(state, action) {

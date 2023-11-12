@@ -23,8 +23,17 @@ function Form({
     const classes = cx('wrapper', {
         [className]: className,
     });
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            if (isValidateForm) {
+                onSubmit();
+            }
+        }
+    };
+
     return (
-        <div className={classes}>
+        <div className={classes} onKeyDown={handleKeyPress}>
             {noFormHeader === false && (
                 <div className={cx('form-header')}>
                     {backBtn && (

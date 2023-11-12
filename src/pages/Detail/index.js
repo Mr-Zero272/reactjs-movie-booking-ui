@@ -31,51 +31,13 @@ const testDataCastList = [
     { avatar: 'https://i.pinimg.com/originals/32/5e/5b/325e5b10dc78eb368ae07bd748da2d07.jpg', name: 'Sam' },
 ];
 
-const SlideshowItems = [
-    {
-        heading: 'Film name 1',
-        desc: 'Lorem Ipsum is simply dummy text oxt ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        button: 'Watch now',
-        imgUrl: 'https://i.pinimg.com/originals/3f/f9/6c/3ff96cece6525e421a760fc976688cb7.jpg',
-        href: '/booking?id=1',
-        whiteText: false,
-        noContent: true,
-    },
-    {
-        heading: 'Film name 2',
-        desc: 'Lorem I industry. Lorem Ipsum hase 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        button: 'Watch now',
-        imgUrl: 'https://i.pinimg.com/originals/38/19/80/3819805f78058157a38831ce1baf6363.png',
-        href: '/booking?id=2',
-        whiteText: true,
-        noContent: true,
-    },
-    {
-        heading: '1917',
-        desc: 'Lorem Ipsum is simply dustry. Lo ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        button: 'Watch now',
-        imgUrl: 'https://i.pinimg.com/originals/83/ef/a6/83efa6577b979b6928d1565620b90eff.jpg',
-        href: '/booking?id=3',
-        whiteText: true,
-        noContent: true,
-    },
-    {
-        heading: 'Film name 4',
-        desc: 'Lorem Ipsum is simply dmmy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-        button: 'Watch now',
-        imgUrl: 'https://i.pinimg.com/originals/32/b9/25/32b92506056c80dd7628b5c15ca72e34.jpg',
-        href: '/booking?id=4',
-        noContent: true,
-        whiteText: true,
-    },
-];
 function Detail() {
     const [movieInfo, setMovieInfo] = useState({ galleries: [] });
     const [listTypes, setListTypes] = useState([]);
-    const movieId = useParams('movieId');
+    const { movieId } = useParams('movieId');
     useEffect(() => {
         const fetchApi = async () => {
-            const result = await searchService.getMovieInfo(movieId.movieId);
+            const result = await searchService.getMovieInfo(movieId);
             const types = await axios.get('http://localhost:8081/api/v1/screening/type');
             //console.log(result);
             setMovieInfo(result);

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faSpinner, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -16,6 +16,7 @@ import { paginationAction } from '~/store/pagination-slice';
 const cx = classNames.bind(styles);
 function Search() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
@@ -66,6 +67,13 @@ function Search() {
     const handleSubmit = (e) => {
         setShowResult(false);
     };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            navigate('/search');
+        }
+    };
+
     return (
         <Tippy
             interactive
@@ -96,6 +104,7 @@ function Search() {
                     spellCheck={false}
                     onChange={handleChange}
                     onFocus={() => setShowResult(true)}
+                    onKeyDown={handleKeyPress}
                 />
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 {searchValue && !loading && (

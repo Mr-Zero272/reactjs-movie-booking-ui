@@ -223,8 +223,9 @@ function ShowTime() {
                                 </span>
                                 <FontAwesomeIcon icon={faAngleDown} className={cx('i')} />
                                 <ul className={cx('sorting_num')}>
-                                    {listAuditoriums.map((auditorium) => (
+                                    {listAuditoriums.map((auditorium, index) => (
                                         <li
+                                            key={index}
                                             className={cx('num_sorting_btn')}
                                             onClick={() => dispatch(addToCartActions.chooseAuditorium(auditorium.id))}
                                         >

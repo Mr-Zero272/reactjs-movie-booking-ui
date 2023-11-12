@@ -14,6 +14,8 @@ import * as userService from '~/apiServices/userService';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
 import * as paymentService from '~/apiServices/paymentService';
+import * as cartService from '~/apiServices/cartService';
+import Swal from 'sweetalert2';
 
 const maskPrivateString = (inputString) => {
     // Extract the first three characters
@@ -39,26 +41,13 @@ const notify = (message, type = 'success') => {
     });
 };
 
-const generateRandomString = (length, key) => {
-    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' + key;
-    let result = '';
-
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters[randomIndex];
-    }
-
-    return result;
-};
-
-let toastLoading;
-
 const cx = classNames.bind(styles);
 
 function Payment() {
     const dispatch = useDispatch();
     const location = useLocation();
-    const paymentSate = useSelector((state) => state.addToCart);
+    const paymentSate = useSelector((state) => state.addToCart.paymentStatus);
+    const [paymentS, setPaymentS] = useState(false);
     let [searchParams] = useSearchParams();
     const invoiceInfo = {
         tt: +searchParams.get('vnp_Amount') / 100,
@@ -130,38 +119,53 @@ function Payment() {
                 vnp_TxnRef,
                 vnp_SecureHash,
             );
-            //console.log(result);
-            if (result.rspCode === '00') {
-                notify('Payment completed ^-^', 'success');
-                setTimeout(() => {
-                    setTimeout(() => {
-                        localStorage.setItem('paymentStatus', true);
-                        window.close();
-                    }, 1500);
+
+            if (rspCode === '00' && result.message === 'success' && paymentSate === false) {
+                setPaymentS((prev) => true);
+                const callApi = async () => {
+                    const token = localStorage.getItem('token');
+                    const result = await cartService.createOrderPayment(token, vnp_TxnRef, true);
+                    //dispatch(addToCartActions.setPaymentStatus({ status: true, invoiceId: vnp_TxnRef }));
+
+                    //console.log(result);
+                    // if (result.message === 'success') {
+                    //     Swal.fire('This order is paid!', 'Thanks for your order.', 'success');
+                    window.close();
+                    // }
+
+                    // console.log('isone', callApiOne);
+                    //console.log('call api');
+                };
+                Swal.fire({
+                    title: 'This order is paid!',
+                    text: 'Thanks for your order.',
+                    icon: 'success',
+                    preConfirm: callApi,
+                    allowOutsideClick: false,
+                    showConfirmButton: 'Agree!',
                 });
-                // setTimeout(() => {
-                //     navigate(-1);
-                // }, 2000);
+            } else {
+                notify('Payment error!!!', 'error');
+                setTimeout(() => {
+                    window.close();
+                }, 1500);
             }
+            //callApi(result.rspCode);
         }
+        //console.log('call api 1');
     }, [location]);
     //console.log(paymentSate);
 
     const handleSubmit = () => {
-        toastLoading = toast.loading('Please wait...');
+        //toastLoading = toast.loading('Please wait...');
         if (paymentInfo.content !== 'MOONMOVIE ' + invoiceInfo.ct) {
             setTimeout(() => {
-                toast.update(toastLoading, {
-                    render: 'Payment failed --!',
-                    type: 'error',
-                    isLoading: false,
-                    autoClose: 2000,
-                });
+                notify('Payment error!!!', 'error');
                 dispatch(addToCartActions.setPaymentStatus(false));
                 setTimeout(() => {
-                    navigate(-1);
-                }, 2000);
-            }, 2000);
+                    window.close();
+                }, 1500);
+            }, 1500);
         } else {
             const urlPayment = paymentService.createPayment(
                 invoiceInfo.tt,
@@ -169,7 +173,8 @@ function Payment() {
                 'http://localhost:3001/payment',
                 invoiceInfo.iv,
             );
-            window.open(urlPayment, '_self')?.focus();
+            window.close();
+            window.open(urlPayment, '_blank')?.focus();
         }
     };
 

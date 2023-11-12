@@ -54,12 +54,19 @@ function Booking() {
     const handleActiveStep = useCallback(
         (stepIndex) => {
             let isValidStep;
+
             if (checkoutInfo.listSeatSelected?.length === 0) {
                 if (stepIndex === 2 || stepIndex === 3) {
                     notify('You must select at least one seat to continue!', 'error');
                     return;
                 }
             }
+
+            if (stepIndex === 1 && checkoutInfo.paymentStatus) {
+                notify('You have already paid so you cannot go back to step 1!!', 'info');
+                return;
+            }
+
             if (stepIndex === 3) {
                 //console.log(checkoutInfo.paymentStatus, 'asdfasdf');
                 if (checkoutInfo.paymentStatus === false) {

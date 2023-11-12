@@ -13,7 +13,7 @@ import TitleHeadingPage from '~/components/TitleHeadingPage';
 import Button from '~/components/Button';
 import images from '~/assets/images';
 import { addToCartActions } from '~/store/add-to-cart-slice';
-import * as paymentService from '~/apiServices/paymentService';
+import * as cartService from '~/apiServices/cartService';
 
 const generateRandomString = (length, key) => {
     const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' + key;
@@ -39,6 +39,10 @@ function Step2({ onNextStep, onChangeInfo }) {
         date: new Date(),
         listSeatSelected: [],
     });
+    const [paymentInfo, setPaymentInfo] = useState(() => ({
+        invoiceId: generateRandomString(10, 'K78FEU'),
+        orderInfo: generateRandomString(10, 'HY45E39R'),
+    }));
     //console.log(addToCartInfo);
 
     const handleChangeInput = (e) => {
@@ -48,14 +52,18 @@ function Step2({ onNextStep, onChangeInfo }) {
 
     //check if this tab is focus again
     useEffect(() => {
-        const handleTabFocus = () => {
-            const paymentS = localStorage.getItem('paymentStatus');
-            if (paymentS !== null && paymentS === 'true') {
-                console.log(paymentS);
-                dispatch(addToCartActions.setPaymentStatus(paymentS));
-                localStorage.removeItem('paymentStatus');
+        const fetchApi = async () => {
+            const token = localStorage.getItem('token');
+            const result = await cartService.isThisInvoiceExists(token, paymentInfo.invoiceId);
+            return result;
+        };
+
+        const handleTabFocus = async () => {
+            const isExist = await fetchApi();
+            console.log(isExist);
+            if (isExist && isExist.message === 'yes') {
+                dispatch(addToCartActions.setPaymentStatus({ status: true, invoiceId: paymentInfo.invoiceId }));
             }
-            //console.log('tab is focus');
         };
         window.addEventListener('focus', handleTabFocus);
 
@@ -124,16 +132,10 @@ function Step2({ onNextStep, onChangeInfo }) {
                         <p>Or you can click here!</p>
                         {!addToCartInfo.paymentStatus && (
                             <Button
-                                href={`/payment?vnp_Amount=${
-                                    addToCartInfo.totalPayment * 100
-                                }&vnp_TxnRef=${generateRandomString(10, 'K78FEU')}&vnp_OrderInfo=${generateRandomString(
-                                    10,
-                                    'HY45E39R',
-                                )}`}
+                                href={`/payment?vnp_Amount=${addToCartInfo.totalPayment * 100}&vnp_TxnRef=${
+                                    paymentInfo.invoiceId
+                                }&vnp_OrderInfo=${paymentInfo.orderInfo}`}
                                 target="_blank"
-                                onClick={() => {
-                                    localStorage.setItem('paymentStatus', false);
-                                }}
                                 primary
                             >
                                 Pay now!!

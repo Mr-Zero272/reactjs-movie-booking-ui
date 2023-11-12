@@ -16,7 +16,6 @@ function Schedule() {
     const dispatch = useDispatch();
     const [baseData, setBaseData] = useState({ cinemaTypes: [], genres: [], data: [] });
     const filter = useSelector((state) => state.listTodaySchedule);
-    const q = useSelector((state) => state.pagination.q);
     const types = useSelector((state) => state.listTodaySchedule.cinemaTypes);
     //console.log(types);
     useEffect(() => {

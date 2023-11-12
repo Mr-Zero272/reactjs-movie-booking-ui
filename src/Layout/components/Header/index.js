@@ -54,7 +54,7 @@ const userMenu = [
     {
         icon: <FontAwesomeIcon icon={faTicket} />,
         title: 'My ticket',
-        to: '/ticket',
+        to: '/ticket?_type=ticket&tab=1',
     },
     ...MENU_ITEMS,
     {

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import L, { map } from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, LayersControl, Polygon, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -12,33 +11,10 @@ import classNames from 'classnames/bind';
 import { CustomComboBoxControl, CustomDistanceCalControl } from './CustomControl';
 import styles from './Map.module.scss';
 import MapClickHandler from './MapClickHandler';
-import { swapCoordinates } from './GeoHelpers/SwapCoordinates';
 import MyGeoJson from './MyGeoJson';
 import DrawTools from './component/DrawTools';
 
 const cx = classNames.bind(styles);
-
-const geojsonData = require('~/assets/a.json');
-
-let testGeoJson = {
-    features: [
-        {
-            geometry: JSON.parse('{"type":"Point","coordinates":[105.772097,10.030249]}'),
-            type: 'Feature',
-            properties: {
-                Name: 'Cong A Dai Hoc Can Tho',
-            },
-        },
-        {
-            geometry: JSON.parse('{"type":"Point","coordinates":[105.771051,10.029072]}'),
-            type: 'Feature',
-            properties: {
-                Name: 'Cong B Dai Hoc Can Tho',
-            },
-        },
-    ],
-    type: 'FeatureCollection',
-};
 
 const customIcon = new Icon({
     iconUrl: image.point,
@@ -99,9 +75,6 @@ function Map() {
         [range],
     );
 
-    // if (featureCollection) {
-    //     console.log(swapCoordinates(featureCollection));
-    // }
     const handleDistance = () => {
         setIsCalculateDistance((prev) => {
             if (!prev === false) {
@@ -115,10 +88,10 @@ function Map() {
         setRange((prev) => value);
     };
 
-    //console.log(featureCollection);
+    //console.log(additionalEleMap);
 
     return (
-        <MapContainer center={[10.030249, 105.772097]} zoom={16} style={{ width: '100vw', height: '100vh' }}>
+        <MapContainer center={[10.030249, 105.772097]} zoom={16} className={cx('wrapper')}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -164,7 +137,6 @@ function Map() {
                     </Popup>
                 </Marker>
             )}
-            <Marker position={[10.031368, 105.770971]} icon={customIcon}></Marker>
         </MapContainer>
     );
 }
