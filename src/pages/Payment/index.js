@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCalendarDays, faFileLines, faMessage, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import classNames from 'classnames/bind';
 
 import styles from './Payment.module.scss';
 import Button from '~/components/Button';
 import FormInputText2 from '~/components/Form/FormInput/FormInputText2';
 import * as userService from '~/apiServices/userService';
-import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
 import * as paymentService from '~/apiServices/paymentService';
 import * as cartService from '~/apiServices/cartService';
-import Swal from 'sweetalert2';
 
 const maskPrivateString = (inputString) => {
     // Extract the first three characters
@@ -145,10 +145,14 @@ function Payment() {
                     showConfirmButton: 'Agree!',
                 });
             } else {
-                notify('Payment error!!!', 'error');
-                setTimeout(() => {
-                    window.close();
-                }, 1500);
+                Swal.fire({
+                    title: 'This order was not paid!',
+                    text: 'Something went wrong!',
+                    icon: 'error',
+                    preConfirm: () => window.close(),
+                    allowOutsideClick: false,
+                    showConfirmButton: 'Agree!',
+                });
             }
             //callApi(result.rspCode);
         }

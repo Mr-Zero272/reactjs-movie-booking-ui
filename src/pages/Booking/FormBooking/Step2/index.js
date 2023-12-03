@@ -50,6 +50,13 @@ function Step2({ onNextStep, onChangeInfo }) {
         onChangeInfo(e);
     };
 
+    const setNewInvoiceId = () => {
+        setPaymentInfo((prev) => ({
+            invoiceId: generateRandomString(10, prev.invoiceId),
+            orderInfo: generateRandomString(10, prev.orderInfo),
+        }));
+    };
+
     //check if this tab is focus again
     useEffect(() => {
         const fetchApi = async () => {
@@ -60,7 +67,7 @@ function Step2({ onNextStep, onChangeInfo }) {
 
         const handleTabFocus = async () => {
             const isExist = await fetchApi();
-            console.log(isExist);
+
             if (isExist && isExist.message === 'yes') {
                 dispatch(addToCartActions.setPaymentStatus({ status: true, invoiceId: paymentInfo.invoiceId }));
             }
@@ -70,9 +77,7 @@ function Step2({ onNextStep, onChangeInfo }) {
         return () => {
             window.removeEventListener('focus', handleTabFocus);
         };
-    }, []);
-
-    //console.log(userInfo);
+    }, [paymentInfo.invoiceId]);
 
     const totalPayment = useMemo(() => {
         return addToCartInfo.listSeatSelected.reduce(
@@ -136,6 +141,7 @@ function Step2({ onNextStep, onChangeInfo }) {
                                     paymentInfo.invoiceId
                                 }&vnp_OrderInfo=${paymentInfo.orderInfo}`}
                                 target="_blank"
+                                onClick={setNewInvoiceId}
                                 primary
                             >
                                 Pay now!!
