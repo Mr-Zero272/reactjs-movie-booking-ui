@@ -51,7 +51,7 @@ function Detail() {
         };
 
         fetchApi();
-    }, [movieId.movieId]);
+    }, [movieId]);
     //console.log(movieInfo);
     var settings = {
         dots: true,
