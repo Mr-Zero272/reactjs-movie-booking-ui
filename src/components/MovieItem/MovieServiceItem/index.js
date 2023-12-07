@@ -10,7 +10,6 @@ function MovieServiceItem({ icon, title, desc }) {
                 <h1 className={cx('title')}>{title}</h1>
                 <p className={cx('desc')}>{desc}</p>
             </div>
-            <a href="#"></a>
         </div>
     );
 }

@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarPlus, faMessage, faPhone, faVoicemail } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './FloatingButton.module.scss';
 

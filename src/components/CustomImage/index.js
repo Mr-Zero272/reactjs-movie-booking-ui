@@ -9,7 +9,7 @@ function CustomImage(props) {
             setSrc(baseUrl.image + props.src);
         }
     }, [props.src]);
-    return <img {...props} src={src} />;
+    return <img {...props} src={src} alt="" />;
 }
 
 export default CustomImage;

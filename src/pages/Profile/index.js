@@ -43,7 +43,7 @@ function Profile() {
     };
 
     const isValidEmail = (email) => {
-        const regex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+        const regex = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
         return regex.test(email);
     };
 

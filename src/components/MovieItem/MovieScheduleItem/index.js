@@ -10,7 +10,6 @@ import ListTimeItem from '~/components/ListTimeItem';
 import CinemaTypeCheckbox from './CinemaTypeCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartActions } from '~/store/add-to-cart-slice';
-import CustomImage from '~/components/CustomImage';
 
 const cx = classNames.bind(styles);
 

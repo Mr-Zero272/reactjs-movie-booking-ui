@@ -53,8 +53,6 @@ function Booking() {
 
     const handleActiveStep = useCallback(
         (stepIndex) => {
-            let isValidStep;
-
             if (checkoutInfo.listSeatSelected?.length === 0) {
                 if (stepIndex === 2 || stepIndex === 3) {
                     notify('You must select at least one seat to continue!', 'error');
@@ -83,6 +81,7 @@ function Booking() {
             setSearchParams({ tab: stepIndex });
             setActiveStep(stepIndex);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [checkoutInfo.listSeatSelected, checkoutInfo.paymentStatus, userInfo.username, userInfo.email],
     );
 
@@ -102,6 +101,7 @@ function Booking() {
 
     let uniqueListScreeningActive = useMemo(() => {
         return getUniqueArray(checkoutInfo.listScreeningsAreActive);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //console.log(movieId);
@@ -109,6 +109,7 @@ function Booking() {
     useEffect(() => {
         //console.log('pagegoi', id);
         dispatch(fetchInfoAddToCart(movieId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getCurrentMoviePosition = () => {
@@ -133,6 +134,7 @@ function Booking() {
         // Check if the action was successful
         dispatch(fetchInfoAddToCart(currentMovieInfo.movieId));
         // Dispatch the second action with the payload from the first action
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [checkoutInfo]);
 
     const handlePrevBooking = useCallback(async () => {
@@ -149,6 +151,7 @@ function Booking() {
             }),
         );
         dispatch(fetchInfoAddToCart(currentMovieInfo.movieId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [checkoutInfo]);
 
     // for step 2

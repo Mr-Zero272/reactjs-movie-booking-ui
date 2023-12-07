@@ -1,30 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
 // import { MapContainer, TileLayer, Marker, Popup, LayersControl, Polygon, Polyline, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-draw/dist/leaflet.draw.css';
-import 'leaflet/dist/images/marker-icon-2x.png';
-import { Icon } from 'leaflet';
-import image from '~/assets/images';
-import axios from 'axios';
-import classNames from 'classnames/bind';
+// import 'leaflet/dist/leaflet.css';
+// import 'leaflet-draw/dist/leaflet.draw.css';
+// import 'leaflet/dist/images/marker-icon-2x.png';
 
 // import { CustomComboBoxControl, CustomDistanceCalControl } from './CustomControl';
-import styles from './Map.module.scss';
+
 // import MapClickHandler from './MapClickHandler';
 // import MyGeoJson from './MyGeoJson';
 // import DrawTools from './component/DrawTools';
 
-const cx = classNames.bind(styles);
+// const customIcon = new Icon({
+//     iconUrl: image.point,
+//     iconSize: [38, 38],
+// });
 
-const customIcon = new Icon({
-    iconUrl: image.point,
-    iconSize: [38, 38],
-});
-
-const customIcon2 = new Icon({
-    iconUrl: image.point2,
-    iconSize: [38, 38],
-});
+// const customIcon2 = new Icon({
+//     iconUrl: image.point2,
+//     iconSize: [38, 38],
+// });
 
 function Map() {
     // const [featureCollection, setFeatureCollection] = useState(null);

@@ -4,7 +4,6 @@ import { faCirclePlay, faCirclePause } from '@fortawesome/free-regular-svg-icons
 
 import classNames from 'classnames/bind';
 import styles from './FullViewBannerTrailer.module.scss';
-import videos from '~/assets/videos';
 
 const cx = classNames.bind(styles);
 function FullViewBannerTrailer({ poster, trailer, movieName }) {

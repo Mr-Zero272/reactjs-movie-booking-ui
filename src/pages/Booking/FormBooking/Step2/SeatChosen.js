@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 
 import styles from './Step2.module.scss';
 import { addToCartActions } from '~/store/add-to-cart-slice';
-import { useState } from 'react';
 const cx = classNames.bind(styles);
 function SeatChosen({ seatInfo, screeningIfo }) {
     const dispatch = useDispatch();

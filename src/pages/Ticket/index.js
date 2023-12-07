@@ -69,6 +69,7 @@ function Ticket() {
         dispatch(addToCartActions.refreshState());
 
         fetchApi();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // handle toggle modal

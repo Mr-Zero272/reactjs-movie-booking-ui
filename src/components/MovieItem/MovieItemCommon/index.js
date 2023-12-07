@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import styles from './MovieItemCommon.module.scss';
 import Button from '~/components/Button';
 import { useState } from 'react';
@@ -9,14 +9,14 @@ const cx = classNames.bind(styles);
 
 function MovieItemCommon({ imgURL, movieName, genres, runTime, rating = 5, video, horizontal, detail, className }) {
     const [hovered, setHovered] = useState(false);
-    let roundRating = Math.round(rating);
-    roundRating = roundRating > 5 ? 5 : roundRating;
+    // let roundRating = Math.round(rating);
+    // roundRating = roundRating > 5 ? 5 : roundRating;
 
     // Generate an array of star elements based on the rating
-    const starElements = Array.from({ length: roundRating }, (_, index) => {
-        if (index + 1 > rating) return <FontAwesomeIcon key={index} icon={faStarHalfStroke} />;
-        return <FontAwesomeIcon key={index} icon={faStar} />;
-    });
+    // const starElements = Array.from({ length: roundRating }, (_, index) => {
+    //     if (index + 1 > rating) return <FontAwesomeIcon key={index} icon={faStarHalfStroke} />;
+    //     return <FontAwesomeIcon key={index} icon={faStar} />;
+    // });
 
     const boxClasses = cx('box', { horizontal });
     // control video hover

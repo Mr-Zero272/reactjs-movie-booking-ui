@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './BoxCheckbox.module.scss';
-import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 const dfFunction = () => {};

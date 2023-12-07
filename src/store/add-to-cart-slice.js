@@ -15,13 +15,13 @@ const checkActiveDate = (d, chosenDate) => {
     return d1.getDate() === d2.getDate() && d1.getMonth() === d2.getMonth() && d1.getFullYear() === d2.getFullYear();
 };
 
-const getListSeatsSelected = (listSeats) => {
-    let listSeatsSelected = [];
-    listSeatsSelected = listSeats.map((item) => {
-        return item.seatId;
-    });
-    return listSeatsSelected;
-};
+// const getListSeatsSelected = (listSeats) => {
+//     let listSeatsSelected = [];
+//     listSeatsSelected = listSeats.map((item) => {
+//         return item.seatId;
+//     });
+//     return listSeatsSelected;
+// };
 
 const addToDistinctArray = (array, value) => {
     let temp = [];

@@ -34,7 +34,7 @@ function BasicProfile({ userDetail = { avatar: '', username: 'username', email: 
             const token = localStorage.getItem('token');
             const formData = new FormData();
             formData.append('file', avatar);
-            const result = await userService.changeAvatar(token, formData);
+            await userService.changeAvatar(token, formData);
             //console.log(result);
             const dotIndex = avatar.name.lastIndexOf('.');
             const newAvatar =
@@ -51,6 +51,7 @@ function BasicProfile({ userDetail = { avatar: '', username: 'username', email: 
         return () => {
             avatar && URL.revokeObjectURL(avatar.preview);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [avatar]);
 
     //console.log(avatar.preview && 'have avatar');

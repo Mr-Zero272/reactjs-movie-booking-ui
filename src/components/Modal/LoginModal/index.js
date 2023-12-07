@@ -115,6 +115,7 @@ function LoginModal() {
 
     useEffect(() => {
         setIsFormValid(isValidateForm);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userLoginInfo]);
 
     // submit event

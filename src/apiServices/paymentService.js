@@ -1,5 +1,3 @@
-import * as request from '~/utils/request';
-import { SHA512 } from 'crypto-js';
 import CryptoJS from 'crypto-js';
 
 function sortObject(obj) {
@@ -110,5 +108,6 @@ export const checkTransactionState = (
             rspCode: 97,
             message: 'error',
         };
+        return res;
     }
 };

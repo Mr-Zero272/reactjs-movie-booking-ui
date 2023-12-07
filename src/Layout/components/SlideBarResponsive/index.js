@@ -62,7 +62,7 @@ function SideBarResponsive({ state, onToggleMenu }) {
                                 </Link>
                             </li>
                             <li className={cx('list')}>
-                                <a href="#" className={cx('nav-link')}>
+                                <a href="/" className={cx('nav-link')}>
                                     <FontAwesomeIcon className={cx('icon')} icon={faBell} />
                                     <span className={cx('link')}>Notifications</span>
                                 </a>
@@ -70,13 +70,13 @@ function SideBarResponsive({ state, onToggleMenu }) {
                         </ul>
                         <div className={cx('bottom-content')}>
                             <li className={cx('list')}>
-                                <a href="#" className={cx('nav-link')}>
+                                <a href="/" className={cx('nav-link')}>
                                     <FontAwesomeIcon className={cx('icon')} icon={faGear} />
                                     <span className={cx('link')}>Settings</span>
                                 </a>
                             </li>
                             <li className={cx('list')}>
-                                <a href="#" className={cx('nav-link')}>
+                                <a href="/" className={cx('nav-link')}>
                                     <FontAwesomeIcon className={cx('icon')} icon={faRightFromBracket} />
                                     <span className={cx('link')}>Login</span>
                                 </a>

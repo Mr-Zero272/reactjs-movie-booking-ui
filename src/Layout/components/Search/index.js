@@ -55,6 +55,7 @@ function Search() {
         };
 
         fetchApi();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounced]);
 
     const handleChange = (e) => {

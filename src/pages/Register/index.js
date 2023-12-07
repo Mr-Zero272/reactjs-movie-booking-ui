@@ -35,7 +35,7 @@ function Register() {
             maxLength: 20,
         },
         email: {
-            patternRegex: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            patternRegex: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
             errorMessage: 'Your email is not valid!!!',
         },
         password: {
@@ -92,6 +92,7 @@ function Register() {
 
     useEffect(() => {
         setIsFormValid(isValidateForm);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userRegisterInfo]);
 
     //console.log(userRegisterInfo);

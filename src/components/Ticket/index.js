@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './Ticket.module.scss';
-import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 function Ticket({

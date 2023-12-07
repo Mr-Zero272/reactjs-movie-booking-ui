@@ -7,7 +7,6 @@ import styles from './SelectOption.module.scss';
 
 const cx = classNames.bind(styles);
 const dfnFn = () => {};
-const dfArray = [{ id: 0, title: '' }];
 
 function SelectOption({ options, defaultOption = 'Select genre movie', onSelectOption = dfnFn }) {
     const [toggleMenu, setToggleMenu] = useState(false);

@@ -4,8 +4,6 @@ import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './ListTimeItem.module.scss';
 import TimeItem from '../TimeItem';
-import { useDispatch, useSelector } from 'react-redux';
-import { listTodayScheduleActions } from '~/store/list-today-schedule-slice';
 
 const cx = classNames.bind(styles);
 

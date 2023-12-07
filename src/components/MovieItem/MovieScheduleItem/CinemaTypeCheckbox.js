@@ -11,23 +11,23 @@ import { addToCartActions } from '~/store/add-to-cart-slice';
 import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
-const fakeSchedule = [
-    {
-        id: 30,
-        type: '3D',
-        screening_start: '2023-09-30T15:30:30',
-    },
-    {
-        id: 31,
-        type: '2D',
-        screening_start: '2023-09-30T17:00:30',
-    },
-    {
-        id: 35,
-        type: '3D',
-        screening_start: '2023-09-30T16:00:30',
-    },
-];
+// const fakeSchedule = [
+//     {
+//         id: 30,
+//         type: '3D',
+//         screening_start: '2023-09-30T15:30:30',
+//     },
+//     {
+//         id: 31,
+//         type: '2D',
+//         screening_start: '2023-09-30T17:00:30',
+//     },
+//     {
+//         id: 35,
+//         type: '3D',
+//         screening_start: '2023-09-30T16:00:30',
+//     },
+// ];
 
 function CinemaTypeCheckbox({ type, schedule, onCheck, activeDate, active = false, cId = 1 }) {
     const dispatch = useDispatch();

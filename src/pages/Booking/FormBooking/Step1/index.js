@@ -29,6 +29,7 @@ function Step1({ onNextStep = defaultF, nextBtn = false, addToCartBtn = false, o
     useEffect(() => {
         //console.log('pagegoi', id);
         dispatch(fetchInfoAddToCart(movieId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div className={cx('wrapper')}>

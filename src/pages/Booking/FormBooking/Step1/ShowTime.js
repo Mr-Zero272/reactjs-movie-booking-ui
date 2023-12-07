@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
-import { formBookingTicketActions } from '~/store/form-boking-ticket-slice';
 import classNames from 'classnames/bind';
 import styles from './Step1.module.scss';
 import TimeItem from '~/components/TimeItem';
@@ -20,51 +19,51 @@ const listAuditoriums = [
     { id: 3, name: 'Blue Sky' },
     { id: 4, name: 'Stars' },
 ];
-const timeDataTest = [
-    {
-        dateInformation: { day: 'Mon', date: 11, month: 'Sep', year: 2023, fullNameDay: 'Monday' },
-        showTimes: [],
-    },
-    {
-        dateInformation: { day: 'Tue', date: 12, month: 'Sep', year: 2023, fullNameDay: 'Tuesday' },
-        showTimes: [
-            { startTime: '9:00', auditorium: '3D' },
-            { startTime: '10:00', auditorium: '2D' },
-        ],
-    },
-    {
-        dateInformation: { day: 'Wed', date: 13, month: 'Sep', year: 2023, fullNameDay: 'Wednesday' },
-        showTimes: [
-            { startTime: '11:00', auditorium: '3D' },
-            { startTime: '11:30', auditorium: '2D' },
-        ],
-    },
-    {
-        dateInformation: { day: 'Thu', date: 14, month: 'Sep', year: 2023, fullNameDay: 'Thursday' },
-        showTimes: [
-            { startTime: '7:00', auditorium: '3D' },
-            { startTime: '5:00', auditorium: '2D' },
-        ],
-    },
-    {
-        dateInformation: { day: 'Fri', date: 15, month: 'Sep', year: 2023, fullNameDay: 'Friday' },
-        showTimes: [
-            { startTime: '7:00', auditorium: '3D' },
-            { startTime: '9:00', auditorium: '2D' },
-        ],
-    },
-    {
-        dateInformation: { day: 'Sat', date: 16, month: 'Sep', year: 2023, fullNameDay: 'Saturday' },
-        showTimes: [
-            { startTime: '4:00', auditorium: '3D' },
-            { startTime: '3:00', auditorium: '2D' },
-        ],
-    },
-    {
-        dateInformation: { day: 'Sun', date: 17, month: 'Sep', year: 2023, fullNameDay: 'Sunday' },
-        showTimes: [],
-    },
-];
+// const timeDataTest = [
+//     {
+//         dateInformation: { day: 'Mon', date: 11, month: 'Sep', year: 2023, fullNameDay: 'Monday' },
+//         showTimes: [],
+//     },
+//     {
+//         dateInformation: { day: 'Tue', date: 12, month: 'Sep', year: 2023, fullNameDay: 'Tuesday' },
+//         showTimes: [
+//             { startTime: '9:00', auditorium: '3D' },
+//             { startTime: '10:00', auditorium: '2D' },
+//         ],
+//     },
+//     {
+//         dateInformation: { day: 'Wed', date: 13, month: 'Sep', year: 2023, fullNameDay: 'Wednesday' },
+//         showTimes: [
+//             { startTime: '11:00', auditorium: '3D' },
+//             { startTime: '11:30', auditorium: '2D' },
+//         ],
+//     },
+//     {
+//         dateInformation: { day: 'Thu', date: 14, month: 'Sep', year: 2023, fullNameDay: 'Thursday' },
+//         showTimes: [
+//             { startTime: '7:00', auditorium: '3D' },
+//             { startTime: '5:00', auditorium: '2D' },
+//         ],
+//     },
+//     {
+//         dateInformation: { day: 'Fri', date: 15, month: 'Sep', year: 2023, fullNameDay: 'Friday' },
+//         showTimes: [
+//             { startTime: '7:00', auditorium: '3D' },
+//             { startTime: '9:00', auditorium: '2D' },
+//         ],
+//     },
+//     {
+//         dateInformation: { day: 'Sat', date: 16, month: 'Sep', year: 2023, fullNameDay: 'Saturday' },
+//         showTimes: [
+//             { startTime: '4:00', auditorium: '3D' },
+//             { startTime: '3:00', auditorium: '2D' },
+//         ],
+//     },
+//     {
+//         dateInformation: { day: 'Sun', date: 17, month: 'Sep', year: 2023, fullNameDay: 'Sunday' },
+//         showTimes: [],
+//     },
+// ];
 
 function getFullWeek(today) {
     //const today = new Date('2023/9/30'); // dayofweek = 3
@@ -133,15 +132,15 @@ function ShowTime() {
         );
     };
 
-    const formatActiveDate = (d) => {
-        return {
-            day: d.toLocaleDateString('en-US', { weekday: 'short' }),
-            date: d.getDate(),
-            month: d.toLocaleDateString('en-US', { month: 'short' }),
-            year: d.getFullYear(),
-            fullNameDay: d.toLocaleDateString('en-US', { weekday: 'long' }),
-        };
-    };
+    // const formatActiveDate = (d) => {
+    //     return {
+    //         day: d.toLocaleDateString('en-US', { weekday: 'short' }),
+    //         date: d.getDate(),
+    //         month: d.toLocaleDateString('en-US', { month: 'short' }),
+    //         year: d.getFullYear(),
+    //         fullNameDay: d.toLocaleDateString('en-US', { weekday: 'long' }),
+    //     };
+    // };
 
     const listItems = dataDate.map((item, index) => {
         const strDate =

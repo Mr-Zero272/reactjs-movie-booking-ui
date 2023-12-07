@@ -124,7 +124,7 @@ function Payment() {
                 setPaymentS((prev) => true);
                 const callApi = async () => {
                     const token = localStorage.getItem('token');
-                    const result = await cartService.createOrderPayment(token, vnp_TxnRef, true);
+                    await cartService.createOrderPayment(token, vnp_TxnRef, true);
                     //dispatch(addToCartActions.setPaymentStatus({ status: true, invoiceId: vnp_TxnRef }));
 
                     //console.log(result);
@@ -157,6 +157,7 @@ function Payment() {
             //callApi(result.rspCode);
         }
         //console.log('call api 1');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
     //console.log(paymentSate);
 

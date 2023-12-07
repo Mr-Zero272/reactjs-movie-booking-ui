@@ -2,10 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import styles from './Step1.module.scss';
-import { formBookingTicketActions } from '~/store/form-boking-ticket-slice';
 import { addToCartActions } from '~/store/add-to-cart-slice';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function Seat({ seatInfo, booked, selected }) {
@@ -20,6 +18,7 @@ function Seat({ seatInfo, booked, selected }) {
         setScreeningInfo((prev) => ({
             activeScreening,
         }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addToCartInfo.screenings]);
     //console.log(screeningInfo);
     let handleChooseSeats = (seatInfo) => {

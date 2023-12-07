@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
-import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import TimeItem from '~/components/TimeItem';
@@ -31,8 +30,6 @@ const cx = classNames.bind(styles);
 function Step2({ onNextStep, onChangeInfo }) {
     const dispatch = useDispatch();
     const addToCartInfo = useSelector((state) => state.addToCart);
-    let [searchParams, setSearchParams] = useSearchParams();
-    const tab = searchParams.get('tab');
     const [userInfo, setUserInfo] = useState({ username: '', email: '' });
     const [step2Info, setStep2Info] = useState({
         activeScreening: [{ type: '' }],
@@ -77,6 +74,7 @@ function Step2({ onNextStep, onChangeInfo }) {
         return () => {
             window.removeEventListener('focus', handleTabFocus);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paymentInfo.invoiceId]);
 
     const totalPayment = useMemo(() => {
@@ -115,6 +113,7 @@ function Step2({ onNextStep, onChangeInfo }) {
             date,
             listSeatSelected: listSeatsForThisVV,
         }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addToCartInfo.screenings, addToCartInfo.listSeatSelected]);
 
     //console.log(step2Info);

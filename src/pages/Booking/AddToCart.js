@@ -9,7 +9,7 @@ import styles from './Booking.module.scss';
 import { MovieItemWithDesc } from '~/components/MovieItem';
 import NavStepper from '~/components/NavStepper';
 import { Step1 } from './FormBooking';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { fetchInfoAddToCart } from '~/store/add-to-cart-slice';
 import * as cartService from '~/apiServices/cartService';
 import { fetchQuantityCart } from '~/store/cart-quantity';
@@ -27,6 +27,7 @@ function AddToCart() {
     useEffect(() => {
         //console.log('pagegoi', id);
         dispatch(fetchInfoAddToCart(movieId));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSubmit = useCallback(() => {
@@ -56,6 +57,7 @@ function AddToCart() {
 
             callApiAddToCart();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addToCartInfo.listSeatSelected]);
 
     return (

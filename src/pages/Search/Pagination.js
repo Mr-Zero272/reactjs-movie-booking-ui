@@ -34,6 +34,7 @@ function Pagination() {
         const type = fullFilterInfo.cinemaType === 'All' ? '' : fullFilterInfo.cinemaType;
         const manufacturers = sliceString(fullFilterInfo.manufacturers);
         dispatch(fetchPaginationMovie({ q, size, cpage, genres, type, manufacturers }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         fullFilterInfo.genres,
         fullFilterInfo.cinemaType,

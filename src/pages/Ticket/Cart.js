@@ -29,6 +29,7 @@ function Cart() {
         };
 
         fetchApi();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const addToDistinctArray = (array, value) => {
@@ -51,6 +52,7 @@ function Cart() {
 
         fetchApi();
         dispatch(fetchQuantityCart());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleCheck = useCallback(
@@ -80,6 +82,7 @@ function Cart() {
             };
             dispatch(addToCartActions.checkout(temp));
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [checkoutInfo],
     );
 
