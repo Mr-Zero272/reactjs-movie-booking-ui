@@ -38,7 +38,7 @@ const publicRoutes = [
     { path: '/detail/:movieId', component: Detail, layout: HeaderOnly },
     { path: '/login', component: Login, layout: null },
     { path: '/register', component: Register, layout: null },
-    { path: '/map', component: Map, layout: null },
+    { path: '/map', component: Map },
 ];
 
 const privateRoutes = [
